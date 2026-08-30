@@ -1,5 +1,5 @@
 {
-  "name": "榴莲树干病辨症 · Durian Trunk Disease Triage",
+  "name": "榴莲树干病辨症 · Durian Trunk Disease Triage · Kenal Pasti Penyakit Batang Durian",
   "short_name": "辨症 Triage",
   "description": "Field triage for durian trunk and root disease: Phytophthora, Botryosphaeriaceae, Fusarium, root disease and borers. Works offline. 中文 / English / Bahasa Melayu.",
   "id": "/duriantrunkdiseases/",
@@ -11,11 +11,35 @@
   "theme_color": "#3A2E24",
   "lang": "zh",
   "dir": "ltr",
-  "categories": ["education", "productivity", "utilities"],
+  "categories": [
+    "education",
+    "productivity",
+    "utilities"
+  ],
   "icons": [
-    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }

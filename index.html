@@ -13,7 +13,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="辨症 Triage">
 <meta name="mobile-web-app-capable" content="yes">
-<title>榴莲树干病辨症 · Durian Trunk Disease Triage</title>
+<title>榴莲树干病辨症 · Durian Trunk Disease Triage · Kenal Pasti Penyakit Batang Durian</title>
 <style>
 :root{
   --bark:#3A2E24; --bark2:#47392C; --bark3:#554636;
@@ -741,6 +741,7 @@ function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&
 
 function renderChrome(){
   document.documentElement.lang = LANG;
+  document.title = T(STR.mark);
   document.getElementById("mark").textContent = T(STR.mark);
   var nextL = LANGS[(LANGS.indexOf(LANG) + 1) % LANGS.length];
   document.getElementById("lang").textContent = { zh:"中文", en:"EN", ms:"BM" }[nextL];
