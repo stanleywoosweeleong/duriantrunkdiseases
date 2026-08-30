@@ -10,7 +10,7 @@
  *
  * Bump CACHE_VERSION on every deploy. That is the whole update mechanism.
  */
-const CACHE_VERSION = 'dtd-v2026-08-30-7';
+const CACHE_VERSION = 'dtd-v2026-08-30-8';
 const CACHE = CACHE_VERSION;
 
 const PRECACHE = [
