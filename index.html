@@ -396,7 +396,7 @@ var SYMPTOMS = [
   { id:"r5",  p:0, b:0, f:0, r:2, zh:"整树萎凋、叶片枯挂，但树干上找不到任何病斑",        en:"Whole tree wilting with leaves clinging, yet no lesion anywhere on the trunk", ms:"Seluruh pokok layu dengan daun melekat, tetapi tiada lesi langsung pada batang",
               zh2:"树干干净却整树垮，最该怀疑的是根", en2:"A clean trunk under a collapsing canopy points down, not up", ms2:"Batang yang bersih di bawah silara yang runtuh menunjuk ke bawah, bukan ke atas" },
   { id:"s11", p:0, b:0, f:0, zh:"叶片黄化、稀疏、整树衰退",                    en:"Yellowing, thinning canopy, general decline", ms:"Daun menguning, silara menipis, pokok merosot keseluruhan",
-              zh2:"三种都会出现，单看这条判不了", en2:"All three do this — this one alone decides nothing", ms2:"Ketiga-tiganya begini — yang ini sahaja tidak menentukan apa-apa" },
+              zh2:"四种都会出现，单看这条判不了", en2:"All four do this — this one alone decides nothing", ms2:"Keempat-empatnya begini — yang ini sahaja tidak menentukan apa-apa" },
   { id:"s12", p:0, b:0, f:0, zh:"果实也出现褐色腐烂",                          en:"Fruit also showing brown rot", ms:"Buah juga menunjukkan reput perang",
               zh2:"疫霉、葡萄座腔菌类与镰刀菌都能引起果腐", en2:"Phytophthora, the Botryosphaeriaceae and Fusarium all cause fruit rot", ms2:"Phytophthora, Botryosphaeriaceae dan Fusarium semuanya menyebabkan reput buah" }
 ];
@@ -417,9 +417,9 @@ var VERDICT = {
   x:{ zh:"证据不足，还分不开", en:"Not enough to separate them", ms:"Belum cukup untuk membezakannya",
       zh2:"去找决定性线索——往下拉到「还分不清？」，按 取样 → 近看 → 剖开 的顺序做。", ms2:"Pergi cari tanda yang menentukan — tatal ke bahagian \u201cMasih tak dapat pastikan?\u201d dan ikut susunan Ambil Sampel, Lihat Dekat, Belah.", ms2:"Pergi cari tanda yang menentukan — tatal ke bahagian \u201cMasih tak dapat pastikan?\u201d dan ikut susunan Ambil Sampel, Lihat Dekat, Belah.", en2:"Go and find a decisive sign — scroll to \u201cStill cannot tell?\u201d and work through Sample, Look, Cut in that order." },
   z:{ zh:"勾选的症状不指向任何一种", en:"What you ticked points to none of them", ms:"Apa yang ditanda tidak menunjuk kepada mana-mana",
-      zh2:"你勾的都是三病共有的症状。请回树上找决定性线索。", en2:"You have only ticked signs all three share. Go back to the tree for a decisive one.", ms2:"Anda hanya menanda tanda yang dikongsi ketiga-tiganya. Balik ke pokok dan cari satu yang menentukan." },
+      zh2:"你勾的都是四病共有的症状。请回树上找决定性线索。", en2:"You have only ticked signs all four share. Go back to the tree for a decisive one.", ms2:"Anda hanya menanda tanda yang dikongsi keempat-empatnya. Balik ke pokok dan cari satu yang menentukan." },
   n:{ zh:"还没勾选症状", en:"No symptoms ticked yet", ms:"Belum ada gejala ditanda",
-      zh2:"从最容易看的三条开始：有没有黑色小点？有没有粉白霉层？有没有流胶？", en2:"Start with the three easiest: black dots? white mould? weeping gum?", ms2:"Mula dengan tiga yang paling mudah: bintik hitam? kulapuk putih? getah meleleh?" }
+      zh2:"从最容易看的四条开始：有没有黑色小点？有没有粉白霉层？有没有流胶？整树垮了但树干干净？", en2:"Start with the four easiest: black dots? white mould? weeping gum? a collapsing tree with a clean trunk?", ms2:"Mula dengan empat yang paling mudah: bintik hitam? kulapuk putih? getah meleleh? pokok runtuh tetapi batang bersih?" }
 };
 
 /* ---------- 2. CHEMICALS ---------- */
@@ -558,8 +558,8 @@ var LEVER = [
     zh2:"切断侵染源与入侵口。葡萄座腔菌类靠空中分生孢子从新鲜修剪伤口进入，病枝留在园里就是下一季的孢子源。这一步不花钱，效果最大。",
     en2:"Cuts off both the spore source and the entry point. The Botryosphaeriaceae enter through fresh pruning wounds via airborne conidia, and prunings left in the orchard are next season's inoculum. Costs nothing, moves the most.", ms2:"Memutuskan kedua-dua sumber spora dan pintu masuknya. Botryosphaeriaceae masuk melalui luka pangkasan baharu menerusi konidia di udara, dan sisa pangkasan yang ditinggalkan dalam kebun ialah sumber jangkitan musim depan. Tiada kos, kesan paling besar." },
   { w:82, zh:"排水与树势", en:"Drainage and tree vigour", ms:"Saliran dan kecergasan pokok",
-    zh2:"文献原话：这类溃疡与回枯在长势差的立地最严重，树势旺时溃疡扩展通常被遏止。疫霉需要自由水，镰刀菌趁根颈长期潮湿入侵——三种病的诱因都在这里。",
-    en2:"Straight from the literature: these cankers and diebacks are most severe where trees grow poorly, and canker development is usually arrested on vigorous trees. Phytophthora needs free water and Fusarium exploits a permanently damp collar — all three pathogens trace back to this.", ms2:"Terus daripada kajian: kanker dan mati rosot ini paling teruk di tempat pokok tumbuh lemah, dan perkembangan kanker biasanya terhenti pada pokok yang cergas. Phytophthora perlukan air bebas dan Fusarium memanfaatkan pangkal batang yang sentiasa lembap — ketiga-tiga patogen berbalik kepada perkara ini." },
+    zh2:"文献原话：这类溃疡与回枯在长势差的立地最严重，树势旺时溃疡扩展通常被遏止。疫霉需要自由水，镰刀菌趁根颈长期潮湿入侵，根部病害也在积水的园里最凶——四种病的诱因都在这里。",
+    en2:"Straight from the literature: these cankers and diebacks are most severe where trees grow poorly, and canker development is usually arrested on vigorous trees. Phytophthora needs free water, Fusarium exploits a permanently damp collar, and root disease is worst in waterlogged blocks — all four trace back to this.", ms2:"Terus daripada kajian: kanker dan mati rosot ini paling teruk di tempat pokok tumbuh lemah, dan perkembangan kanker biasanya terhenti pada pokok yang cergas. Phytophthora perlukan air bebas dan Fusarium memanfaatkan pangkal batang yang sentiasa lembap — ketiga-tiga patogen berbalik kepada perkara ini." },
   { w:55, zh:"生物防治", en:"Biologicals", ms:"Agen biologi",
     zh2:"木霉涂伤口＋芽孢杆菌喷干灌根。田间可期望的量级是 53.51%（海南镰刀菌茎腐），不是九成。作为常规打底，不是救火手段。",
     en2:"Trichoderma into wounds plus Bacillus on trunk and soil. The realistic field magnitude is 53.51% (Hainan, Fusarium stem rot), not 90%. A routine base layer, not a rescue.", ms2:"Trichoderma pada luka serta Bacillus pada batang dan tanah. Magnitud ladang yang realistik ialah 53.51% (Hainan, reput batang Fusarium), bukan 90%. Lapisan asas rutin, bukan penyelamat." },
@@ -570,7 +570,7 @@ var LEVER = [
 
 var STEPS = [
   { zh:"先确诊，再花钱", en:"Confirm the pathogen before spending anything", ms:"Sahkan patogennya sebelum membelanjakan apa-apa",
-    zh2:"用「判症」页。刮开病斑边缘找三条决定性线索：针尖黑色小点＝葡萄座腔菌类；粉白／粉红霉层＝镰刀菌；铁锈色流胶、组织湿腐＝疫霉。", en2:"Use the Triage tab. Scrape the lesion margin for the three decisive signs: pinhead black dots = Botryosphaeriaceae; white or pink mould = Fusarium; rust-coloured ooze and wet rot = Phytophthora.", ms2:"Gunakan tab Kenal Pasti. Kikis pinggir lesi untuk mencari tiga tanda yang menentukan: bintik hitam sebesar kepala jarum = Botryosphaeriaceae; kulapuk putih atau merah jambu = Fusarium; lelehan warna karat dan reput basah = Phytophthora." },
+    zh2:"用「判症」页。刮开病斑边缘找决定性线索：针尖黑色小点＝葡萄座腔菌类；粉白／粉红霉层＝镰刀菌；铁锈色流胶、组织湿腐＝疫霉。树干找不到病斑就扒开表土看根。", en2:"Use the Triage tab. Scrape the lesion margin for a decisive sign: pinhead black dots = Botryosphaeriaceae; white or pink mould = Fusarium; rust-coloured ooze and wet rot = Phytophthora. If the trunk is clean, open the topsoil and look at the roots.", ms2:"Gunakan tab Kenal Pasti. Kikis pinggir lesi untuk mencari tanda yang menentukan: bintik hitam halus = Botryosphaeriaceae; kulapuk putih atau merah jambu = Fusarium; lelehan warna karat dan reput basah = Phytophthora. Jika batang bersih, buka tanah atas dan periksa akar." },
   { zh:"清园：剪回到健康木质部", en:"Sanitation: cut back to clean wood", ms:"Kebersihan kebun: potong balik sampai ke kayu yang bersih",
     zh2:"病枝一律搬离果园烧掉。剪一株消一次刀。", en2:"Carry infected prunings out of the orchard and burn them. Disinfect the blade between trees.", ms2:"Bawa sisa pangkasan yang berpenyakit keluar dari kebun dan bakar. Nyahkuman mata alat antara pokok." },
   { zh:"当天封口，不隔夜", en:"Seal every wound the same day you make it", ms:"Tutup setiap luka pada hari yang sama anda membuatnya",
@@ -685,7 +685,7 @@ var TAB = localStorage.getItem("dct-tab") || "triage";
 var STR = {
   mark:{ zh:"榴莲树干病辨症", en:"Durian Trunk Disease Triage", ms:"Kenal Pasti Penyakit Batang Durian" },
   t_triage:{ zh:"这棵树得的是哪一种病？", en:"Which one is on this tree?", ms:"Pokok ini kena yang mana satu?" },
-  l_triage:{ zh:"三种病看起来很像，用药却完全不同。勾选你在树上真正看到的。", en:"The three diseases look alike but need entirely different chemistry. Tick only what you can actually see on the tree.", ms:"Ketiga-tiga penyakit ini nampak serupa tetapi memerlukan bahan kimia yang berlainan sama sekali. Tandakan hanya apa yang benar-benar anda nampak pada pokok." },
+  l_triage:{ zh:"四种病看起来很像，处理方法却完全不同。勾选你在树上真正看到的。", en:"The four look alike but need entirely different handling. Tick only what you can actually see on the tree.", ms:"Keempat-empatnya nampak serupa tetapi memerlukan penanganan yang berlainan sama sekali. Tandakan hanya apa yang benar-benar anda nampak pada pokok." },
   reset:{ zh:"清除重选", en:"Clear and start again", ms:"Kosongkan dan mula semula" },
   mix_lead:{ zh:"两种都有实证支持。这不是判不出来，是树上真的有两个病——树势一弱就常常同时中。", en:"Both have real support. This is not an inconclusive result — the tree genuinely has two problems, which is common once vigour drops.", ms:"Kedua-duanya ada sokongan sebenar. Ini bukan keputusan yang tidak muktamad — pokok ini memang ada dua masalah, dan itu biasa apabila kecergasan pokok jatuh." },
   t_fruit:{ zh:"果实：同一批病菌的另一个出口", en:"Fruit: the same pathogens, another outlet", ms:"Buah: patogen yang sama, saluran keluar yang lain" },
@@ -697,7 +697,7 @@ var STR = {
   l_ask:{ zh:"本软件只做到辨症方向，剩下的靠人。你把看到的讲得越清楚，对方越帮得上忙。", en:"This app only gets you a direction; the rest needs a person. The clearer you describe what you saw, the more they can help.", ms:"Aplikasi ini hanya memberi anda arah; selebihnya perlukan seorang manusia. Semakin jelas anda menerangkan apa yang dilihat, semakin banyak mereka boleh bantu." },
   t_res:{ zh:"抗性：可选的药太少，这才是最大的风险", en:"Resistance: too few options is the real risk here", ms:"Kerintangan: pilihan yang terlalu sedikit itulah risiko sebenar di sini" },
   t_borer:{ zh:"蛀虫：病菌进树的门", en:"Borers: the doorway into the tree", ms:"Penggerek: pintu masuk ke dalam pokok" },
-  l_borer:{ zh:"蛀虫本身不是这三种病，但天牛与小蠹钻的孔正是葡萄座腔菌类与镰刀菌的主要入口。虫不处理，伤口封了也白封。", en:"Borers are not one of the three diseases, but the holes made by longhorn and shot-hole beetles are the main entry for the Botryosphaeriaceae and Fusarium. Seal a wound while the insect is still working and you have sealed nothing.", ms:"Penggerek bukan salah satu daripada tiga penyakit itu, tetapi lubang yang dibuat kumbang tanduk panjang dan kumbang lubang jarum ialah pintu masuk utama bagi Botryosphaeriaceae dan Fusarium. Tutup luka sedangkan serangganya masih bekerja, dan anda sebenarnya tidak menutup apa-apa." },
+  l_borer:{ zh:"蛀虫本身不是病，但天牛与小蠹钻的孔正是葡萄座腔菌类与镰刀菌的主要入口。虫不处理，伤口封了也白封。", en:"Borers are not a disease themselves, but the holes made by longhorn and shot-hole beetles are the main entry for the Botryosphaeriaceae and Fusarium. Seal a wound while the insect is still working and you have sealed nothing.", ms:"Penggerek bukan penyakit, tetapi lubang yang dibuat kumbang tanduk panjang dan kumbang lubang jarum ialah pintu masuk utama bagi Botryosphaeriaceae dan Fusarium. Tutup luka sedangkan serangganya masih bekerja, dan anda sebenarnya tidak menutup apa-apa." },
   b_do:{ zh:"做法", en:"Do this", ms:"Buat ini" }, b_watch:{ zh:"别这样做", en:"Do not", ms:"Jangan" }, b_note:{ zh:"注意", en:"Note", ms:"Perhatian" },
   nudge:{ zh:"只勾了一两条就有结论，是好事——但别急着收工。树的其他部位也走一遍：根颈、修剪口、地下各看一眼。两种病并发在弱树上很常见，只治一种等于没治。", en:"Getting an answer from one or two ticks is a good sign — but do not stop there. Walk the rest of the tree: the collar, the pruning cuts, and underground. Two diseases at once is common on a weak tree, and treating only one is treating none.", ms:"Mendapat jawapan daripada satu atau dua tanda itu petanda baik — tetapi jangan berhenti di situ. Periksa seluruh pokok: pangkal batang, luka pangkasan, dan bawah tanah. Dua penyakit serentak adalah biasa pada pokok yang lemah, dan merawat satu sahaja sama seperti tidak merawat langsung." },
   t_fast:{ zh:"先看这四条", en:"Start with these four", ms:"Mula dengan empat ini" },
@@ -727,7 +727,7 @@ var STR = {
   legend_b:{ zh:"葡萄座腔菌回枯", en:"Botryosphaeriaceae dieback", ms:"Mati rosot Botryosphaeriaceae" },
   legend_f:{ zh:"镰刀菌茎腐", en:"Fusarium stem rot", ms:"Reput batang Fusarium" },
   legend_r:{ zh:"根部病害", en:"Root disease", ms:"Penyakit akar" },
-  legend_n:{ zh:"三病共有，判不了", en:"all three — decides nothing", ms:"semua — tidak menentukan apa-apa" },
+  legend_n:{ zh:"四病共有，判不了", en:"all four — decides nothing", ms:"semua empat — tidak menentukan" },
   tag_d:{ zh:"榴莲", en:"DURIAN", ms:"DURIAN" }, tag_g:{ zh:"官方数据", en:"OFFICIAL DATA", ms:"DATA RASMI" }, tag_o:{ zh:"其他作物", en:"OTHER CROP", ms:"TANAMAN LAIN" },
   tier_field:{ zh:"田间防效", en:"FIELD TRIAL", ms:"UJIAN LADANG" }, tier_inoc:{ zh:"接种试验", en:"INOCULATED", ms:"UJIAN INOKULASI" },
   tier_plate:{ zh:"仅培养皿", en:"PLATE ONLY", ms:"PIRING SAHAJA" }, tier_moa:{ zh:"机理判定", en:"MODE OF ACTION", ms:"CARA TINDAKAN" },
