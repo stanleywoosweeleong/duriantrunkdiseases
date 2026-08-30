@@ -41,8 +41,12 @@ body{
   repeating-linear-gradient(45deg,var(--husk) 0 1px,transparent 1px 9px);
   opacity:.5}
 
-header{background:var(--bark2);border-bottom:1px solid var(--line)}
-.hbar{display:flex;align-items:center;gap:12px;padding:11px 0 12px}
+/* viewport-fit=cover + black-translucent puts us under the status bar, so the
+   header must pay the top inset itself. On a Dynamic Island phone that is
+   ~59px; on an older phone 0, and the layout is unchanged. */
+header{background:var(--bark2);border-bottom:1px solid var(--line);
+  padding-top:env(safe-area-inset-top,0px)}
+.hbar{display:flex;align-items:center;gap:12px;padding:11px 0 12px;min-height:52px}
 .mark{font-family:var(--disp);font-size:21px;line-height:1.15;letter-spacing:.01em;flex:1}
 .lang{background:transparent;border:1px solid var(--line);color:var(--cream);
   font-family:var(--mono);font-size:11px;letter-spacing:.1em;padding:8px 11px;border-radius:2px;cursor:pointer}
