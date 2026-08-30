@@ -233,8 +233,8 @@ td.ok{color:var(--husk)} td.bad{color:var(--rust)} td.part{color:var(--amber)}
    letter-spacing used for Latin eyebrows is pulled back for Chinese. */
 html[lang="zh"] body{font-size:17px;line-height:1.8;padding-bottom:calc(116px + env(safe-area-inset-bottom))}
 html[lang="zh"] .mark{font-size:24px}
-html[lang="zh"] html[lang="zh"] .lang{font-size:13px;letter-spacing:.04em;padding:8px 12px}
-html[lang="zh"] html[lang="zh"] nav button{font-size:12px}
+html[lang="zh"] .lang{font-size:13px;letter-spacing:.04em;padding:8px 12px}
+html[lang="zh"] nav button{font-size:12px}
 html[lang="zh"] nav button b{font-size:16px}
 html[lang="zh"] h2{font-size:25px;line-height:1.35}
 html[lang="zh"] .lede{font-size:15px}
@@ -252,7 +252,7 @@ html[lang="zh"] .sym em{font-size:13.5px;margin-top:5px}
 html[lang="zh"] .pin{font-size:12px;padding:3px 8px}
 html[lang="zh"] .box{width:19px;height:19px;font-size:13px}
 html[lang="zh"] .reset{font-size:13.5px;padding:11px 14px}
-html[lang="zh"] html[lang="zh"] html[lang="zh"] .chem-n b{font-size:16.5px}
+html[lang="zh"] .chem-n b{font-size:16.5px}
 html[lang="zh"] .chem-n span{font-size:11.5px}
 html[lang="zh"] .stamp{font-size:15px;padding:5px 10px}
 html[lang="zh"] .chem-b{font-size:15px;line-height:1.8}
@@ -273,7 +273,7 @@ html[lang="zh"] .step-d{font-size:14px}
 html[lang="zh"] .step-n{font-size:13px;width:24px}
 html[lang="zh"] .src{font-size:14.5px;line-height:1.8}
 html[lang="zh"] .tag{font-size:10.5px;letter-spacing:.03em;padding:3px 7px}
-html[lang="zh"] html[lang="zh"] .crow-h b{font-size:16.5px}
+html[lang="zh"] .crow-h b{font-size:16.5px}
 html[lang="zh"] .pill{font-size:13.5px;padding:4px 12px}
 html[lang="zh"] .crow p{font-size:14.5px;line-height:1.8}
 html[lang="zh"] .lyr{font-size:12px;letter-spacing:.05em}
@@ -339,8 +339,14 @@ html[lang="zh"] #upd{font-size:15.5px}
 
 <script>
 "use strict";
-var LANG = localStorage.getItem("dct-lang") || "zh";
-if (LANGS === undefined) {}
+
+/* Storage is best-effort. In iOS private browsing the quota is zero and
+   setItem throws, which would otherwise abort a click handler mid-render. */
+function lsGet(k){ try { return localStorage.getItem(k); } catch (e) { return null; } }
+function lsSet(k, v){ try { localStorage.setItem(k, v); } catch (e) { /* choices just do not persist */ } }
+function lsJSON(k){ try { return JSON.parse(lsGet(k) || "{}"); } catch (e) { return {}; } }
+
+var LANG = lsGet("dct-lang") || "zh";
 var LANGS = ["zh", "en"];
 var MS_DONE = true;
 if (MS_DONE) LANGS.push("ms");
@@ -415,7 +421,7 @@ var PATH = [
 
 var VERDICT = {
   x:{ zh:"证据不足，还分不开", en:"Not enough to separate them", ms:"Belum cukup untuk membezakannya",
-      zh2:"去找决定性线索——往下拉到「还分不清？」，按 取样 → 近看 → 剖开 的顺序做。", ms2:"Pergi cari tanda yang menentukan — tatal ke bahagian \u201cMasih tak dapat pastikan?\u201d dan ikut susunan Ambil Sampel, Lihat Dekat, Belah.", ms2:"Pergi cari tanda yang menentukan — tatal ke bahagian \u201cMasih tak dapat pastikan?\u201d dan ikut susunan Ambil Sampel, Lihat Dekat, Belah.", en2:"Go and find a decisive sign — scroll to \u201cStill cannot tell?\u201d and work through Sample, Look, Cut in that order." },
+      zh2:"去找决定性线索——往下拉到「还分不清？」，按 取样 → 近看 → 剖开 的顺序做。", ms2:"Pergi cari tanda yang menentukan — tatal ke bahagian \u201cMasih tak dapat pastikan?\u201d dan ikut susunan Ambil Sampel, Lihat Dekat, Belah.", en2:"Go and find a decisive sign — scroll to \u201cStill cannot tell?\u201d and work through Sample, Look, Cut in that order." },
   z:{ zh:"勾选的症状不指向任何一种", en:"What you ticked points to none of them", ms:"Apa yang ditanda tidak menunjuk kepada mana-mana",
       zh2:"你勾的都是四病共有的症状。请回树上找决定性线索。", en2:"You have only ticked signs all four share. Go back to the tree for a decisive one.", ms2:"Anda hanya menanda tanda yang dikongsi keempat-empatnya. Balik ke pokok dan cari satu yang menentukan." },
   n:{ zh:"还没勾选症状", en:"No symptoms ticked yet", ms:"Belum ada gejala ditanda",
@@ -680,7 +686,7 @@ var TABS = [
   { id:"field",  ic:"✎", zh:"现场",  en:"Field", ms:"Di Ladang" },
   { id:"src",    ic:"§", zh:"依据",  en:"Evidence", ms:"Rujukan" }
 ];
-var TAB = localStorage.getItem("dct-tab") || "triage";
+var TAB = lsGet("dct-tab") || "triage";
 
 var STR = {
   mark:{ zh:"榴莲树干病辨症", en:"Durian Trunk Disease Triage", ms:"Kenal Pasti Penyakit Batang Durian" },
@@ -720,7 +726,7 @@ var STR = {
   c_spare:{ zh:"不伤菌剂", en:"Spares microbes", ms:"Tidak memudaratkan mikrob" }, c_do:{ zh:"做法", en:"Practice", ms:"Amalan" },
   
   l_field:{ zh:"按顺序做。勾选会保存在这台设备上。", en:"In order. Ticks are saved on this device.", ms:"Ikut susunan. Tanda disimpan pada peranti ini." },
-  t_src:{ zh:"数据依据", en:"Where the numbers come from", ms:"Dari mana angka-angka ini datang", ms:"Dari mana angka-angka ini datang" },
+  t_src:{ zh:"数据依据", en:"Where the numbers come from", ms:"Dari mana angka-angka ini datang" },
   l_src:{ zh:"每一条标明作物来源。榴莲专属的数据不多，大部分葡萄座腔菌类生防数据来自其他木本作物——这一点必须对农友讲清楚。", en:"Each entry is labelled with its crop. Durian-specific data is limited; most Botryosphaeriaceae biocontrol figures come from other woody crops, and farmers should be told that plainly.", ms:"Setiap catatan dilabelkan dengan tanamannya. Data khusus durian adalah terhad; kebanyakan angka kawalan biologi Botryosphaeriaceae datang daripada tanaman berkayu yang lain, dan pekebun patut diberitahu perkara itu dengan jelas." },
   pin_p:{ zh:"疫霉", en:"PHY", ms:"PHY" }, pin_b:{ zh:"回枯", en:"BOT", ms:"BOT" }, pin_f:{ zh:"镰刀", en:"FUS", ms:"FUS" }, pin_r:{ zh:"根部", en:"ROOT", ms:"AKAR" }, pin_n:{ zh:"共有", en:"ALL", ms:"SEMUA" },
   legend_p:{ zh:"疫霉茎溃疡", en:"Phytophthora canker", ms:"Kanker batang Phytophthora" },
@@ -747,8 +753,8 @@ var STR = {
   crop:{ zh:"来源作物", en:"Source crop", ms:"Tanaman sumber" },
 };
 
-var picked = JSON.parse(localStorage.getItem("dct-sym") || "{}");
-var done = JSON.parse(localStorage.getItem("dct-steps") || "{}");
+var picked = lsJSON("dct-sym");
+var done = lsJSON("dct-steps");
 
 function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
 
@@ -1307,11 +1313,12 @@ function mixedCard(m){
     "A double infection almost always points at one root cause: a weak tree. Drainage, roots, crop load — fix those or it returns."
   ], [
     "Rawat dua pintu masuk itu secara berasingan: Phytophthora dan Fusarium masuk di pangkal batang — saliran, alihkan sungkupan; Botryosphaeriaceae masuk melalui luka di atas — potong sampai kayu bersih dan tutup pada hari yang sama.",
-    "Tiada satu produk pun meliputi oomiset dan kulat sekali gus. Racun oomiset tiada kesan pada kulat dan begitu juga sebaliknya — satu semburan tidak akan mencukupi.",
+    oomy ? "Tiada satu produk pun meliputi oomiset dan kulat sekali gus. Racun oomiset tiada kesan pada kulat dan begitu juga sebaliknya — satu semburan tidak akan mencukupi."
+         : "Kedua-duanya kulat, tetapi Fusarium kurang peka terhadap kebanyakan produk berbanding Botryosphaeriaceae. Jangan gunakan satu produk untuk kedua-dua penyakit.",
     "Selamatkan batang dan pangkal dahulu, dahan kemudian. Dahan yang diselamatkan pada pokok yang batangnya gagal hanyalah kerja terbuang.",
     "Jangkitan berganda hampir selalu menunjuk kepada satu punca: pokok yang lemah. Saliran, akar, beban buah — baiki itu atau ia akan berulang."
   ]);
-  return "<div class='mixed'><h4>" + esc(P("两种并发：", "Two at once: ")) + esc(both) + "</h4><ul>" +
+  return "<div class='mixed'><h4>" + esc(P("两种并发：", "Two at once: ", "Dua serentak: ")) + esc(both) + "</h4><ul>" +
     pts.map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>";
 }
 
@@ -1345,11 +1352,13 @@ function renderTriage(){
     /* both have real support — call it a double infection, not "inconclusive" */
     mixed = [order[0], order[1]];
     v = { zh: "两种并发：" + order[0].zh + " ＋ " + order[1].zh,
-          en: "Two at once: " + order[0].en, ms: "Dua serentak: " + T(order[0]) + " + " + order[1].en,
-          zh2: T(STR.mix_lead), en2: STR.mix_lead.en };
+          en: "Two at once: " + order[0].en + " + " + order[1].en,
+          ms: "Dua serentak: " + order[0].ms + " + " + order[1].ms,
+          zh2: STR.mix_lead.zh, en2: STR.mix_lead.en, ms2: STR.mix_lead.ms };
   } else if (top - sec >= 2) {
     var lead = order[0];
-    v = { zh:"倾向 " + lead.zh, en:"Leaning " + lead.en, zh2:lead.zh2, en2:lead.en2 };
+    v = { zh:"倾向 " + lead.zh, en:"Leaning " + lead.en, ms:"Cenderung kepada " + lead.ms,
+          zh2:lead.zh2, en2:lead.en2, ms2:lead.ms2 };
   } else v = VERDICT.x;
 
   var h = "<h2>" + esc(T(STR.t_triage)) + "</h2><p class='lede'>" + esc(T(STR.l_triage)) + "</p>";
@@ -1387,6 +1396,7 @@ function renderTriage(){
   h += "";
   h += '<button class="reset" type="button" id="reset">' + esc(T(STR.reset)) + "</button>";
   h += renderHelper();
+  if (mixed) h += mixedCard(mixed);
   document.getElementById("s-triage").innerHTML = h;
 }
 
@@ -1573,18 +1583,26 @@ function renderSrc(){
 
 function renderAll(){ renderChrome(); renderTriage(); renderChem(); renderBio(); renderFruit(); renderField(); renderSrc(); }
 
+/* innerHTML re-render drops focus; put it back on the row that was toggled,
+   otherwise a keyboard or screen-reader user is dumped to the top of the page. */
+function refocus(sel){
+  var el = document.querySelector(sel);
+  if (el && document.activeElement === document.body) el.focus({ preventScroll:true });
+}
+
 document.addEventListener("click", function(e){
   var t = e.target.closest("[data-tab]");
-  if (t) { TAB = t.dataset.tab; localStorage.setItem("dct-tab", TAB); renderChrome(); window.scrollTo(0, 0); return; }
+  if (t) { TAB = t.dataset.tab; lsSet("dct-tab", TAB); renderChrome(); window.scrollTo(0, 0); return; }
 
   if (e.target.closest("#lang")) {
     LANG = LANGS[(LANGS.indexOf(LANG) + 1) % LANGS.length];
-    localStorage.setItem("dct-lang", LANG); renderAll(); return;
+    lsSet("dct-lang", LANG); renderAll(); return;
   }
   var s = e.target.closest("[data-sym]");
-  if (s) { var id = s.dataset.sym; picked[id] = !picked[id]; localStorage.setItem("dct-sym", JSON.stringify(picked)); renderTriage(); return; }
+  if (s) { var id = s.dataset.sym; picked[id] = !picked[id]; lsSet("dct-sym", JSON.stringify(picked));
+    renderTriage(); refocus("[data-sym='" + id + "']"); return; }
 
-  if (e.target.closest("#reset")) { picked = {}; localStorage.setItem("dct-sym", "{}"); renderTriage(); return; }
+  if (e.target.closest("#reset")) { picked = {}; lsSet("dct-sym", "{}"); renderTriage(); return; }
 
 
   var c = e.target.closest("[data-chem]");
@@ -1611,7 +1629,8 @@ document.addEventListener("click", function(e){
   }
 
   var st = e.target.closest("[data-step]");
-  if (st) { var i = st.dataset.step; done[i] = !done[i]; localStorage.setItem("dct-steps", JSON.stringify(done)); renderField(); return; }
+  if (st) { var i = st.dataset.step; done[i] = !done[i]; lsSet("dct-steps", JSON.stringify(done));
+    renderField(); refocus("[data-step='" + i + "']"); return; }
 });
 
 document.addEventListener("keydown", function(e){

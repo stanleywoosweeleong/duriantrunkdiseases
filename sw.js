@@ -10,7 +10,7 @@
  *
  * Bump CACHE_VERSION on every deploy. That is the whole update mechanism.
  */
-const CACHE_VERSION = 'dtd-v2026-08-30-5';
+const CACHE_VERSION = 'dtd-v2026-08-30-6';
 const CACHE = CACHE_VERSION;
 
 const PRECACHE = [
@@ -67,8 +67,12 @@ self.addEventListener('fetch', (event) => {
       try {
         const preload = await event.preloadResponse;
         const fresh = preload || await fetch(req);
-        const cache = await caches.open(CACHE);
-        cache.put('./index.html', fresh.clone());
+        // only a good response may become the offline copy — caching a 404 or a
+        // Pages error page would strand the orchard on it, silently
+        if (fresh && fresh.ok && fresh.type !== 'opaque') {
+          const cache = await caches.open(CACHE);
+          cache.put('./index.html', fresh.clone());
+        }
         return fresh;
       } catch (err) {
         const cache = await caches.open(CACHE);
