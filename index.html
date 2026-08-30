@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#3A2E24">
+<meta name="description" content="榴莲树干与根部病害田间辨症 · Field triage for durian trunk and root disease · Kenal pasti penyakit batang dan akar durian">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon-64.png" sizes="64x64" type="image/png">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="辨症 Triage">
+<meta name="mobile-web-app-capable" content="yes">
+<title>榴莲树干病辨症 · Durian Trunk Disease Triage</title>
+<style>
+:root{
+  --bark:#3A2E24; --bark2:#47392C; --bark3:#554636;
+  --cream:#F6F0E5; --muted:#C9B8A1; --line:#6B5744;
+  --husk:#B7C97E; --rust:#F08A66; --ink:#C7BAF5; --amber:#F0C063; --fus:#6FCBC2; --root:#E59BC4;
+  --disp:Georgia,"Songti SC","Noto Serif SC",serif;
+  --body:system-ui,-apple-system,"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Consolas,"Courier New",monospace;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bark); color:var(--cream); font-family:var(--body);
+  font-size:15px; line-height:1.6;
+  padding-bottom:calc(104px + env(safe-area-inset-bottom));
+  scroll-padding-bottom:120px;
+}
+.wrap{max-width:720px;margin:0 auto;
+  padding-left:max(16px, env(safe-area-inset-left));
+  padding-right:max(16px, env(safe-area-inset-right))}
+
+/* durian husk spikes — used once, in the header */
+.spikes{height:11px;background:
+  repeating-linear-gradient(135deg,var(--husk) 0 1px,transparent 1px 9px),
+  repeating-linear-gradient(45deg,var(--husk) 0 1px,transparent 1px 9px);
+  opacity:.5}
+
+header{background:var(--bark2);border-bottom:1px solid var(--line)}
+.hbar{display:flex;align-items:center;gap:12px;padding:11px 0 12px}
+.mark{font-family:var(--disp);font-size:21px;line-height:1.15;letter-spacing:.01em;flex:1}
+.lang{background:transparent;border:1px solid var(--line);color:var(--cream);
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;padding:8px 11px;border-radius:2px;cursor:pointer}
+.lang:hover{border-color:var(--husk)}
+
+
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--bark2);
+  border-top:1px solid var(--line);z-index:40;padding-bottom:env(safe-area-inset-bottom)}
+.navin{max-width:720px;margin:0 auto;display:flex;
+  padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+nav button{flex:1;background:none;border:0;color:var(--muted);padding:10px 2px 11px;min-height:52px;
+  font-family:var(--body);font-size:10.5px;cursor:pointer;border-top:2px solid transparent}
+nav button b{display:block;font-size:15px;font-weight:400;margin-bottom:3px;font-family:var(--disp)}
+nav button[aria-current="true"]{color:var(--cream);border-top-color:var(--husk)}
+
+section{display:none;padding:22px 0 30px}
+section.on{display:block}
+h2{font-family:var(--disp);font-size:22px;font-weight:400;margin:0 0 6px}
+.lede{color:var(--muted);font-size:13.5px;margin:0 0 20px}
+h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin:26px 0 10px;font-weight:400}
+
+.card{background:var(--bark2);border:1px solid var(--line);border-radius:3px;padding:14px;margin-bottom:10px}
+
+/* signature: three scored pathways */
+.fold button{background:none;border:0;padding:6px 0;min-height:44px;cursor:pointer;color:var(--muted);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;text-align:left}
+.fold button:hover{color:var(--cream)}
+.fold em{font-style:normal;opacity:.7}
+.caret{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;flex:none;
+  border:1px solid var(--line);border-radius:3px;font-family:var(--body);font-size:12px;line-height:1}
+html[lang="zh"] .fold button{font-size:13px;letter-spacing:.04em}
+.helper{margin-top:4px}
+.helper > h3{margin:0 0 9px}
+.htabs{display:flex;gap:6px;margin-bottom:10px}
+.htabs button{flex:1;min-width:0;min-height:52px;background:var(--bark2);border:1px solid var(--line);color:var(--muted);
+  font-family:var(--body);font-size:11px;padding:9px 3px;border-radius:3px;cursor:pointer;line-height:1.3}
+.htabs button b{display:block;font-weight:500;color:var(--cream);margin-bottom:2px}
+.htabs button[aria-pressed="true"]{border-color:var(--husk);background:var(--bark3)}
+.htabs button[aria-pressed="true"] b{color:var(--husk)}
+html[lang="zh"] .htabs button{font-size:12.5px}
+.plate{background:var(--bark2);border:1px solid var(--line);border-radius:3px;padding:10px 8px 4px;margin-bottom:10px}
+.plate svg{width:100%;height:auto;display:block}
+.plate h3{margin:2px 6px 6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--muted)}
+html[lang="zh"] .plate h3{font-size:13px;letter-spacing:.04em}
+.plate p{margin:2px 6px 8px;font-size:11.5px;color:var(--muted);line-height:1.55}
+html[lang="zh"] .plate p{font-size:13.5px}
+.nudge{background:var(--bark3);border-left:3px solid var(--muted);border-radius:3px;
+  padding:10px 12px;margin-bottom:14px;font-size:12.5px;color:var(--muted);line-height:1.7}
+html[lang="zh"] .nudge{font-size:14px}
+.mixed{background:var(--bark2);border:1px solid var(--amber);border-left:4px solid var(--amber);
+  border-radius:3px;padding:13px 14px;margin-bottom:14px}
+.mixed h4{margin:0 0 8px;font-family:var(--disp);font-size:16px;font-weight:400;color:var(--amber)}
+.mixed ul{margin:0;padding-left:17px;font-size:13px;line-height:1.7}
+.mixed li{margin-bottom:6px}
+html[lang="zh"] .mixed h4{font-size:18px}
+html[lang="zh"] .mixed ul{font-size:14.5px;line-height:1.8}
+.gauge{background:var(--bark2);border:1px solid var(--line);border-radius:3px;padding:15px 14px 13px;
+  margin-bottom:10px}
+/* compact sticky readout — sits right after the gauge, so it pins to the top
+   exactly when the full gauge has scrolled away. ~46px, never half the screen. */
+.mini{position:sticky;top:env(safe-area-inset-top);z-index:25;display:flex;align-items:center;gap:10px;
+  background:var(--bark2);border:1px solid var(--line);border-radius:3px;
+  padding:9px 12px;margin-bottom:14px;box-shadow:0 6px 14px rgba(0,0,0,.35)}
+.mini-v{flex:1;font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mini-b{flex:none;width:62px;display:flex;flex-direction:column;gap:3px}
+.mini-t{height:4px;border-radius:2px;background:var(--bark3);overflow:hidden}
+.mini-f{height:100%;border-radius:2px;transition:width .35s ease}
+.mini-n{flex:none;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.grow{margin-bottom:11px}
+.glabel{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:5px}
+.gname{font-size:13px;font-weight:500}
+.gval{font-family:var(--mono);font-size:11px;color:var(--muted);flex:none}
+.gtrack{height:9px;border-radius:5px;background:var(--bark3);overflow:hidden}
+.gfill{height:100%;border-radius:5px;width:0;transition:width .45s cubic-bezier(.2,.8,.3,1)}
+.readout{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-size:13.5px;min-height:20px}
+.readout b{font-family:var(--disp);font-size:16px;font-weight:400}
+.legend{font-size:12px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.lrow{display:flex;align-items:center;gap:9px;margin-bottom:6px}
+.lrow:last-child{margin-bottom:0}
+.lrow .pin{margin:0;flex:none;min-width:52px;text-align:center}
+.sym{display:flex;gap:11px;align-items:flex-start;min-height:52px;background:var(--bark2);border:1px solid var(--line);
+  border-radius:3px;padding:12px 13px;margin-bottom:7px;cursor:pointer}
+.sym:active{background:var(--bark3)}
+.sym[data-on="1"]{border-color:var(--husk);background:var(--bark3)}
+.fast .sym{padding:15px 14px}
+.fast .sym p{font-size:15.5px}
+html[lang="zh"] .fast .sym p{font-size:17.5px}
+.box{width:17px;height:17px;border:1.5px solid var(--muted);border-radius:2px;flex:none;margin-top:2px;
+  display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--bark)}
+.sym[data-on="1"] .box{background:var(--husk);border-color:var(--husk);color:var(--bark)}
+.sym p{margin:0;font-size:14px;flex:1}
+.sym em{display:block;font-style:normal;font-size:11.5px;color:var(--muted);margin-top:3px}
+.pins{flex:none;display:flex;flex-direction:column;gap:4px;align-items:flex-end}
+.pin{font-family:var(--body);font-size:10px;letter-spacing:.02em;padding:3px 7px;border-radius:3px;flex:none;margin-top:2px;white-space:nowrap}
+.pin.p{background:var(--rust);color:#2E1207;font-weight:600}
+.pin.f{background:var(--fus);color:#0E2A28;font-weight:600}
+.pin.r{background:var(--root);color:#3A1226;font-weight:600}
+.pin.n{background:var(--bark3);color:var(--muted)}
+.pin.b{background:var(--ink);color:#231645;font-weight:600}
+
+.reset{background:none;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);
+  font-size:11px;padding:9px 14px;border-radius:2px;cursor:pointer;margin:14px 0 28px;width:100%}
+
+
+.chem{background:var(--bark2);border:1px solid var(--line);border-radius:3px;margin-bottom:8px;overflow:hidden}
+.chem-h{display:flex;align-items:center;gap:10px;padding:12px 13px;cursor:pointer}
+.chem-n{flex:1;min-width:0}
+.chem-n b{font-weight:500;font-size:14.5px;display:block}
+.chem-n span{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.05em}
+.stamps{flex:none;display:flex;flex-direction:column;gap:5px;align-items:flex-end}
+.srow{display:flex;align-items:center;gap:6px}
+.sgrp{font-size:10.5px;color:var(--muted);white-space:nowrap}
+.stamp{font-family:var(--body);font-size:11px;padding:3px 8px;border:1.5px solid;border-radius:3px;flex:none;
+  min-width:56px;text-align:center;white-space:nowrap}
+html[lang="zh"] .sgrp{font-size:12px}
+html[lang="zh"] .stamp{font-size:12.5px;min-width:62px}
+.s-no{color:#2E1207;border-color:var(--rust);background:var(--rust);font-weight:600}
+.s-yes{color:var(--husk);border-color:var(--husk);background:rgba(183,201,126,.14)}
+.s-part{color:var(--amber);border-color:var(--amber);background:rgba(240,192,99,.14)}
+.chem-b{display:none;padding:0 13px 14px;font-size:13.5px;border-top:1px solid var(--line);margin-top:0}
+.chem[data-open="1"] .chem-b{display:block;padding-top:12px}
+.kv{display:flex;gap:10px;margin-top:8px;font-size:12.5px}
+.kv b{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--muted);
+  text-transform:uppercase;flex:none;width:88px;padding-top:2px}
+.basis{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:2px 6px;
+  border-radius:2px;border:1px solid var(--line);color:var(--muted)}
+.basis.field{border-color:var(--husk);color:var(--husk)}
+.basis.inoc{border-color:var(--amber);color:var(--amber)}
+.basis.plate{border-color:var(--fus);color:var(--fus)}
+.basis.moa{border-color:var(--line);color:var(--muted)}
+.reg{display:inline-block;font-size:11px;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.reg.mrl{color:var(--husk);border-color:var(--husk);background:rgba(183,201,126,.14)}
+.reg.pend{color:var(--amber);border-color:var(--amber);background:rgba(240,192,99,.14)}
+.reg.none{color:var(--muted);border-color:var(--line)}
+.finding{background:var(--bark2);border-left:3px solid var(--amber);border-radius:3px;
+  padding:12px 13px;margin-bottom:14px;font-size:13.5px;line-height:1.7}
+.risk{margin-top:9px;padding:9px 11px;border-radius:3px;background:rgba(240,138,102,.14);
+  border-left:3px solid var(--rust);font-size:12.5px;line-height:1.65}
+.lever{margin-bottom:11px}
+.lever-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:5px}
+.lever-h b{font-size:15px;font-weight:500}
+.lever-h span{font-family:var(--mono);font-size:10.5px;color:var(--muted);flex:none}
+.lever-t{height:7px;border-radius:4px;background:var(--bark3);overflow:hidden;margin-bottom:6px}
+.lever-f{height:100%;border-radius:4px;background:var(--husk)}
+.lever p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.7}
+.drop{opacity:.72}
+.drop .chem-n b{text-decoration:line-through}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:400}
+td.ok{color:var(--husk)} td.bad{color:var(--rust)} td.part{color:var(--amber)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+.step{display:flex;gap:12px;padding:13px;background:var(--bark2);border:1px solid var(--line);
+  border-radius:3px;margin-bottom:8px;cursor:pointer}
+.step[data-done="1"]{opacity:.55}
+.step[data-done="1"] .step-t{text-decoration:line-through}
+.step-n{font-family:var(--mono);font-size:11px;color:var(--husk);flex:none;padding-top:3px;width:20px}
+.step-t{font-size:14.5px;margin:0 0 3px;font-weight:500}
+.step-d{font-size:12.5px;color:var(--muted);margin:0}
+
+.src{font-size:12.5px;padding:12px 0;border-bottom:1px solid var(--line)}
+.src b{font-weight:500;display:block;margin-bottom:3px}
+.src span{color:var(--muted)}
+.tag{font-family:var(--mono);font-size:9px;letter-spacing:.07em;padding:2px 6px;border-radius:2px;
+  background:var(--bark3);color:var(--muted);margin-right:5px}
+.tag.d{background:rgba(183,201,126,.2);color:var(--husk)}
+.tag.g{background:rgba(199,186,245,.2);color:var(--ink)}
+
+/* Chinese type scale — CJK glyphs read smaller than Latin at the same px,
+   so every text-bearing size steps up when lang="zh", and the wide mono
+   letter-spacing used for Latin eyebrows is pulled back for Chinese. */
+html[lang="zh"] body{font-size:17px;line-height:1.8;padding-bottom:calc(116px + env(safe-area-inset-bottom))}
+html[lang="zh"] .mark{font-size:24px}
+html[lang="zh"] html[lang="zh"] .lang{font-size:13px;letter-spacing:.04em;padding:8px 12px}
+html[lang="zh"] html[lang="zh"] nav button{font-size:12px}
+html[lang="zh"] nav button b{font-size:16px}
+html[lang="zh"] h2{font-size:25px;line-height:1.35}
+html[lang="zh"] .lede{font-size:15px}
+html[lang="zh"] h3{font-size:13px;letter-spacing:.06em}
+html[lang="zh"] .gname{font-size:14.5px}
+html[lang="zh"] .mini-v{font-size:14.5px}
+html[lang="zh"] .legend{font-size:14px}
+html[lang="zh"] .lrow .pin{min-width:62px}
+html[lang="zh"] .mini-n{font-size:12px}
+html[lang="zh"] .gval{font-size:12px}
+html[lang="zh"] .readout{font-size:15.5px}
+html[lang="zh"] .readout b{font-size:19px}
+html[lang="zh"] .sym p{font-size:16px}
+html[lang="zh"] .sym em{font-size:13.5px;margin-top:5px}
+html[lang="zh"] .pin{font-size:12px;padding:3px 8px}
+html[lang="zh"] .box{width:19px;height:19px;font-size:13px}
+html[lang="zh"] .reset{font-size:13.5px;padding:11px 14px}
+html[lang="zh"] html[lang="zh"] html[lang="zh"] .chem-n b{font-size:16.5px}
+html[lang="zh"] .chem-n span{font-size:11.5px}
+html[lang="zh"] .stamp{font-size:15px;padding:5px 10px}
+html[lang="zh"] .chem-b{font-size:15px;line-height:1.8}
+html[lang="zh"] .kv{font-size:14.5px}
+html[lang="zh"] .kv b{font-size:11.5px;width:104px;letter-spacing:.04em}
+html[lang="zh"] .basis{font-size:11px;letter-spacing:.02em;padding:3px 7px}
+html[lang="zh"] .risk{font-size:14px}
+html[lang="zh"] .reg{font-size:12.5px}
+html[lang="zh"] .finding{font-size:15px}
+
+html[lang="zh"] .lever-h b{font-size:16.5px}
+html[lang="zh"] .lever p{font-size:14px}
+html[lang="zh"] table{font-size:14.5px}
+html[lang="zh"] th{font-size:11.5px;letter-spacing:.05em}
+html[lang="zh"] td,html[lang="zh"] th{padding:11px 9px}
+html[lang="zh"] .step-t{font-size:16.5px}
+html[lang="zh"] .step-d{font-size:14px}
+html[lang="zh"] .step-n{font-size:13px;width:24px}
+html[lang="zh"] .src{font-size:14.5px;line-height:1.8}
+html[lang="zh"] .tag{font-size:10.5px;letter-spacing:.03em;padding:3px 7px}
+html[lang="zh"] html[lang="zh"] .crow-h b{font-size:16.5px}
+html[lang="zh"] .pill{font-size:13.5px;padding:4px 12px}
+html[lang="zh"] .crow p{font-size:14.5px;line-height:1.8}
+html[lang="zh"] .lyr{font-size:12px;letter-spacing:.05em}
+html[lang="zh"] .crow .where{font-size:14px}
+
+/* card rows — replace tables where CJK columns collapse on a phone */
+.crow{background:var(--bark2);border:1px solid var(--line);border-radius:3px;padding:13px;margin-bottom:8px}
+.crow-h{display:flex;align-items:flex-start;gap:10px;margin-bottom:7px}
+.crow-h b{flex:1;font-weight:500;font-size:15px;line-height:1.4}
+.pill{white-space:nowrap;flex:none;font-size:12px;padding:4px 11px;border-radius:13px;border:1px solid;margin-top:1px}
+.pill.ok{color:var(--husk);border-color:rgba(183,201,126,.7);background:rgba(183,201,126,.16)}
+.pill.bad{color:#2E1207;border-color:var(--rust);background:var(--rust);font-weight:600}
+.pill.part{color:var(--amber);border-color:rgba(240,192,99,.7);background:rgba(240,192,99,.16)}
+.pill.note{color:var(--muted);border-color:var(--line);background:var(--bark3)}
+.crow p{margin:0;font-size:13px;color:var(--muted);line-height:1.65}
+.lyr{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--husk);margin-bottom:6px}
+.crow .where{margin-top:7px;padding-top:7px;border-top:1px solid var(--line);font-size:12.5px}
+.crow .where b{font-weight:400;color:var(--husk)}
+
+#upd{position:fixed;left:50%;transform:translateX(-50%);
+  bottom:calc(78px + env(safe-area-inset-bottom));z-index:60;
+  background:var(--husk);color:#1B2408;border:0;border-radius:22px;
+  padding:12px 20px;font-family:var(--body);font-size:14px;font-weight:600;
+  box-shadow:0 6px 18px rgba(0,0,0,.45);cursor:pointer;max-width:calc(100% - 32px)}
+#upd:disabled{opacity:.6}
+html[lang="zh"] #upd{font-size:15.5px}
+
+@media (max-width:520px){
+  .wrap{padding-left:max(13px, env(safe-area-inset-left));padding-right:max(13px, env(safe-area-inset-right))}
+  .kv{flex-direction:column;gap:3px}
+  .kv b,html[lang="zh"] .kv b{width:auto}
+  .chem-h{gap:8px}
+  nav button{font-size:9.5px}
+  html[lang="zh"] nav button{font-size:11.5px}
+}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="spikes"></div>
+  <div class="wrap">
+    <div class="hbar">
+      <div class="mark" id="mark"></div>
+      <button class="lang" id="lang" type="button">EN</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="s-triage" class="on"></section>
+  <section id="s-chem"></section>
+  <section id="s-bio"></section>
+  <section id="s-fruit"></section>
+  <section id="s-field"></section>
+  <section id="s-src"></section>
+  </main>
+
+<nav><div class="navin" id="nav"></div></nav>
+
+<script>
+"use strict";
+var LANG = localStorage.getItem("dct-lang") || "zh";
+if (LANGS === undefined) {}
+var LANGS = ["zh", "en"];
+var MS_DONE = true;
+if (MS_DONE) LANGS.push("ms");
+var PL = function (zh, en, ms) { return LANG === "ms" ? (ms || en) : (LANG === "en" ? en : zh); };
+var P = function (zh, en, ms) { return LANG === "ms" ? (ms === undefined ? en : ms) : (LANG === "en" ? en : zh); };
+var body2 = function (o) { return (o["" + LANG + "2"] || o.ms2 || o.en2 || o.zh2 || ""); };
+var T = function (o) { return (o && (o[LANG] || o.en || o.zh)) || ""; };
+
+/* ---------- 1. TRIAGE ---------- */
+/* w > 0 leans Phytophthora (rust) ; w < 0 leans Botryosphaeriaceae (ink) */
+var SYMPTOMS = [
+  { id:"s1",  p:3, b:0, f:2, zh:"病斑在树干基部或低位，靠近地面",              en:"Lesion low on the trunk, near ground level", ms:"Lesi di bahagian bawah batang, dekat dengan tanah",
+              zh2:"雨水溅射把疫霉从土里带上树皮；镰刀菌茎腐也多从根颈起", en2:"Rain splash carries Phytophthora up from the soil; Fusarium stem rot also starts at the collar", ms2:"Percikan hujan membawa Phytophthora naik dari tanah; reput batang Fusarium juga bermula di pangkal" },
+  { id:"s2",  p:3, b:0, f:1, zh:"病斑渗出暗褐色／铁锈色汁液",                  en:"Lesion weeps dark brown / rust-coloured ooze", ms:"Lesi mengeluarkan lelehan perang gelap / warna karat",
+              zh2:"典型流胶，湿季最明显", en2:"Classic gummosis, clearest in the wet season", ms2:"Gumosis klasik, paling jelas pada musim hujan" },
+  { id:"s3",  p:2, b:0, f:1, zh:"刮开树皮下是红褐色湿腐，边缘湿润",            en:"Under the bark: reddish-brown wet rot with a moist margin", ms:"Di bawah kulit kayu: reput basah perang kemerahan dengan pinggir lembap",
+              zh2:"组织软、含水", en2:"Tissue soft and water-soaked", ms2:"Tisu lembut dan berair" },
+  { id:"s4",  p:3, b:0, f:1, r:1, zh:"暴雨或积水后明显加重",                        en:"Clearly worse after heavy rain or waterlogging", ms:"Jelas bertambah teruk selepas hujan lebat atau air bertakung",
+              zh2:"疫霉游动孢子需要自由水；长期涝也削弱树势诱发镰刀菌", en2:"Phytophthora zoospores need free water; prolonged waterlogging also predisposes to Fusarium", ms2:"Zoospora Phytophthora perlukan air bebas; air bertakung lama juga memudahkan Fusarium" },
+  { id:"s5",  p:2, b:0, f:1, r:1, zh:"同园低洼、排水差的树先发病",                  en:"Trees in low, poorly drained spots go first", ms:"Pokok di kawasan rendah dan salirannya buruk kena dahulu",
+              zh2:"分布跟着地形走", en2:"The pattern follows the terrain", ms2:"Coraknya mengikut bentuk muka bumi" },
+
+  { id:"s6",  p:0, b:3, f:0, zh:"病斑上有针尖大小的黑色小点（分生孢子器）",    en:"Pinhead-size black dots on the lesion (pycnidia)", ms:"Bintik hitam sebesar kepala jarum pada lesi (piknidia)",
+              zh2:"决定性线索：葡萄座腔菌类的产孢结构。疫霉与镰刀菌都不会有", en2:"Decisive: the fruiting bodies of the Botryosphaeriaceae. Neither Phytophthora nor Fusarium makes these", ms2:"Menentukan: jasad berbuah Botryosphaeriaceae. Phytophthora dan Fusarium tidak menghasilkannya" },
+  { id:"s7",  p:0, b:3, f:1, zh:"病斑从修剪伤口、断枝或钻蛀虫孔开始",          en:"Lesion starts at a pruning cut, broken branch or borer hole", ms:"Lesi bermula di tempat pangkasan, dahan patah atau lubang kumbang penggerek",
+              zh2:"伤口是葡萄座腔菌类的主要入侵口；镰刀菌也能借伤口进入", en2:"Wounds are the main entry for the Botryosphaeriaceae; Fusarium can also use them", ms2:"Luka ialah pintu masuk utama Botryosphaeriaceae; Fusarium juga boleh menggunakannya" },
+  { id:"s8",  p:0, b:3, f:0, zh:"枝条回枯，枯叶挂在枝上不掉落",                en:"Branch dieback with dead leaves clinging, not dropping", ms:"Dahan mati rosot dengan daun kering melekat, tidak gugur",
+              zh2:"英文叫 flagging，先枯一条枝，由上往下", en2:"Called flagging — one branch at a time, working downward", ms2:"Dipanggil flagging — sedahan demi sedahan, bergerak ke bawah" },
+  { id:"s9",  p:0, b:2, f:0, zh:"病斑干燥、木质坚硬，不流胶",                  en:"Lesion is dry and hard, no gumming", ms:"Lesi kering dan keras, tiada getah",
+              zh2:"横切木质部可见变色条纹上下延伸", en2:"Cut across: vascular streaking runs up and down", ms2:"Belah melintang: jalur berwarna pada tisu vaskular menjalar ke atas dan ke bawah" },
+  { id:"s10", p:0, b:2, f:1, zh:"发病前树曾经历干旱、断根或严重挂果应激",      en:"Tree had drought, root damage or a heavy crop load before symptoms", ms:"Pokok mengalami kemarau, kerosakan akar atau buah terlalu lebat sebelum gejala muncul",
+              zh2:"葡萄座腔菌类多数时间是潜伏内生菌，树弱才发作", en2:"The Botryosphaeriaceae sit latent inside healthy wood and only attack a stressed tree", ms2:"Botryosphaeriaceae duduk pendam dalam kayu sihat dan hanya menyerang pokok yang tertekan" },
+
+  { id:"s13", p:0, b:0, f:3, zh:"病部或裂口有粉白、粉红或橙色霉层／孢子堆",    en:"White, pink or orange mould / spore masses on the lesion or in cracks", ms:"Kulapuk atau kumpulan spora putih, merah jambu atau jingga pada lesi atau dalam rekahan",
+              zh2:"决定性线索：镰刀菌的产孢座。不是黑点，是粉状霉层", en2:"Decisive: Fusarium sporodochia. Not black dots — a powdery mould mass", ms2:"Menentukan: sporodokia Fusarium. Bukan bintik hitam — gumpalan kulapuk berdebu" },
+  { id:"s14", p:1, b:0, f:3, zh:"根颈部或嫁接口腐烂，向上扩展，且找不到黑色小点", en:"Rot at the collar or graft union spreading upward, with no black dots", ms:"Reput di pangkal batang atau tempat cantuman merebak ke atas, tanpa bintik hitam",
+              zh2:"由下往上走，方向与葡萄座腔菌类回枯相反", en2:"Travels upward — the opposite direction to Botryosphaeriaceae dieback", ms2:"Bergerak ke atas — bertentangan arah dengan mati rosot Botryosphaeriaceae" },
+  { id:"s15", p:1, b:1, f:2, zh:"剖开木质部呈褐至紫褐色变色，界限清楚",        en:"Cut wood shows brown to purplish-brown discoloration with a sharp boundary", ms:"Kayu yang dibelah menunjukkan perubahan warna perang hingga perang keunguan dengan sempadan yang tajam",
+              zh2:"泰国东部与海南的榴莲茎腐样本都分离到腐皮镰刀菌", en2:"Fusarium solani was isolated from durian stem rot samples in both Eastern Thailand and Hainan", ms2:"Fusarium solani dipencilkan daripada sampel reput batang durian di Thailand Timur dan Hainan" },
+  { id:"s16", p:1, b:1, f:2, zh:"树干基部曾有白蚁、天牛或除草机械伤",          en:"Termite, borer or strimmer damage at the base of the trunk", ms:"Kerosakan anai-anai, kumbang penggerek atau mesin rumput di pangkal batang",
+              zh2:"根颈伤口是镰刀菌最常见的入口", en2:"Collar wounds are the commonest entry route for Fusarium", ms2:"Luka di pangkal batang ialah laluan masuk paling biasa bagi Fusarium" },
+  { id:"s17", p:1, b:0, f:2, zh:"覆盖物、泥土或有机质长期堆到树干上",          en:"Mulch, soil or organic matter piled against the trunk long-term", ms:"Sungkupan, tanah atau bahan organik lama tertimbun rapat pada batang",
+              zh2:"树干基部长期潮湿，同时利于疫霉与镰刀菌", en2:"Keeps the collar permanently damp — favours both Phytophthora and Fusarium", ms2:"Mengekalkan pangkal batang sentiasa lembap — menyenangkan Phytophthora dan Fusarium" },
+
+  { id:"r1",  p:0, b:0, f:0, r:3, zh:"扒开表土，根面上有白色扁平菌索（久了转红褐）",    en:"Open the topsoil: flat white strands running along the roots (turning red-brown with age)", ms:"Buka tanah atas: benang putih leper menjalar pada akar (bertukar perang kemerahan apabila lama)",
+              zh2:"决定性线索：白根病的菌索，紧贴根面走。树干上找不到病斑也要挖开看这一条", en2:"Decisive: white root disease rhizomorphs, pressed flat against the root surface. Check this even when the trunk looks clean", ms2:"Menentukan: rizomorf penyakit akar putih, melekat leper pada permukaan akar. Periksa ini walaupun batang kelihatan bersih" },
+  { id:"r2",  p:0, b:0, f:0, r:3, zh:"树头基部长出橙黄色、有同心环纹的层状子实体",        en:"Orange-yellow bracket with concentric rings at the base of the trunk", ms:"Cendawan berbentuk rak jingga kekuningan dengan bulatan sepusat di pangkal batang",
+              zh2:"决定性线索：白根病的子实体。看到就不用再猜了", en2:"Decisive: the fruiting body of white root disease. Nothing left to guess", ms2:"Menentukan: jasad berbuah penyakit akar putih. Tiada apa lagi untuk diteka" },
+  { id:"r3",  p:0, b:0, f:0, r:2, zh:"同一行相邻的树一棵接一棵衰退",                      en:"Neighbouring trees declining one after another down the row", ms:"Pokok bersebelahan merosot satu demi satu mengikut barisan",
+              zh2:"根系接触传播，所以跟着种植行走，不跟着地形走", en2:"Root-to-root spread follows the planting row, not the terrain", ms2:"Rebakan akar ke akar mengikut barisan tanaman, bukan bentuk muka bumi" },
+  { id:"r4",  p:0, b:0, f:0, r:2, zh:"挖开根系：根皮变黑，木质发白变软，一捏就碎",        en:"Dig to the roots: black root bark, soft whitish wood that crumbles", ms:"Gali sampai akar: kulit akar hitam, kayu keputihan lembut yang hancur",
+              zh2:"白腐，与树干上的干硬病斑完全不同", en2:"A white rot — nothing like the dry hard lesions on the trunk", ms2:"Reput putih — jauh berbeza daripada lesi kering dan keras pada batang" },
+  { id:"r5",  p:0, b:0, f:0, r:2, zh:"整树萎凋、叶片枯挂，但树干上找不到任何病斑",        en:"Whole tree wilting with leaves clinging, yet no lesion anywhere on the trunk", ms:"Seluruh pokok layu dengan daun melekat, tetapi tiada lesi langsung pada batang",
+              zh2:"树干干净却整树垮，最该怀疑的是根", en2:"A clean trunk under a collapsing canopy points down, not up", ms2:"Batang yang bersih di bawah silara yang runtuh menunjuk ke bawah, bukan ke atas" },
+  { id:"s11", p:0, b:0, f:0, zh:"叶片黄化、稀疏、整树衰退",                    en:"Yellowing, thinning canopy, general decline", ms:"Daun menguning, silara menipis, pokok merosot keseluruhan",
+              zh2:"三种都会出现，单看这条判不了", en2:"All three do this — this one alone decides nothing", ms2:"Ketiga-tiganya begini — yang ini sahaja tidak menentukan apa-apa" },
+  { id:"s12", p:0, b:0, f:0, zh:"果实也出现褐色腐烂",                          en:"Fruit also showing brown rot", ms:"Buah juga menunjukkan reput perang",
+              zh2:"疫霉、葡萄座腔菌类与镰刀菌都能引起果腐", en2:"Phytophthora, the Botryosphaeriaceae and Fusarium all cause fruit rot", ms2:"Phytophthora, Botryosphaeriaceae dan Fusarium semuanya menyebabkan reput buah" }
+];
+
+var PATH = [
+  { k:"p", c:"var(--rust)", zh:"疫霉茎溃疡",       en:"Phytophthora canker", ms:"Kanker batang Phytophthora",
+    zh2:"卵菌，不是真菌——防治方向与另外两种相反。它靠自由水传播和侵染，所以扒开树干基部的覆盖物、修好排水，比找药更要紧。见「现场」页。", en2:"An oomycete, not a fungus — the control direction is the opposite of the other two. It spreads and infects through free water, so clearing mulch off the collar and fixing drainage matters more than finding a product. See the Field tab.", ms2:"Oomiset, bukan kulat — arah kawalannya bertentangan dengan dua yang lain. Ia merebak dan menjangkiti melalui air bebas, jadi mengalihkan sungkupan dari pangkal batang dan membaiki saliran lebih penting daripada mencari racun. Lihat tab Di Ladang." },
+  { k:"b", c:"var(--ink)",  zh:"葡萄座腔菌类回枯", en:"Botryosphaeriaceae dieback", ms:"Mati rosot Botryosphaeriaceae",
+    zh2:"真正的真菌（壳梭孢、可可毛色二孢）。疫霉药完全无效——见「药剂」页。", en2:"A true fungus (Fusicoccum, Lasiodiplodia). Phytophthora products do nothing — see the Chemicals tab.", ms2:"Kulat sebenar (Fusicoccum, Lasiodiplodia). Racun untuk Phytophthora tidak memberi apa-apa kesan — lihat tab Racun Kulat." },
+  { k:"r", c:"var(--root)", zh:"根部病害（含白根病）", en:"Root disease (incl. white root)", ms:"Penyakit akar (termasuk akar putih)",
+    zh2:"病在地下，树干上往往找不到病斑。要紧的是时间差：接种试验里根面一个月就长出菌索，叶片却要三个月才开始变——你看到叶子黄的时候，根下面已经烂了几个月，邻株多半也开始了。白根病靠菌索沿根系在行内一棵传一棵，喷树干完全没有用：挖开表土看根、隔开病株与邻株、树头连根清掉。",
+    en2:"The problem is underground and there is often no trunk lesion at all. The lag is what matters: in inoculation trials rhizomorphs appear on the roots within a month while the leaves only start changing at three — so by the time you see yellowing, the roots have been rotting for months and the neighbours have probably started too. White root disease travels root to root along the row, so spraying the trunk does nothing: open the topsoil and look at the roots, isolate the tree from its neighbours, and take out the stump.", ms2:"Masalahnya di bawah tanah dan selalunya tiada lesi langsung pada batang. Yang penting ialah jarak masanya: dalam ujian inokulasi, rizomorf muncul pada akar dalam sebulan sementara daun baru mula berubah pada bulan ketiga — jadi apabila anda nampak daun menguning, akar sudah reput berbulan-bulan dan pokok sebelah pun berkemungkinan sudah mula. Penyakit akar putih merebak dari akar ke akar sepanjang barisan, jadi menyembur batang tidak berguna: buka tanah atas dan periksa akar, asingkan pokok itu daripada jirannya, dan keluarkan tunggulnya." },
+  { k:"f", c:"var(--fus)",  zh:"镰刀菌茎腐",       en:"Fusarium stem rot", ms:"Reput batang Fusarium",
+    zh2:"也是真菌，疫霉药同样无效。海南试验中枯草芽孢杆菌 SYST2 田间防效 53.51%，高于化学药的 25.46%。", en2:"Also a true fungus, so Phytophthora products fail here too. In the Hainan trial Bacillus subtilis SYST2 gave 53.51% field efficacy versus 25.46% for chemical fungicides.", ms2:"Juga kulat sebenar, jadi racun Phytophthora gagal di sini. Dalam ujian di Hainan, Bacillus subtilis SYST2 memberi keberkesanan ladang 53.51% berbanding 25.46% bagi racun kulat kimia." }
+];
+
+var VERDICT = {
+  x:{ zh:"证据不足，还分不开", en:"Not enough to separate them", ms:"Belum cukup untuk membezakannya",
+      zh2:"去找决定性线索——往下拉到「还分不清？」，按 取样 → 近看 → 剖开 的顺序做。", ms2:"Pergi cari tanda yang menentukan — tatal ke bahagian \u201cMasih tak dapat pastikan?\u201d dan ikut susunan Ambil Sampel, Lihat Dekat, Belah.", ms2:"Pergi cari tanda yang menentukan — tatal ke bahagian \u201cMasih tak dapat pastikan?\u201d dan ikut susunan Ambil Sampel, Lihat Dekat, Belah.", en2:"Go and find a decisive sign — scroll to \u201cStill cannot tell?\u201d and work through Sample, Look, Cut in that order." },
+  z:{ zh:"勾选的症状不指向任何一种", en:"What you ticked points to none of them", ms:"Apa yang ditanda tidak menunjuk kepada mana-mana",
+      zh2:"你勾的都是三病共有的症状。请回树上找决定性线索。", en2:"You have only ticked signs all three share. Go back to the tree for a decisive one.", ms2:"Anda hanya menanda tanda yang dikongsi ketiga-tiganya. Balik ke pokok dan cari satu yang menentukan." },
+  n:{ zh:"还没勾选症状", en:"No symptoms ticked yet", ms:"Belum ada gejala ditanda",
+      zh2:"从最容易看的三条开始：有没有黑色小点？有没有粉白霉层？有没有流胶？", en2:"Start with the three easiest: black dots? white mould? weeping gum?", ms2:"Mula dengan tiga yang paling mudah: bintik hitam? kulapuk putih? getah meleleh?" }
+};
+
+/* ---------- 2. CHEMICALS ---------- */
+/* SCOPE: only actives that appear in the DOA residue database under the durian
+   commodity entry. Nothing is listed on the strength of overseas status,
+   inference, or literature alone. No product here is a recommendation. */
+var CHEMS = [
+  { zh:"三乙膦酸铝", en:"Fosetyl-aluminium", ms:"Fosetyl-aluminium", oo:"yes", frac:"FRAC P07",
+    my:{s:"mrl", mrl:"1 mg/kg", phi:{zh:"30 天",en:"30 days", ms:"30 hari"}}, v:"no", tier:"moa",
+    zh2:"这是一支针对卵菌病害的杀菌剂，对疫霉有活性，也是它标签所列的用途——用在疫霉茎溃疡上是对的。<br><br>本页要说明的只有一点：葡萄座腔菌类与镰刀菌属于真菌，不是卵菌，作用机理不同（本剂主要激发寄主对卵菌的防卫反应），因此对这两类病原没有直接活性。这不是产品好坏的问题，是病原类别的问题——判错了病，任何一支药都会白花钱。",
+    en2:"This is a fungicide for oomycete diseases. It is active against Phytophthora, which is what its label covers — using it on Phytophthora canker is correct.<br><br>The single point this page makes is that the Botryosphaeriaceae and Fusarium are fungi, not oomycetes, and the mode of action differs (this product works mainly by priming host defence against oomycetes), so it has no direct activity on those two. That is a question of pathogen group, not of product quality — get the diagnosis wrong and any product wastes your money.", ms2:"Ini racun kulat untuk penyakit oomiset. Ia aktif terhadap Phytophthora, dan itulah yang tertera pada labelnya — menggunakannya pada kanker Phytophthora adalah betul.<br><br>Satu-satunya perkara yang dinyatakan halaman ini ialah Botryosphaeriaceae dan Fusarium tergolong sebagai kulat, bukan oomiset, dan cara tindakannya berbeza (produk ini bertindak terutamanya dengan merangsang pertahanan pokok terhadap oomiset), jadi ia tiada kesan langsung pada kedua-dua itu. Ini soal kumpulan patogen, bukan soal mutu produk — silap mengenal pasti penyakit, apa jua racun pun membazir wang anda." },
+  { zh:"甲霜灵 / 精甲霜灵", en:"Metalaxyl / Metalaxyl-M", ms:"Metalaxyl / Metalaxyl-M", oo:"yes", frac:"FRAC 4",
+    my:{s:"mrl", mrl:"0.2 mg/kg", phi:{zh:"21 天",en:"21 days", ms:"21 hari"}}, v:"no", tier:"moa",
+    zh2:"针对卵菌的内吸杀菌剂，对疫霉有活性，这也是它标签所列的用途。<br><br>作用靶标是卵菌的 RNA 聚合酶 I。葡萄座腔菌类与镰刀菌是真菌，没有这个靶标，所以本剂对它们没有活性——同样是病原类别的差异，不是产品的问题。<br><br>另外提醒：全球范围内疫霉对本组（FRAC 4）的抗性已相当普遍，即使确诊疫霉，也应与不同作用机理轮替，不要连续使用。",
+    en2:"A systemic fungicide for oomycete diseases, active against Phytophthora, which is what its label covers.<br><br>Its target is oomycete RNA polymerase I. The Botryosphaeriaceae and Fusarium are fungi and do not carry that target, so the product has no activity against them — again a difference of pathogen group, not a shortcoming of the product.<br><br>Separately: resistance to this group (FRAC 4) is already widespread in Phytophthora worldwide, so even a confirmed Phytophthora case should be rotated with a different mode of action rather than treated repeatedly.", ms2:"Racun kulat sistemik untuk penyakit oomiset, aktif terhadap Phytophthora, dan itulah yang tertera pada labelnya.<br><br>Sasarannya ialah RNA polimerase I oomiset. Botryosphaeriaceae dan Fusarium ialah kulat dan tidak mempunyai sasaran itu, jadi produk ini tiada kesan terhadapnya — sekali lagi perbezaan kumpulan patogen, bukan kelemahan produk.<br><br>Selain itu: kerintangan terhadap kumpulan ini (FRAC 4) sudah meluas pada Phytophthora di seluruh dunia, jadi walaupun Phytophthora disahkan, ia patut digilirkan dengan cara tindakan yang lain dan bukan dirawat berulang kali." },
+  { zh:"嘧菌酯", en:"Azoxystrobin", ms:"Azoxystrobin", oo:"part", frac:"FRAC 11 · QoI",
+    my:{s:"none"}, v:"yes", tier:"moa",
+    zh2:"甲氧基丙烯酸酯类（QoI），对葡萄座腔菌类有活性。它少见的地方是在文献中与木霉兼容——推荐剂量下单用或与苯醚甲环唑复配都不抑制木霉，是少数能与生物防治方案并存的化学药。<br><br>但要认清它的作用方式：QoI 主要阻断孢子萌发，是保护剂，治疗力弱。对已经在死木质里扩展的溃疡，它到不了病斑边缘——最合理的用法是修剪后保护新鲜伤口，不是治老病斑。",
+    en2:"A strobilurin (QoI), active on the Botryosphaeriaceae. Its distinguishing feature is Trichoderma compatibility — at recommended rates, alone or mixed with difenoconazole, it did not inhibit Trichoderma, making it one of the few chemistries that can coexist with a biological programme.<br><br>But understand how it acts: QoI mainly blocks spore germination. It is a protectant with weak curative power, and it cannot reach the advancing margin of a canker already running inside dead wood. The sensible use is protecting fresh pruning wounds, not treating an old lesion.", ms2:"Strobilurin (QoI), aktif terhadap Botryosphaeriaceae. Keistimewaannya ialah keserasian dengan Trichoderma — pada kadar disyorkan, sama ada sendirian atau bercampur dengan difenoconazole, ia tidak merencat Trichoderma, menjadikannya antara sedikit bahan kimia yang boleh hidup bersama program biologi.<br><br>Tetapi fahami cara tindakannya: QoI terutamanya menyekat percambahan spora. Ia pelindung dengan kuasa penyembuhan yang lemah, dan tidak dapat mencapai pinggir kanker yang sudah merebak dalam kayu mati. Penggunaan yang munasabah ialah melindungi luka pangkasan yang baharu, bukan merawat lesi lama.",
+    risk:{zh:"榴莲无残留标准，属标签外使用，风险自负。抗性风险高且是「断崖式」：细胞色素 b 第 143 位一个 G143A 点突变即可让整组 QoI 完全失效，并在组内交互抗性。一季不要超过两次，务必与不同机理轮替。另：镰刀菌对本类普遍不敏感，怀疑镰刀菌茎腐时不要指望它。",
+      en:"No durian residue standard — off-label, at your own risk. Resistance risk is high and it fails off a cliff: a single G143A point mutation at codon 143 of cytochrome b can knock out the entire QoI group, with full cross-resistance inside it. No more than twice a season, always rotated with a different mode of action. Also: Fusarium is generally insensitive to this class — do not rely on it for a suspected collar rot.", ms:"Tiada piawai residu durian — di luar label, risiko ditanggung sendiri. Risiko kerintangan tinggi dan kegagalannya mendadak: satu mutasi titik G143A pada kodon 143 sitokrom b boleh melumpuhkan seluruh kumpulan QoI, dengan kerintangan silang penuh di dalamnya. Tidak lebih dua kali semusim, sentiasa digilirkan dengan cara tindakan yang lain. Juga: Fusarium umumnya tidak peka terhadap kelas ini."} },
+
+  { zh:"铜制剂（氧氯化铜、氢氧化铜）", en:"Copper (oxychloride, hydroxide)", ms:"Kuprum (oksiklorida, hidroksida)", oo:"yes", frac:"FRAC M01 · 多位点",
+    my:{s:"none"}, v:"part", tier:"moa",
+    zh2:"多位点保护剂：同时作用于病菌体内多个靶标，所以病菌几乎无法靠单个突变躲开——几十年下来抗性问题一直很小。这正是它在抗性管理里的价值。<br><br>但要认清它只能保护、不能治疗：进不了已经形成的溃疡，也上不了树。用途是新鲜伤口与树皮表面的预防。对木霉有部分抑制（约 23–39%），与生物防治错开时间用。",
+    en2:"A multi-site protectant: it hits several targets at once, so the fungus cannot dodge it with a single mutation — which is why resistance has stayed a minor problem after decades of use. That is exactly its value in a resistance programme.<br><br>Understand its limit: it protects but does not cure. It cannot reach an established canker and does not move in the tree. Its job is fresh wounds and bark surfaces. It partially inhibits Trichoderma (~23–39%), so separate it in time from biologicals.", ms2:"Pelindung berbilang tapak: ia menyerang beberapa sasaran serentak, jadi kulat tidak boleh mengelaknya dengan satu mutasi sahaja — sebab itulah kerintangan kekal menjadi masalah kecil selepas berdekad-dekad digunakan. Itulah nilainya dalam program pengurusan kerintangan.<br><br>Fahami hadnya: ia melindungi tetapi tidak menyembuhkan. Ia tidak dapat mencapai kanker yang sudah terbentuk dan tidak bergerak dalam pokok. Tugasnya ialah luka baharu dan permukaan kulit kayu. Ia merencat Trichoderma sebahagiannya (~23–39%), jadi asingkan masa penggunaannya daripada agen biologi.",
+    risk:{zh:"榴莲无残留标准，属标签外使用。抗性风险低（多位点）——在只有两个单位点组可用的情况下，这一条比它的防效更重要。", en:"No durian residue standard — off-label. Resistance risk low (multi-site), and with only two single-site groups available that property matters more than its raw efficacy.", ms:"Tiada piawai residu durian — di luar label. Risiko kerintangan rendah (berbilang tapak), dan dengan hanya dua kumpulan satu tapak yang ada, sifat itu lebih penting daripada keberkesanan mentahnya."} },
+  { zh:"代森锰锌", en:"Mancozeb", ms:"Mancozeb", oo:"yes", frac:"FRAC M03 · 多位点",
+    my:{s:"none"}, v:"part", tier:"moa",
+    zh2:"另一支多位点保护剂，抗性风险同样低，常作为单位点药的混配伙伴以延缓抗性。同样只保护不治疗，对已扩展的干部溃疡没有治疗作用。",
+    en2:"A second multi-site protectant with the same low resistance risk, commonly used as a mixing partner for single-site products to slow resistance. Also protectant only, with no curative action on an advancing trunk canker.", ms2:"Pelindung berbilang tapak yang kedua dengan risiko kerintangan yang sama rendah, lazim digunakan sebagai pasangan campuran bagi produk satu tapak untuk melambatkan kerintangan. Juga pelindung sahaja, tanpa kesan penyembuhan pada kanker batang yang sedang merebak.",
+    risk:{zh:"榴莲无残留标准，属标签外使用。多地正在收紧代森类的登记，用前先查马来西亚现行名录。", en:"No durian residue standard — off-label. Registration of the dithiocarbamates is tightening in many jurisdictions; check the current Malaysian listing first.", ms:"Tiada piawai residu durian — di luar label. Pendaftaran ditiokarbamat semakin diketatkan di banyak negara; semak senarai Malaysia yang terkini dahulu."} },
+  { zh:"SDHI 类（FRAC 7）", en:"SDHI group (FRAC 7)", ms:"Kumpulan SDHI (FRAC 7)", oo:"no", frac:"FRAC 7 · SDHI",
+    my:{s:"none"}, v:"yes", tier:"moa",
+    zh2:"琥珀酸脱氢酶抑制剂，作用点与三唑类（FRAC 3）、甲氧基丙烯酸酯类（FRAC 11）都不同，因此可以作为第三个轮替组——这是本页最值得知道的一条，因为只有两个组可轮时，抗性只是早晚问题。氟吡菌酰胺、氟唑菌酰胺等在大马已有登记（其他作物），但榴莲没有残留标准。<br><br>提醒一：SDHI 本身也是单位点，抗性风险中至高，它是多一个组，不是安全牌。<br><br>提醒二：市面上的 SDHI 产品很多是复配的——常与三唑类或甲氧基丙烯酸酯类做成一瓶。买到 FRAC 7＋11 的复配，等于同时用了两个组，不是换掉了甲氧基丙烯酸酯类。轮替要看瓶上的 FRAC 号，不是看商品名。",
+    ms2:"Perencat suksinat dehidrogenase mengikat pada tapak yang berbeza daripada triazol (FRAC 3) dan strobilurin (FRAC 11), jadi ia menawarkan kumpulan penggiliran ketiga — perkara paling berguna di halaman ini, kerana dengan hanya dua kumpulan untuk digilirkan, kerintangan hanyalah soal bila, bukan sama ada. Fluopyram dan fluxapyroxad berdaftar di Malaysia untuk tanaman lain, tetapi tiada piawai residu durian.<br><br>Nota satu: SDHI sendiri bersifat satu tapak dengan risiko kerintangan sederhana hingga tinggi. Ini satu kumpulan tambahan, bukan pilihan yang selamat.<br><br>Nota dua: banyak produk SDHI di pasaran ialah campuran siap, lazimnya dipasangkan dengan triazol atau strobilurin dalam botol yang sama. Membeli campuran FRAC 7 + 11 bermakna menggunakan kedua-dua kumpulan, bukan menggilirkan strobilurin. Baca nombor FRAC pada label, bukan nama dagang.", en2:"Succinate dehydrogenase inhibitors bind at a site different from both the triazoles (FRAC 3) and the strobilurins (FRAC 11), so they offer a third rotation group — the most useful thing on this page, because with only two groups to alternate, resistance is a matter of when rather than whether. Fluopyram and fluxapyroxad are registered in Malaysia on other crops, but there is no durian residue standard.<br><br>Note one: SDHIs are themselves single-site with moderate to high resistance risk. This is one more group, not a safe option.<br><br>Note two: many SDHI products on the shelf are pre-mixes, commonly paired with a triazole or a strobilurin in the same bottle. Buying a FRAC 7 + 11 mix means using both groups, not rotating away from the strobilurin. Read the FRAC numbers on the label, not the trade name.",
+    risk:{zh:"榴莲无残留标准，属标签外使用。单位点，需与不同机理轮替，一季不超过两次。对榴莲干部病害没有田间数据。", en:"No durian residue standard — off-label. Single-site: rotate with other modes of action, no more than twice a season. No field data for durian trunk disease.", ms:"Tiada piawai residu durian — di luar label. Satu tapak: gilirkan dengan cara tindakan lain, tidak lebih dua kali semusim. Tiada data ladang untuk penyakit batang durian."} },
+  { zh:"苯醚甲环唑", en:"Difenoconazole", ms:"Difenoconazole", oo:"no", frac:"FRAC 3 · DMI",
+    my:{s:"pend", mrl:"0.8 mg/kg", phi:{zh:"1 天",en:"1 day", ms:"1 hari"}}, v:"yes", tier:"moa",
+    zh2:"三唑类，对真菌有活性——本表唯一一支。但榴莲 MRL 仍标示「待宪报」，宪报前不应视为可用。另需注意：三唑类会抑制木霉，与生物防治只能轮替、不能混桶。对榴莲干部病害没有田间防效数据。",
+    en2:"A triazole with activity on fungi — the only one in this table. But its durian MRL is still marked awaiting gazette, and should not be treated as available before that. Note also that triazoles suppress Trichoderma: rotate with biologicals, never tank-mix. There is no field-efficacy data for durian trunk disease.", ms2:"Triazol yang aktif terhadap kulat — satu-satunya dalam jadual ini. Tetapi MRL duriannya masih bertanda menunggu warta, dan tidak patut dianggap sudah boleh digunakan sebelum itu. Perhatikan juga bahawa triazol merencat Trichoderma: gilirkan dengan agen biologi, jangan sekali-kali campur dalam tangki yang sama. Tiada data keberkesanan ladang untuk penyakit batang durian.",
+    risk:{zh:"中等抗性风险（单位点）。宪报状态请自行到 LRMP 登记名录复核，本app不作时效保证。", en:"Moderate resistance risk (single-site). Verify the gazette status yourself on the LRMP register — this app makes no guarantee of currency.", ms:"Risiko kerintangan sederhana (satu tapak). Sahkan sendiri status wartanya dalam daftar LRMP — aplikasi ini tidak menjamin kemaskiniannya."} }
+];
+
+/* ---------- borers: the doorway the fungi come through ---------- */
+var BORER = [
+  { s:"do", zh:"天牛：一孔一虫，可以逐个处理", en:"Longhorn: one hole, one larva — treatable individually", ms:"Tanduk panjang: satu lubang, satu larva — boleh dirawat satu per satu",
+    zh2:"母虫在树皮上咬一个凹槽把卵产在皮下，幼虫先在韧皮部取食，长大后钻进心材化蛹，这时才看得到孔、流胶和木屑。做法：刮净木屑确认还活着，用硬铁丝顺虫道捅到底；两周内没有新木屑，才算处理掉。",
+    en2:"The female chews a depression in the bark and lays under it; the larva feeds in the phloem first, then bores into the heartwood to pupate — which is when the hole, the sap and the frass become visible. Method: clear the frass, confirm it is alive, then run a stiff wire down the tunnel. Only two weeks with no new frass counts as done.", ms2:"Kumbang betina mengunyah lekuk pada kulit kayu dan bertelur di bawahnya; larvanya makan dalam floem dahulu, kemudian menggerek masuk ke teras kayu untuk menjadi pupa — ketika itulah lubang, getah dan habuk kayu mula kelihatan. Kaedah: bersihkan habuk kayu, sahkan ia masih hidup, kemudian masukkan dawai keras menyusur terowong itu. Hanya dua minggu tanpa habuk kayu baharu barulah dikira selesai." },
+  { s:"harm", zh:"别封住还活着的虫道", en:"Never seal a tunnel that is still active", ms:"Jangan sekali-kali tutup terowong yang masih aktif",
+    zh2:"封住等于把幼虫关在里面继续啃，同时把水汽封进一段你根本消不了毒的木头里——这正是可可毛色二孢最想要的环境。要封，也只封表面伤口，虫道口留着透气排水。",
+    en2:"Sealing traps the larva to keep chewing and shuts moisture into wood you cannot sterilise — precisely the conditions Lasiodiplodia wants. If you dress anything, dress the surface wound and leave the tunnel mouth open to drain and dry.", ms2:"Menutupnya mengurung larva supaya terus menggerek dan mengunci kelembapan dalam kayu yang tidak dapat anda nyahkuman — tepat keadaan yang dikehendaki Lasiodiplodia. Jika hendak merawat, rawat luka permukaan dan biarkan mulut terowong terbuka supaya kering." },
+  { s:"harm", zh:"小蠹成片：别一个个治，那是结果不是原因", en:"Shot-holes in numbers: a symptom, not the cause", ms:"Lubang halus yang banyak: gejala, bukan puncanya",
+    zh2:"针孔太小太多，逐孔处理没有意义。更重要的是：榴莲上的小蠹多出现在已经有根腐／茎腐的树上，它们钻的孔又把病害带到树的其他部位。看到成片针孔，先回「判症」页查根颈，而不是先打虫。",
+    en2:"The pinholes are too small and too many for hole-by-hole work. More importantly, shot-hole borers on durian are found mostly on trees that already have root or stem rot, and their holes carry that disease into other parts of the tree. Seeing pinholes in numbers means going back to Triage and checking the collar — not reaching for an insecticide.", ms2:"Lubang halus itu terlalu kecil dan terlalu banyak untuk dirawat satu per satu. Lebih penting lagi, penggerek lubang jarum pada durian kebanyakannya ditemui pada pokok yang sudah mengalami reput akar atau reput batang, dan lubangnya membawa penyakit itu ke bahagian lain pokok. Melihat banyak lubang halus bermakna kembali ke tab Kenal Pasti dan memeriksa pangkal batang — bukan mencapai racun serangga." },
+  { s:"do", zh:"降低虫压的其实是树势与清园", en:"What actually lowers borer pressure is vigour and sanitation", ms:"Yang benar-benar mengurangkan tekanan penggerek ialah kecergasan pokok dan kebersihan kebun",
+    zh2:"两类蛀虫都偏好受伤、缺水、涝害或挂果过重的树。枯枝是天牛的繁殖场——剪下来就搬走烧掉，别堆在园里。除草机、绑绳、施肥铲在根颈留下的伤口，是产卵的首选位置。",
+    en2:"Both kinds prefer trees that are wounded, drought-stressed, waterlogged or over-cropped. Dead limbs are longhorn breeding sites — carry prunings out and burn them rather than stacking them in the orchard. Strimmer cuts, tie wounds and spade damage at the collar are the preferred egg-laying sites.", ms2:"Kedua-dua jenis lebih gemarkan pokok yang cedera, tertekan kemarau, bertakung air atau terlalu lebat berbuah. Dahan mati ialah tempat pembiakan kumbang tanduk panjang — bawa sisa pangkasan keluar dan bakar, jangan ditimbun dalam kebun. Luka mesin rumput, luka tali dan kerosakan cangkul di pangkal batang ialah tempat bertelur yang paling digemari." },
+  { s:"harm", zh:"小蠹：没有一支药能可靠地治好它——这不是本app的意见", en:"Shot-hole borers: no product reliably controls them — and that is not this app's opinion", ms:"Penggerek lubang jarum: tiada racun yang mengawalnya dengan pasti — dan itu bukan pendapat aplikasi ini",
+    zh2:"斯里兰卡在茶树上研究这种小蠹超过半个世纪，结论是：杀虫剂即使在正确时机使用，对未处理对照也只有约 40% 的防效，靠的是减少新虫道、压低下一代数量，不是把树里的虫杀掉。<br><br>近缘的多食性小蠹（PSHB）情况更清楚：目前没有有效的防治手段，实验室里有效的商品化生物制剂，喷到树皮外表后对成虫存活与繁殖影响有限。相关综述的结论是——除了维持树势与清除严重受害的木材，可用的手段很有限。<br><br>原因有三：虫在边材深处的虫道里，表面喷雾到不了；它不吃木头，吃自己养的真菌，所以内吸药也大多打不中；真正伤树的有一部分是那种共生真菌，不是虫本身。<br><br>所以：听到「有一支药可以根治蛀虫」，先想想上面这些数字。钱花在排水、树势与清除病株上，回报确定得多。",
+    en2:"Sri Lanka has studied this borer in tea for over half a century. The conclusion: insecticides used at the correct time give only about 40% control over untreated, and they work by reducing new gallery formation and cutting the next generation's numbers — not by killing the beetles already inside the tree.<br><br>For the closely related polyphagous shot hole borer the position is plainer still: there is currently no effective control measure, and commercial biological products that worked in the laboratory had limited effect on beetle survival and reproduction once applied to the outer bark in the field. Reviews conclude there are limited options beyond maintaining tree vigour and removing severely infested material.<br><br>Three reasons: the beetle sits in galleries deep in the sapwood where a surface spray cannot reach; it does not eat wood but farms its own fungus, so systemics largely miss it; and part of the damage is that symbiotic fungus rather than the insect.<br><br>So when someone tells you a product will cure your borers, weigh it against those numbers. Money spent on drainage, tree vigour and removing affected trees returns far more reliably.", ms2:"Sri Lanka telah mengkaji penggerek ini pada pokok teh lebih setengah abad. Kesimpulannya: racun serangga yang digunakan pada masa yang betul hanya memberi kira-kira 40% kawalan berbanding tanpa rawatan, dan ia berkesan dengan mengurangkan pembentukan terowong baharu serta menurunkan bilangan generasi seterusnya — bukan dengan membunuh kumbang yang sudah berada dalam pokok.<br><br>Bagi penggerek lubang jarum polifagus yang berkait rapat, keadaannya lebih jelas lagi: setakat ini tiada langkah kawalan yang berkesan, dan produk biologi komersial yang berkesan di makmal memberi kesan terhad pada kemandirian dan pembiakan kumbang apabila disapu pada kulit luar di ladang. Ulasan kajian menyimpulkan pilihan adalah terhad selain mengekalkan kecergasan pokok dan membuang bahan yang teruk dijangkiti.<br><br>Tiga sebabnya: kumbang berada dalam terowong jauh di dalam kayu gubal yang tidak dapat dicapai semburan permukaan; ia tidak makan kayu tetapi menternak kulatnya sendiri, jadi racun sistemik kebanyakannya tersasar; dan sebahagian kerosakan itu datang daripada kulat simbiotik, bukan serangganya." },
+  { s:"note", zh:"天牛的化学防治：时机比药重要", en:"Chemicals for longhorn borers: timing beats product", ms:"Bahan kimia untuk penggerek tanduk panjang: masa lebih penting daripada racun",
+    zh2:"大马榴莲残留资料库中有登记残留标准的杀虫剂包括三氟氯氰菊酯（MRL 0.1 mg/kg，安全间隔期 7 天）——菊酯类，也是国外用于树干预防性喷施的那一类。要认清它的用途：预防成虫产卵，不是杀已经钻进心材的幼虫。喷得对不对，看的是有没有对上成虫活动期。具体产品与用法以标签及农艺师意见为准，本app不作推荐。",
+    en2:"Insecticides with a durian residue standard in the DOA database include cyhalothrin (MRL 0.1 mg/kg, PHI 7 days) — a pyrethroid, the same class used elsewhere for preventive trunk sprays. Be clear about its job: preventing adults from laying, not killing a larva already in the heartwood. Whether a spray works depends on hitting the adult flight period. Product and method go by the label and your agronomist — this app makes no recommendation.", ms2:"Racun serangga yang mempunyai piawai residu durian dalam pangkalan data DOA termasuk cyhalothrin (MRL 0.1 mg/kg, TDMH 7 hari) — sejenis piretroid, kelas yang sama digunakan di tempat lain untuk semburan pencegahan pada batang. Jelaskan tugasnya: menghalang kumbang dewasa bertelur, bukan membunuh larva yang sudah berada dalam teras kayu. Sama ada semburan berkesan bergantung pada menepati tempoh penerbangan kumbang dewasa. Produk dan kaedah ikut label dan juruteknologi pertanian anda — aplikasi ini tidak membuat sebarang saranan." }
+];
+
+/* ---------- 3. BIOCONTROL ---------- */
+/* tier: field | inoc | plate — a petri-dish number is NOT a control figure */
+var BIO = [
+  { zh:"枯草芽孢杆菌 SYST2", en:"Bacillus subtilis SYST2", ms:"Bacillus subtilis SYST2", crop:{zh:"榴莲（海南，镰刀菌茎腐）",en:"durian (Hainan, Fusarium stem rot)", ms:"durian (Hainan, reput batang Fusarium)"}, dur:true,
+    fig:{zh:"53.51%",en:"53.51%", ms:"53.51%"}, tier:"field",
+    zh2:"本页唯一的田间防效数字：53.51%，高于所测化学杀菌剂（25.46%）与商品微生物制剂（35.15%）。作者本人称这只算中等，原因之一是只用单一菌株。这个数字最可信，也最该作为期望值——不要指望九成。",
+    en2:"The only field-efficacy figure on this page: 53.51%, better than the tested chemical fungicides (25.46%) and commercial microbial agents (35.15%). The authors themselves call it moderate, partly because a single strain was used. This is the most trustworthy number here and the one to set expectations by — do not expect 90%.", ms2:"Satu-satunya angka keberkesanan ladang di halaman ini: 53.51%, lebih baik daripada racun kulat kimia yang diuji (25.46%) dan agen mikrob komersial (35.15%). Penulisnya sendiri menyifatkannya sederhana, sebahagiannya kerana hanya satu strain digunakan. Inilah angka paling boleh dipercayai di sini dan yang patut dijadikan ukuran jangkaan — jangan harapkan 90%." },
+  { zh:"哈茨木霉 T-22 ＋ 绿木霉 G-41（伤口涂抹）", en:"T. harzianum T-22 + T. virens G-41 (wound paint)", ms:"T. harzianum T-22 + T. virens G-41 (sapuan luka)", crop:{zh:"紫荆",en:"redbud", ms:"redbud"}, dur:false,
+    fig:{zh:"该试验最佳",en:"best in that trial", ms:"terbaik dalam ujian itu"}, tier:"inoc",
+    zh2:"与单格孢 U3（Ulocladium oudemansii）同列为降低葡萄座腔菌溃疡病斑长度与病原回收率最有效的处理。接种试验，不是田间防效。但「伤口涂抹」这个用法本身是全app最值得照做的一条。",
+    en2:"Listed with Ulocladium oudemansii U3 as the most effective products for reducing Botryosphaeria canker lesion length and pathogen recovery. An inoculation trial, not a field-efficacy figure. But the wound-paint method itself is the single most worthwhile thing on this page.", ms2:"Disenaraikan bersama Ulocladium oudemansii U3 sebagai rawatan paling berkesan untuk mengurangkan panjang lesi kanker Botryosphaeria dan pemulihan patogen. Ujian inokulasi, bukan angka keberkesanan ladang. Tetapi kaedah sapuan luka itu sendiri ialah perkara paling berbaloi di halaman ini." },
+  { zh:"篮状菌 KUFA1604（Talaromyces tratensis）＋ 棘孢木霉 KUFA1606（粗提物）", en:"Talaromyces tratensis KUFA1604 + T. asperellum KUFA1606 (crude extract)", ms:"Talaromyces tratensis KUFA1604 + T. asperellum KUFA1606 (ekstrak kasar)", crop:{zh:"榴莲（果实浸泡）",en:"durian (fruit dip)", ms:"durian (rendaman buah)"}, dur:true,
+    fig:{zh:"49–55%",en:"49–55%", ms:"49–55%"}, tier:"inoc",
+    zh2:"10,000 ppm 浸果，对可可毛色二孢病害严重度降低 49.41–54.51%；对疫霉 66.90–70.53%。是接种果实，不是树干，剂量也很高。",
+    en2:"At 10,000 ppm as a fruit dip, reduced Lasiodiplodia severity by 49.41–54.51% and Phytophthora by 66.90–70.53%. Inoculated fruit, not trunks, and a high dose.", ms2:"Pada 10,000 ppm sebagai rendaman buah, mengurangkan keterukan Lasiodiplodia sebanyak 49.41–54.51% dan Phytophthora 66.90–70.53%. Buah yang diinokulasi, bukan batang, dan pada dos yang tinggi." },
+  { zh:"贝莱斯芽孢杆菌 ACH16", en:"Bacillus velezensis ACH16", ms:"Bacillus velezensis ACH16", crop:{zh:"扁桃（杏仁）",en:"almond", ms:"badam"}, dur:false,
+    fig:{zh:"95%",en:"95%", ms:"95%"}, tier:"plate",
+    zh2:"这个 95% 是培养皿对峙抑菌率，不是防效。同一研究另测接种扁桃枝条，病斑长度显著缩短，AC17 效果与木霉及标准化学处理相当。菌种对得上你的发酵液，但菌株不同、作物不同——把它当筛选线索，不是承诺。",
+    en2:"That 95% is dual-culture plate inhibition, not disease control. The same study also shortened lesions significantly on inoculated almond twigs, with AC17 on a par with Trichoderma and standard chemical treatments. The species matches your brew, but the strain and the crop do not — treat it as a screening lead, not a promise.", ms2:"Angka 95% itu ialah perencatan piring dua kultur, bukan kawalan penyakit. Kajian yang sama juga memendekkan lesi dengan ketara pada ranting badam yang diinokulasi, dengan AC17 setanding Trichoderma dan rawatan kimia biasa. Spesiesnya sepadan dengan tapaian anda, tetapi strain dan tanamannya tidak — anggap ia petunjuk saringan, bukan janji." },
+  { zh:"棘孢木霉 Tri-1", en:"Trichoderma asperellum Tri-1", ms:"Trichoderma asperellum Tri-1", crop:{zh:"榴莲",en:"durian", ms:"durian"}, dur:true,
+    fig:{zh:"86.17%",en:"86.17%", ms:"86.17%"}, tier:"plate",
+    zh2:"培养皿抑菌率，对拟茎点霉（Phomopsis sp.）。菌株从榴莲病组织分离而来，这一点有价值，但 86% 是平板数字，没有田间防效。",
+    en2:"Plate inhibition, against Phomopsis sp. The strain was isolated from diseased durian tissue, which counts for something — but 86% is a petri-dish number with no field efficacy behind it.", ms2:"Perencatan piring, terhadap Phomopsis sp. Strain ini dipencilkan daripada tisu durian yang berpenyakit, dan itu ada nilainya — tetapi 86% ialah angka piring kultur tanpa keberkesanan ladang di sebaliknya." },
+  { zh:"枯草芽孢杆菌 PTA-271", en:"Bacillus subtilis PTA-271", ms:"Bacillus subtilis PTA-271", crop:{zh:"葡萄",en:"grapevine", ms:"anggur"}, dur:false,
+    fig:{zh:"无数值",en:"no figure",ms:"tiada angka"}, tier:"inoc",
+    zh2:"通过激发免疫反应并解毒真菌毒素来对抗葡萄座腔菌回枯。机制清楚，但没有可搬到榴莲的防效数字。",
+    en2:"Counteracts Botryosphaeria dieback by triggering immune responses and detoxifying the fungal phytotoxins. The mechanism is clear, but there is no efficacy figure transferable to durian.", ms2:"Melawan mati rosot Botryosphaeria dengan mencetuskan tindak balas imun dan menyahtoksik fitotoksin kulat. Mekanismenya jelas, tetapi tiada angka keberkesanan yang boleh dipindahkan kepada durian." },
+  { zh:"缓病类芽孢杆菌 CBCA-2（Paenibacillus lentimorbus）", en:"Paenibacillus lentimorbus CBCA-2", ms:"Paenibacillus lentimorbus CBCA-2", crop:{zh:"开心果",en:"pistachio", ms:"pistasio"}, dur:false,
+    fig:{zh:"无数值",en:"no figure",ms:"tiada angka"}, tier:"plate",
+    zh2:"被认为是防治葡萄座腔菌有前景的生防菌。同一篇也直说：开心果上的木霉试验总体不成功。这条留在这里就是提醒——木霉不是万能的，别的作物上它失败过。",
+    en2:"Reported as promising for Botryosphaeria dothidea. The same review states plainly that Trichoderma trials in pistachio have generally been unsuccessful. This entry stays here as the reminder: Trichoderma is not universal, and it has failed on other crops.", ms2:"Dilaporkan berpotensi terhadap Botryosphaeria dothidea. Ulasan yang sama menyatakan dengan jelas bahawa ujian Trichoderma pada pistasio umumnya tidak berjaya. Catatan ini kekal di sini sebagai peringatan: Trichoderma bukan penyelesaian universal, dan ia pernah gagal pada tanaman lain." }
+];
+
+/* ---------- 4. COMPATIBILITY ---------- */
+/* Principles only. No product shortlist — anything not in the durian entry is out of scope. */
+var COMPAT = [
+  { s:"harm", zh:"三唑类会抑制木霉", en:"Triazoles suppress Trichoderma", ms:"Triazol merencat Trichoderma",
+    zh2:"这是最常见的自毁操作：一边灌木霉，一边喷三唑类。文献中多种三唑类对木霉的抑制率可达 100%。若要同时做两件事，只能在时间上错开，不能同桶。<br><br><b>但对芽孢杆菌不一样。</b>三唑类的靶标是麦角固醇合成路径上的 CYP51，细菌不合成麦角固醇，也就没有这个靶点——所以苯醚甲环唑这类药对芽孢杆菌制剂的直接抑制有限。实务上的意思是：非用三唑类不可的那段时间，生物防治可以先靠芽孢杆菌撑着，木霉等药过了再补。（机理判定，非榴莲田间数据；配方中的助剂对细菌的影响另计。）",
+    en2:"The commonest self-defeating move: drenching Trichoderma while spraying a triazole. Several triazoles inhibit Trichoderma by up to 100% in published testing. If you must do both, separate them in time — never in the same tank.<br><br><b>Bacillus is a different case.</b> Triazoles target CYP51 in the ergosterol pathway; bacteria do not make ergosterol and have no such target, so difenoconazole and its relatives do little direct damage to a Bacillus inoculant. Practically: during a window when a triazole is unavoidable, let Bacillus carry the biological side and reintroduce Trichoderma once the interval has passed. (Mode-of-action reasoning, not durian field data; formulation adjuvants are a separate question for bacteria.)", ms2:"Langkah paling biasa yang merugikan diri sendiri: menyiram Trichoderma sambil menyembur triazol. Beberapa triazol merencat Trichoderma sehingga 100% dalam ujian yang diterbitkan. Jika terpaksa buat kedua-duanya, asingkan masanya — jangan sekali-kali dalam tangki yang sama.<br><br><b>Bacillus lain ceritanya.</b> Triazol menyasarkan CYP51 dalam laluan ergosterol; bakteria tidak menghasilkan ergosterol dan tiada sasaran itu, jadi difenoconazole dan sekeluarganya kurang memudaratkan inokulan Bacillus secara langsung. Secara praktikal: sewaktu tempoh triazol tidak dapat dielakkan, biarkan Bacillus memikul bahagian biologi dan masukkan semula Trichoderma selepas selang masa berlalu. (Pertimbangan cara tindakan, bukan data ladang durian; bahan tambahan dalam formulasi ialah persoalan berasingan bagi bakteria.)" },
+  { s:"spare", zh:"嘧菌酯是少数不伤木霉的一支", en:"Azoxystrobin is one of the few that spare Trichoderma", ms:"Azoxystrobin antara sedikit yang tidak memudaratkan Trichoderma",
+    zh2:"推荐剂量下单用、或与苯醚甲环唑复配，均未抑制木霉生长。道理是：这类药掐断真菌的一条呼吸通路，而木霉另外还有一条备用通路，正好绕得过去。<br><br>但别把这当保证。第一，木霉在培养皿里比在树上更容易走那条备用通路，所以试验结果偏乐观；第二，数据来自别的作物、别的木霉菌株，换一个菌株未必一样。真要一起用，先拿你自己那瓶菌剂在一个培养皿上试一次，看它还长不长。",
+    en2:"At recommended rates, alone or mixed with difenoconazole, it did not inhibit Trichoderma growth. The reason: this class cuts one of the fungus's breathing routes, and Trichoderma happens to have a spare route that goes around it.<br><br>Do not read that as a guarantee. First, Trichoderma uses that spare route more freely in a petri dish than in a tree, so the test result flatters it. Second, the data come from other crops and other Trichoderma strains, and yours may behave differently. If you really want to use them together, test your own product on one plate first and see whether it still grows.", ms2:"Pada kadar disyorkan, sama ada sendirian atau bercampur dengan difenoconazole, ia tidak merencat pertumbuhan Trichoderma. Sebabnya: kelas ini memotong salah satu laluan pernafasan kulat, dan Trichoderma kebetulan mempunyai laluan simpanan yang memintasnya.<br><br>Jangan anggap itu sebagai jaminan. Pertama, Trichoderma menggunakan laluan simpanan itu dengan lebih bebas dalam piring kultur berbanding dalam pokok, jadi keputusan ujian itu memihak kepadanya. Kedua, datanya daripada tanaman lain dan strain Trichoderma lain, dan milik anda mungkin berbeza. Jika anda benar-benar mahu menggunakannya bersama, uji produk anda sendiri pada satu piring dahulu dan lihat sama ada ia masih tumbuh." },
+  { s:"spare", zh:"QoI 对芽孢杆菌基本无直接作用", en:"QoI has little direct effect on Bacillus", ms:"QoI kurang memberi kesan langsung pada Bacillus",
+    zh2:"QoI 的靶标是真菌线粒体的细胞色素 b，细菌没有线粒体，所以嘧菌酯这类药对芽孢杆菌制剂的直接杀伤有限。但这只是「不直接杀死」，不等于生态上无影响——压掉土壤真菌群落，间接改变的东西不一定对你有利。",
+    en2:"QoI targets cytochrome b in fungal mitochondria, and bacteria have no mitochondria, so a strobilurin does little direct damage to a Bacillus inoculant. That is only an absence of direct kill, not ecological neutrality — flattening the soil fungal community changes things indirectly, not necessarily in your favour.", ms2:"QoI menyasarkan sitokrom b dalam mitokondria kulat, dan bakteria tiada mitokondria, jadi strobilurin kurang memudaratkan inokulan Bacillus secara langsung. Itu hanya bermakna tiada bunuhan langsung, bukan bermakna ia neutral dari segi ekologi — meratakan komuniti kulat tanah mengubah keadaan secara tidak langsung, dan belum tentu memihak kepada anda." },
+  { s:"harm", zh:"SDHI（FRAC 7）：对木霉要当成有害，对芽孢杆菌别照搬三唑类的结论", en:"SDHI (FRAC 7): assume it harms Trichoderma, and do not carry the triazole reasoning over to Bacillus", ms:"SDHI (FRAC 7): anggap ia memudaratkan Trichoderma, dan jangan pindahkan hujah triazol kepada Bacillus",
+    zh2:"SDHI 的靶标是琥珀酸脱氢酶——所有真菌都有的呼吸酶，木霉也不例外。所以合理的预设是它会抑制木霉，不要当成兼容。<br><br>芽孢杆菌那边要小心：三唑类之所以对细菌影响小，是因为细菌根本不合成麦角固醇、没有那个靶点；但琥珀酸脱氢酶细菌是有的。选择性是配方设计出来的，不是天生不存在靶标——所以「细菌没有靶点」这套推理在 SDHI 上不成立，兼容性应视为未知。<br><br>（此条为机理判定，没有引用具体试验；真要同用，先用你自己的菌剂做一次对峙试验。）",
+    en2:"SDHIs target succinate dehydrogenase — a respiratory enzyme every fungus has, Trichoderma included. So the sensible default is that it suppresses Trichoderma; do not treat it as compatible.<br><br>Be careful on the Bacillus side. Triazoles spare bacteria because bacteria do not make ergosterol and simply have no such target. Succinate dehydrogenase, however, bacteria do have. Selectivity here is engineered into the molecule rather than guaranteed by an absent target, so the no-target argument does not carry over and compatibility should be treated as unknown.<br><br>(Mode-of-action reasoning, no specific trial cited. If you intend to use both, run a dual-culture test with your own inoculant first.)", ms2:"SDHI menyasarkan suksinat dehidrogenase — enzim pernafasan yang ada pada setiap kulat, termasuk Trichoderma. Jadi andaian yang munasabah ialah ia merencat Trichoderma; jangan anggap ia serasi.<br><br>Berhati-hati di pihak Bacillus. Triazol tidak memudaratkan bakteria kerana bakteria tidak menghasilkan ergosterol dan memang tiada sasaran itu. Namun suksinat dehidrogenase memang ada pada bakteria. Kepilihan di sini direka dalam molekulnya, bukan dijamin oleh ketiadaan sasaran, jadi hujah tiada-sasaran itu tidak boleh dipindahkan dan keserasiannya patut dianggap tidak diketahui.<br><br>(Pertimbangan cara tindakan, tiada ujian khusus dirujuk. Jika anda berhasrat menggunakan kedua-duanya, jalankan ujian dua kultur dengan inokulan anda sendiri dahulu.)" },
+  { s:"harm", zh:"复配产品：按最伤菌剂的那一支算", en:"Pre-mixes: judge them by their harshest component", ms:"Campuran siap: nilaikan mengikut komponen paling keras",
+    zh2:"一瓶里常常不止一个有效成分。对生物防治来说，混的是什么就按最伤的那一支算——FRAC 7＋3 的复配，对你的木霉而言就是一支三唑类，不会因为多了一个成分而变温和。看瓶上的成分表，别看商品名。",
+    en2:"A single bottle often holds more than one active. For a biological programme, judge the mix by its harshest component — a FRAC 7 + 3 pre-mix is a triazole as far as your Trichoderma is concerned, and adding a second active does not soften it. Read the ingredient list, not the trade name.", ms2:"Satu botol selalunya mengandungi lebih daripada satu bahan aktif. Bagi program biologi, nilaikan campuran itu mengikut komponen yang paling keras — campuran siap FRAC 7 + 3 tetap sebuah triazol pada pandangan Trichoderma anda, dan menambah bahan aktif kedua tidak melembutkannya. Baca senarai bahan, bukan nama dagang." },
+  { s:"partharm", zh:"铜制剂对木霉是部分抑制", en:"Copper partially suppresses Trichoderma", ms:"Kuprum merencat Trichoderma sebahagiannya",
+    zh2:"研究中菌丝抑制约 22.74–38.66%。不是全杀，但也别在涂木霉膏的同一周喷铜。",
+    en2:"Around 22.74–38.66% mycelial inhibition in testing. Not a wipeout, but do not spray copper the same week you paint Trichoderma into wounds.", ms2:"Kira-kira 22.74–38.66% perencatan miselium dalam ujian. Bukan pemusnahan menyeluruh, tetapi jangan sembur kuprum pada minggu yang sama anda menyapu Trichoderma pada luka." },
+  { s:"harm", zh:"广谱杀菌剂会压掉土壤菌群", en:"Broad-spectrum fungicides flatten the soil community", ms:"Racun kulat spektrum luas meratakan komuniti tanah",
+    zh2:"榴莲上的一项兼容性研究显示：某些杀菌剂处理 60 天后土壤微生物数由 2.93–3.67×10³ 跌至 0.12×10³ CFU/g，而另一些则维持稳定。喷什么，决定你的生防菌还在不在。",
+    en2:"A durian compatibility study found soil microbial counts falling from 2.93–3.67×10³ to 0.12×10³ CFU/g at 60 days under some fungicide treatments, while others left them stable. What you spray decides whether your biologicals are still alive.", ms2:"Satu kajian keserasian pada durian mendapati kiraan mikrob tanah jatuh daripada 2.93–3.67×10³ kepada 0.12×10³ CFU/g pada hari ke-60 di bawah sesetengah rawatan racun kulat, manakala rawatan lain mengekalkannya stabil. Apa yang anda sembur menentukan sama ada agen biologi anda masih hidup." },
+  { s:"do", zh:"轮替机理，不是混桶", en:"Rotate modes of action — do not tank-mix", ms:"Gilirkan cara tindakan — jangan campur dalam tangki",
+    zh2:"生物防治打底、化学药做救火，两者在时间上分开。同一 FRAC 号一季不要连用，单位点药（FRAC 3、11）尤其如此。",
+    en2:"Biologicals as the base, chemistry as rescue, separated in time. Do not repeat the same FRAC number within a season, especially the single-site groups (FRAC 3, 11).", ms2:"Agen biologi sebagai asas, bahan kimia sebagai penyelamat, diasingkan mengikut masa. Jangan ulang nombor FRAC yang sama dalam satu musim, terutamanya kumpulan satu tapak (FRAC 3, 11)." },
+  { s:"do", zh:"先确诊，再谈药", en:"Diagnose before discussing product at all", ms:"Kenal pasti penyakit dahulu sebelum bercakap tentang racun",
+    zh2:"疫霉药对真菌无效，真菌药对疫霉无效。判错病，无论选哪一支都是浪费一季。",
+    en2:"Oomycete products do nothing to fungi and fungal products do nothing to oomycetes. Get the diagnosis wrong and any product wastes a season.", ms2:"Racun oomiset tiada kesan pada kulat dan racun kulat tiada kesan pada oomiset. Silap mengenal pasti penyakit, apa jua racun pun membazir satu musim." }
+];
+
+/* ---------- 5. FIELD PROTOCOL ---------- */
+/* Ranked by what actually moves the needle on trunk disease. */
+var LEVER = [
+  { w:100, zh:"清园 ＋ 当天封口", en:"Sanitation + same-day wound sealing", ms:"Kebersihan kebun + tutup luka pada hari sama",
+    zh2:"切断侵染源与入侵口。葡萄座腔菌类靠空中分生孢子从新鲜修剪伤口进入，病枝留在园里就是下一季的孢子源。这一步不花钱，效果最大。",
+    en2:"Cuts off both the spore source and the entry point. The Botryosphaeriaceae enter through fresh pruning wounds via airborne conidia, and prunings left in the orchard are next season's inoculum. Costs nothing, moves the most.", ms2:"Memutuskan kedua-dua sumber spora dan pintu masuknya. Botryosphaeriaceae masuk melalui luka pangkasan baharu menerusi konidia di udara, dan sisa pangkasan yang ditinggalkan dalam kebun ialah sumber jangkitan musim depan. Tiada kos, kesan paling besar." },
+  { w:82, zh:"排水与树势", en:"Drainage and tree vigour", ms:"Saliran dan kecergasan pokok",
+    zh2:"文献原话：这类溃疡与回枯在长势差的立地最严重，树势旺时溃疡扩展通常被遏止。疫霉需要自由水，镰刀菌趁根颈长期潮湿入侵——三种病的诱因都在这里。",
+    en2:"Straight from the literature: these cankers and diebacks are most severe where trees grow poorly, and canker development is usually arrested on vigorous trees. Phytophthora needs free water and Fusarium exploits a permanently damp collar — all three pathogens trace back to this.", ms2:"Terus daripada kajian: kanker dan mati rosot ini paling teruk di tempat pokok tumbuh lemah, dan perkembangan kanker biasanya terhenti pada pokok yang cergas. Phytophthora perlukan air bebas dan Fusarium memanfaatkan pangkal batang yang sentiasa lembap — ketiga-tiga patogen berbalik kepada perkara ini." },
+  { w:55, zh:"生物防治", en:"Biologicals", ms:"Agen biologi",
+    zh2:"木霉涂伤口＋芽孢杆菌喷干灌根。田间可期望的量级是 53.51%（海南镰刀菌茎腐），不是九成。作为常规打底，不是救火手段。",
+    en2:"Trichoderma into wounds plus Bacillus on trunk and soil. The realistic field magnitude is 53.51% (Hainan, Fusarium stem rot), not 90%. A routine base layer, not a rescue.", ms2:"Trichoderma pada luka serta Bacillus pada batang dan tanah. Magnitud ladang yang realistik ialah 53.51% (Hainan, reput batang Fusarium), bukan 90%. Lapisan asas rutin, bukan penyelamat." },
+  { w:30, zh:"化学药剂", en:"Chemical fungicides", ms:"Racun kulat kimia",
+    zh2:"排最后，有原因：树干溃疡长在死木质里，没有活的输导组织，内吸药很难到达正在扩展的病斑边缘。这也是所有木本作物干部病害化学防治都不理想的原因。仅在确诊真菌性溃疡且快速扩展时使用，并严格轮替机理。",
+    en2:"Last, for a reason: a trunk canker sits in dead wood with no functioning xylem, so systemic fungicides struggle to reach the advancing margin. This is why chemical control underperforms for trunk disease across every woody crop. Use only for a confirmed, fast-advancing fungal canker, and rotate modes of action strictly.", ms2:"Terakhir, dan ada sebabnya: kanker batang berada dalam kayu mati tanpa xilem yang berfungsi, jadi racun kulat sistemik sukar mencapai pinggir yang sedang merebak. Inilah sebabnya kawalan kimia kurang berkesan untuk penyakit batang pada semua tanaman berkayu. Gunakan hanya untuk kanker kulat yang disahkan dan merebak cepat, dan gilirkan cara tindakan dengan ketat." }
+];
+
+var STEPS = [
+  { zh:"先确诊，再花钱", en:"Confirm the pathogen before spending anything", ms:"Sahkan patogennya sebelum membelanjakan apa-apa",
+    zh2:"用「判症」页。刮开病斑边缘找三条决定性线索：针尖黑色小点＝葡萄座腔菌类；粉白／粉红霉层＝镰刀菌；铁锈色流胶、组织湿腐＝疫霉。", en2:"Use the Triage tab. Scrape the lesion margin for the three decisive signs: pinhead black dots = Botryosphaeriaceae; white or pink mould = Fusarium; rust-coloured ooze and wet rot = Phytophthora.", ms2:"Gunakan tab Kenal Pasti. Kikis pinggir lesi untuk mencari tiga tanda yang menentukan: bintik hitam sebesar kepala jarum = Botryosphaeriaceae; kulapuk putih atau merah jambu = Fusarium; lelehan warna karat dan reput basah = Phytophthora." },
+  { zh:"清园：剪回到健康木质部", en:"Sanitation: cut back to clean wood", ms:"Kebersihan kebun: potong balik sampai ke kayu yang bersih",
+    zh2:"病枝一律搬离果园烧掉。剪一株消一次刀。", en2:"Carry infected prunings out of the orchard and burn them. Disinfect the blade between trees.", ms2:"Bawa sisa pangkasan yang berpenyakit keluar dari kebun dan bakar. Nyahkuman mata alat antara pokok." },
+  { zh:"当天封口，不隔夜", en:"Seal every wound the same day you make it", ms:"Tutup setiap luka pada hari yang sama anda membuatnya",
+    zh2:"新鲜修剪伤口是这类病菌的主要入侵口。木霉膏涂进刀口，是全app回报最高的单一动作。", en2:"Fresh pruning wounds are the main entry site. A Trichoderma paste into the cut is the highest-return single action in this app.", ms2:"Luka pangkasan yang baharu ialah pintu masuk utama. Menyapu Trichoderma pada luka itu ialah tindakan tunggal berpulangan tertinggi dalam aplikasi ini." },
+  { zh:"只在干燥天修剪", en:"Prune in dry weather only", ms:"Pangkas hanya ketika cuaca kering",
+    zh2:"雨前动刀等于替病菌开门。", en2:"Cutting before rain is opening the door.", ms2:"Memotong sebelum hujan sama seperti membuka pintu." },
+  { zh:"把覆盖物、泥土扒离树干基部", en:"Pull mulch and soil away from the collar", ms:"Tarik sungkupan dan tanah menjauhi pangkal batang",
+    zh2:"根颈长期潮湿同时招来疫霉与镰刀菌。露出根颈，是最便宜的一步。", en2:"A permanently damp collar invites both Phytophthora and Fusarium. Exposing the root collar is the cheapest step here.", ms2:"Pangkal batang yang sentiasa lembap menjemput Phytophthora dan Fusarium. Mendedahkan pangkal akar ialah langkah paling murah di sini." },
+  { zh:"修排水，养树势", en:"Fix drainage, build vigour", ms:"Baiki saliran, bina kecergasan pokok",
+    zh2:"消除诱因比任何喷药重要。低洼、积水、断根、超载挂果——先解决这些。", en2:"Removing what predisposed the tree matters more than any spray. Low spots, waterlogging, root damage, over-cropping — deal with these first.", ms2:"Menghapuskan punca yang melemahkan pokok lebih penting daripada sebarang semburan. Kawasan rendah, air bertakung, kerosakan akar, buah terlalu lebat — uruskan ini dahulu." },
+  { zh:"生物防治打底，化学药只做救火", en:"Biologicals as the base, chemistry only as rescue", ms:"Agen biologi sebagai asas, bahan kimia hanya sebagai penyelamat",
+    zh2:"木霉＋芽孢杆菌为常规。确诊真菌性溃疡且扩展快时才上三唑／甲氧基丙烯酸酯类，且与生物制剂错开时间，不可混桶。", en2:"Trichoderma + Bacillus as routine. Bring in a triazole or strobilurin only for a confirmed, fast-advancing fungal canker, separated in time from the biologicals — never tank-mixed.", ms2:"Trichoderma + Bacillus sebagai amalan biasa. Guna triazol atau strobilurin hanya untuk kanker kulat yang disahkan dan merebak cepat, diasingkan masanya daripada agen biologi — jangan sekali-kali dicampur dalam tangki." },
+  { zh:"轮替机理，别连用同一组", en:"Rotate modes of action, never repeat a group", ms:"Gilirkan cara tindakan, jangan ulang kumpulan yang sama",
+    zh2:"甲氧基丙烯酸酯类（FRAC 11）一个点突变就能完全失效；三唑类（FRAC 3）抗性逐步累积。同一 FRAC 号一季不要用超过两次。", en2:"A single point mutation can knock out the strobilurins (FRAC 11) entirely; triazole (FRAC 3) sensitivity shifts gradually. Do not use the same FRAC number more than twice in a season.", ms2:"Satu mutasi titik boleh melumpuhkan strobilurin (FRAC 11) sepenuhnya; kepekaan triazol (FRAC 3) berubah secara beransur. Jangan gunakan nombor FRAC yang sama lebih daripada dua kali dalam satu musim." },
+  { zh:"判到根部病害，换一套做法", en:"If it is root disease, change the whole approach", ms:"Jika ia penyakit akar, tukar seluruh pendekatan",
+    zh2:"喷树干没有意义。扒开树头周围表土检查根面有没有白色菌索；确认后，在病株与健康邻株之间挖一道隔离沟切断根系接触；病株连树头挖除、搬走烧掉，别把树桩留在园里。这条行上的邻株要盯住，通常是下一个。", en2:"Spraying the trunk is pointless. Open the topsoil around the collar and check the root surfaces for white strands. Once confirmed, dig an isolation trench between the affected tree and its healthy neighbours to break root contact; take the tree out with its stump and burn it rather than leaving the stump standing. Watch the neighbours down that row — they are usually next.", ms2:"Menyembur batang tidak berguna. Buka tanah atas di sekeliling pangkal batang dan periksa permukaan akar untuk benang putih. Setelah disahkan, gali parit pengasingan antara pokok yang dijangkiti dan jiran sihatnya untuk memutuskan sentuhan akar; keluarkan pokok itu bersama tunggulnya dan bakar, jangan biarkan tunggul itu tinggal. Perhatikan pokok jiran di barisan itu — biasanya merekalah yang seterusnya." },
+  { zh:"环剥过半就别再治了", en:"Past half-girdled, stop treating", ms:"Melebihi separuh lilitan, berhenti merawat",
+    zh2:"病斑绕枝条或树干超过一半，上面就断了水源。砍到病斑以下，搬走烧掉。主干根颈过半，整棵列入替换——留着是园里的孢子源。", en2:"Once a lesion wraps more than half the circumference, everything above it has lost its water supply. Cut below it and carry it out to burn. If the trunk at the collar is past half, plan replacement — a standing dead tree is a spore source.", ms2:"Apabila lesi melingkari lebih separuh lilitan, semua di atasnya sudah kehilangan bekalan air. Potong di bawahnya dan bawa keluar untuk dibakar. Jika batang di pangkal sudah melebihi separuh, rancang penggantian — pokok mati yang dibiarkan berdiri ialah sumber spora." },
+  { zh:"回头看伤口有没有在愈合", en:"Go back and see whether the wound is closing", ms:"Kembali dan lihat sama ada luka itu sedang menutup",
+    zh2:"不用尺。看边缘：新长出一圈微微隆起的愈伤组织，颜色比病斑浅，就是止住了；边缘还是湿的、还在往外扩，就是没止住。隔几周看同一棵，比记数字管用。", en2:"No ruler needed. Look at the margin: a slightly raised ring of callus, paler than the lesion, means it has stopped; a margin still wet and still creeping means it has not. Revisit the same tree a few weeks later — that tells you more than any number.", ms2:"Tidak perlu pembaris. Lihat pinggirnya: lingkaran kalus yang timbul sedikit dan lebih pucat daripada lesi bermakna ia sudah berhenti; pinggir yang masih basah dan masih merayap bermakna belum. Lawati semula pokok yang sama beberapa minggu kemudian — itu memberitahu lebih banyak daripada sebarang angka." }
+];
+
+/* ---------- fruit rot: where the money is actually lost ---------- */
+var FRUIT = [
+  { s:"p", zh:"疫霉果腐：接触面先烂", en:"Phytophthora fruit rot: starts where the fruit touches", ms:"Reput buah Phytophthora: bermula di tempat buah bersentuhan",
+    zh2:"病斑水渍状、褐色，边界糊，从果实贴地或贴枝的那一面开始，湿度高时表面长出白色绵状霉。来源是土里的疫霉被雨水溅上去——所以低垂、近地的果最先中。同一株树若树干也在流胶，果腐多半是同一个病原。",
+    en2:"Water-soaked brown lesions with a blurred edge, starting on the side that touches the ground or a branch, with white cottony growth on the surface in humid weather. The source is Phytophthora splashed up from the soil, so low-hanging fruit go first. If the same tree is also weeping at the trunk, the fruit rot is probably the same pathogen.", ms2:"Lesi perang berair dengan pinggir kabur, bermula di bahagian yang menyentuh tanah atau dahan, dengan tumbuhan putih seperti kapas pada permukaan ketika cuaca lembap. Puncanya ialah Phytophthora yang terpercik naik dari tanah, jadi buah yang rendah kena dahulu. Jika pokok yang sama juga meleleh getah pada batang, reput buah itu berkemungkinan patogen yang sama." },
+  { s:"b", zh:"蒂腐：从果柄那一端开始", en:"Stem-end rot: starts at the stalk", ms:"Reput hujung tangkai: bermula di tangkai",
+    zh2:"从果蒂／果柄切口向下扩展，褐至黑褐色，果肉发苦。病菌多半在树上就已经潜伏在果柄里，采收造成的伤口给了它机会——这就是为什么蒂腐常常在采后几天才显出来。可可毛色二孢是主角，和树干回枯是同一类病原。",
+    en2:"Spreads down from the stalk or the cut end, brown to blackish, with bitter flesh. The fungus is usually already latent in the peduncle while the fruit is on the tree, and the harvest wound gives it its opening — which is why stem-end rot often appears days after picking. Lasiodiplodia is the main one, the same group as the trunk dieback.", ms2:"Merebak turun dari tangkai atau hujung potongan, perang hingga kehitaman, dengan isi yang pahit. Kulatnya biasanya sudah pendam dalam tangkai semasa buah masih di pokok, dan luka semasa menuai memberinya peluang — sebab itulah reput hujung tangkai selalunya muncul beberapa hari selepas dipetik. Lasiodiplodia yang utama, kumpulan yang sama dengan mati rosot batang." },
+  { s:"do", zh:"采前：别让果实碰地、碰湿", en:"Before harvest: keep fruit off the ground and out of the wet", ms:"Sebelum menuai: jauhkan buah daripada tanah dan kelembapan",
+    zh2:"清掉树下落果与病果，它们是下一批的接种源。低垂果枝适当疏果或托高；园里排水做好，土面越干，溅上去的越少。树干上的病先处理，果实上的压力自然小一半。",
+    en2:"Clear fallen and rotten fruit from under the tree — they are the inoculum for the next batch. Thin or lift low-hanging fruit; keep the orchard drained, because a drier soil surface splashes less. Deal with the disease on the trunk first and the pressure on the fruit halves itself.", ms2:"Bersihkan buah gugur dan buah reput di bawah pokok — itulah sumber jangkitan untuk kelompok seterusnya. Jarangkan atau angkat buah yang rendah; pastikan saliran kebun baik, kerana permukaan tanah yang lebih kering kurang memercik. Uruskan penyakit pada batang dahulu dan tekanan pada buah akan berkurang separuh dengan sendirinya." },
+  { s:"do", zh:"采收：伤口和落地是两个最大来源", en:"At harvest: wounds and ground contact are the two biggest sources", ms:"Semasa menuai: luka dan sentuhan tanah ialah dua punca terbesar",
+    zh2:"留一段果柄，别齐着果蒂剪；接住，别让果实直接落地；箩筐、垫布、地面先清干净。采后堆在裸土上，等于把土里的疫霉直接送到果面。",
+    en2:"Leave a length of stalk rather than cutting flush; catch the fruit instead of letting it drop; clean baskets, sheets and the ground first. Stacking fresh fruit on bare soil delivers soil Phytophthora straight onto the skin.", ms2:"Tinggalkan sedikit tangkai dan jangan potong rapat; sambut buah, jangan biarkan ia jatuh; bersihkan bakul, kain alas dan tanah terlebih dahulu. Menimbun buah segar atas tanah kosong menghantar Phytophthora tanah terus ke kulit buah." },
+  { s:"note", zh:"采后处理：有数据，但别当万灵药", en:"Postharvest dips: there is data, but it is not a cure-all", ms:"Rendaman lepas tuai: ada datanya, tetapi bukan penyelesaian menyeluruh",
+    zh2:"榴莲果实试验：篮状菌 KUFA1604 与棘孢木霉 KUFA1606 的粗提物在 10,000 ppm 浸果，对可可毛色二孢病害严重度降低 49.41–54.51%，对疫霉 66.90–70.53%。注意这是接种试验、剂量很高，而且大马榴莲没有登记的采后杀菌剂——处理得干净、采得小心，比浸什么都有效。",
+    en2:"From a durian fruit trial: crude extracts of Talaromyces tratensis KUFA1604 and T. asperellum KUFA1606 at 10,000 ppm as a dip reduced Lasiodiplodia severity by 49.41–54.51% and Phytophthora by 66.90–70.53%. Note this was an inoculation trial at a high dose, and there is no registered postharvest fungicide for durian in Malaysia — clean handling and careful picking do more than any dip.", ms2:"Daripada satu ujian buah durian: ekstrak kasar Talaromyces tratensis KUFA1604 dan T. asperellum KUFA1606 pada 10,000 ppm sebagai rendaman mengurangkan keterukan Lasiodiplodia sebanyak 49.41–54.51% dan Phytophthora 66.90–70.53%. Perhatikan ini ujian inokulasi pada dos tinggi, dan tiada racun kulat lepas tuai yang berdaftar untuk durian di Malaysia — pengendalian yang bersih dan pemetikan yang berhati-hati lebih berkesan daripada sebarang rendaman." }
+];
+
+/* ---------- tool hygiene: one saw can carry one tree's problem to twenty ---------- */
+var SANI = [
+  { s:"do", zh:"什么时候消：每棵树之间，都要", en:"When: between every tree, without exception", ms:"Bila: antara setiap pokok, tanpa kecuali",
+    zh2:"一把没消过的锯子，可以把一棵树的病带到接下来二十棵。同一棵树上，从病斑切到健康部位之前也要消一次——不然你只是把病菌往干净的木头里推。",
+    en2:"One unsterilised saw can carry a single tree's problem into the next twenty. Do it within a tree too, before moving from a lesion to clean wood — otherwise you are just pushing the pathogen into sound timber.", ms2:"Satu gergaji yang tidak dinyahkuman boleh membawa masalah satu pokok kepada dua puluh pokok seterusnya. Lakukannya dalam pokok yang sama juga, sebelum berpindah daripada lesi ke kayu yang bersih — jika tidak, anda hanya menolak patogen masuk ke dalam kayu yang sihat." },
+  { s:"do", zh:"怎么消：酒精最省事，漂白水最便宜", en:"How: alcohol is easiest, bleach is cheapest", ms:"Cara: alkohol paling mudah, peluntur paling murah",
+    zh2:"70% 酒精喷湿刀刃、停 30 秒即可，不腐蚀、不用冲洗，随身带一瓶最实际。家用漂白水按 1 份兑 9 份水，浸 1–2 分钟，但之后必须清水冲洗擦干——漂白水会锈蚀刀具和弹簧。喷灯烧灼刀刃几秒也有效，适合大锯。",
+    en2:"70% alcohol: wet the blade, wait 30 seconds. No corrosion, no rinsing, and a bottle in your pocket is the most practical option. Household bleach at 1 part to 9 parts water works with a 1–2 minute soak, but must be rinsed and dried afterwards — it corrodes blades and springs. A few seconds with a blowtorch also works and suits a large saw.", ms2:"Alkohol 70%: basahkan mata alat, tunggu 30 saat. Tiada kakisan, tidak perlu dibilas, dan sebotol dalam poket ialah pilihan paling praktikal. Peluntur rumah pada nisbah 1 bahagian kepada 9 bahagian air berkesan dengan rendaman 1–2 minit, tetapi mesti dibilas dan dikeringkan selepas itu — ia mengakis mata alat dan spring. Beberapa saat dengan penyembur api juga berkesan dan sesuai untuk gergaji besar." },
+  { s:"harm", zh:"没用的做法", en:"What does not work", ms:"Apa yang tidak berkesan",
+    zh2:"用布擦一擦、用清水冲一冲、在裤子上蹭两下——都不是消毒，只是把木屑抹开。刀刃上肉眼看不见的湿木屑就是接种源。也别只消刀尖，整个接触过病组织的部分都要。",
+    en2:"Wiping with a rag, rinsing with water, or a couple of swipes on your trousers is not disinfection — it just spreads the sawdust around. The damp wood dust you cannot see on the blade is the inoculum. And do not clean only the tip: everything that touched diseased tissue counts.", ms2:"Mengelap dengan kain, membilas dengan air, atau menyapu pada seluar bukan penyahkumanan — itu hanya menyebarkan habuk kayu. Habuk kayu lembap yang tidak kelihatan pada mata alat itulah sumber jangkitannya. Dan jangan bersihkan hujungnya sahaja: semua bahagian yang menyentuh tisu berpenyakit dikira." },
+  { s:"do", zh:"不只是刀：手套、鞋底、除草机", en:"Not just blades: gloves, boots, the strimmer", ms:"Bukan mata alat sahaja: sarung tangan, kasut, mesin rumput",
+    zh2:"根部病害尤其如此——带着病土从一棵树走到另一棵，跟用脏刀是一回事。刚处理过病株，先清鞋底再进健康区；除草机打到过病树头，也该冲一冲。",
+    en2:"This matters most for root disease — walking infected soil from one tree to the next is the same act as using a dirty blade. After working on an affected tree, clean your boots before entering a healthy block, and rinse the strimmer if it has been against a diseased collar.", ms2:"Ini paling penting bagi penyakit akar — membawa tanah yang dijangkiti dari satu pokok ke pokok lain sama sahaja dengan menggunakan mata alat yang kotor. Selepas bekerja pada pokok yang dijangkiti, bersihkan kasut sebelum masuk ke blok yang sihat, dan bilas mesin rumput jika ia pernah tersentuh pangkal batang yang berpenyakit." },
+  { s:"note", zh:"病株的顺序：最后处理", en:"Sequence: work the sick trees last", ms:"Susunan: kerjakan pokok yang sakit paling akhir",
+    zh2:"能安排的话，先修健康树，最后才处理病株，当天工具用完再一次彻底清理。这一条不花一分钱，省下的是整排树。",
+    en2:"Where you can choose, prune the healthy trees first and leave the affected ones until last, then clean everything thoroughly at the end of the day. This costs nothing and can save a whole row.", ms2:"Jika boleh memilih, pangkas pokok yang sihat dahulu dan tinggalkan yang dijangkiti sampai akhir, kemudian bersihkan semuanya dengan teliti di penghujung hari. Ini tiada kos dan boleh menyelamatkan satu barisan penuh." }
+];
+
+/* ---------- who to ask when the app runs out ---------- */
+var ASK = [
+  { s:"do", zh:"找看过这个病的人", en:"Find someone who has seen this before", ms:"Cari orang yang pernah melihat penyakit ini",
+    zh2:"处理过同样问题的农艺师，判断会快很多——他知道哪一条线索最值钱。开口先把部位和特征讲出来，他马上就能接上，不用从头猜。",
+    en2:"An agronomist who has handled this reads it far faster — he knows which clue is worth the most. Open with the position and the sign, and he can pick it up immediately instead of starting from guesswork.", ms2:"Juruteknologi pertanian yang pernah menanganinya membacanya jauh lebih cepat — dia tahu petunjuk mana yang paling bernilai. Mulakan dengan kedudukan dan tandanya, dan dia boleh terus faham tanpa perlu meneka dari awal." },
+  { s:"do", zh:"药商销售员：常常是最快到场的一位", en:"Product reps: often the fastest to show up", ms:"Wakil racun: selalunya paling cepat sampai",
+    zh2:"销售员对产品最熟，也最愿意跑一趟果园。长期合作下来的通常最实在——树救不回来，生意也做不长，这一点大家心里都清楚。你把病情讲得越清楚，他越能给你对的东西。",
+    en2:"Reps know the products best and are the most willing to drive out to the orchard. The ones you end up working with for years tend to be the straight ones — a tree that dies is a customer lost, and everyone knows it. The clearer you describe the problem, the better what he brings you will fit.", ms2:"Wakil racun paling arif tentang produk dan paling sanggup datang ke kebun. Mereka yang akhirnya bekerjasama dengan anda bertahun-tahun biasanya yang jujur — pokok yang mati bermakna pelanggan yang hilang, dan semua orang tahu itu. Semakin jelas anda menerangkan masalahnya, semakin sesuai apa yang dibawanya." },
+  { s:"do", zh:"你的描述就是对方的眼睛", en:"Your description is what he has to see with", ms:"Penerangan anda ialah matanya",
+    zh2:"多数时候人不在现场，全靠你说。讲三件事就够：部位（低位／伤口／根颈／地下）、方向（往上还是往下）、决定性特征（黑点／粉白霉／流胶／菌索）。这三句说完，问题已经清楚一半。",
+    en2:"Most of the time he is not standing at the tree, so your words are all he has. Three things cover it: position (low trunk, wound, collar, underground), direction (up or down), and the decisive sign (black dots, pale mould, weeping, root strands). Say those three and half the problem is already clear.", ms2:"Kebanyakan masa dia tidak berdiri di depan pokok itu, jadi kata-kata anda sahaja yang ada padanya. Tiga perkara sudah memadai: kedudukan (batang bawah, luka, pangkal batang, bawah tanah), arah (ke atas atau ke bawah), dan tanda yang menentukan (bintik hitam, kulapuk pucat, getah meleleh, benang akar). Sebut ketiga-tiganya dan separuh masalah sudah jelas." },
+  { s:"do", zh:"一个让双方对上频道的问题", en:"One question that gets you both on the same page", ms:"Satu soalan yang menyelaraskan kefahaman kedua-dua pihak",
+    zh2:"问一句：「这支药是针对卵菌的，还是针对真菌的？」再跟你判到的病原对一对。对得上，就放心照标签用；对不上，多半是病情没讲清楚——把部位和特征再说一遍，通常就顺了。",
+    en2:"Ask: is this product for an oomycete or for a fungus? Then line the answer up against what you diagnosed. If it matches, go ahead by the label. If it does not, the description probably did not land — say the position and the sign again and it usually sorts itself out.", ms2:"Tanya: racun ini untuk oomiset atau untuk kulat? Kemudian padankan jawapannya dengan apa yang anda kenal pasti. Jika sepadan, teruskan mengikut label. Jika tidak, kemungkinan besar penerangan tadi tidak sampai — sebut semula kedudukan dan tandanya dan biasanya ia selesai." },
+  { s:"do", zh:"要拍的三张照片", en:"The three photos to take", ms:"Tiga gambar yang perlu diambil",
+    zh2:"① 整棵树，看得出病在哪一段；② 病斑全貌，带一点健康树皮做对比；③ 刮开后病健交界的特写，要能看清有没有黑点或粉白霉。根部有疑问就再加一张扒开表土的根面。有这几张，隔着电话也能问。",
+    en2:"1 the whole tree, so the position is visible; 2 the whole lesion with some healthy bark for comparison; 3 a close-up of the scraped margin, clear enough to show black dots or pale mould. Add one of the root surface with the topsoil opened if roots are in question. With these you can ask over the phone.", ms2:"1 seluruh pokok, supaya kedudukannya kelihatan; 2 keseluruhan lesi dengan sedikit kulit kayu sihat sebagai perbandingan; 3 gambar dekat pinggir yang dikikis, cukup jelas untuk menunjukkan bintik hitam atau kulapuk pucat. Tambah satu gambar permukaan akar dengan tanah atas dibuka jika akar dipersoalkan. Dengan gambar ini anda boleh bertanya melalui telefon." }
+];
+
+/* ---------- 6. SOURCES ---------- */
+var SRC = [
+  { d:false, zh:"马来西亚气象局气候资料：东北季风约 11 月至 3 月，是全国主要雨季，对东海岸（吉兰丹、登嘉楼、彭亨、东柔佛）影响最大；西南季风约 5 月底至 9 月，相对干燥；4–5 月与 10–11 月为季风过渡期，午后雷雨频繁。半岛东海岸各州以 11、12、1 月雨量最大，6、7 月为多数地区最干月份。「现场」页的年历雨量部分据此绘制。", en:"MetMalaysia climate information: the northeast monsoon runs roughly November to March and is the country's main rainy season, affecting the east coast states (Kelantan, Terengganu, Pahang, east Johor) most; the southwest monsoon runs late May to September and is relatively drier; April–May and October–November are inter-monsoon transitions with frequent afternoon thunderstorms. For east-coast peninsular states November, December and January carry maximum rainfall, while June and July are the driest months in most districts. The rainfall bands on the Field tab calendar are drawn from this.", ms:"Maklumat iklim MetMalaysia: monsun timur laut berlangsung kira-kira November hingga Mac dan merupakan musim hujan utama negara, memberi kesan paling besar kepada negeri pantai timur (Kelantan, Terengganu, Pahang, Johor timur); monsun barat daya berlangsung akhir Mei hingga September dan relatifnya lebih kering; April–Mei dan Oktober–November ialah peralihan antara monsun dengan ribut petir petang yang kerap. Bagi negeri pantai timur semenanjung, November, Disember dan Januari mencatat hujan maksimum, manakala Jun dan Julai ialah bulan paling kering di kebanyakan daerah. Jalur hujan pada kalendar tab Di Ladang dilukis daripada sumber ini.", k:"g", ref:"MetMalaysia — Malaysia's Climate (met.gov.my)" },
+  { d:false, zh:"白根病（Rigidoporus microporus）在马来西亚的病征：白色、纤维状的菌索紧贴根皮生长，可延伸达数米；根系在腐烂过程中变黑。接种试验中，感染后 1 个月主根表面即出现菌索，叶片症状要到 3 个月才慢慢显现——也就是说叶子开始黄的时候，根下面已经烂了几个月。子实体长在树干基部，是最明确的一条判断依据。此病寄主范围很广，包括橡胶、可可与果树。", en:"White root disease (Rigidoporus microporus) in Malaysia: white, fibrous, stringy rhizomorphs attached firmly to the root bark, able to run several metres; the root structure turns black as it rots. In inoculation trials rhizomorphs appeared on the tap root within one month of infection while foliar symptoms only developed slowly by three months — meaning that by the time leaves yellow, the roots have been rotting for months. The fruiting body at the base of the trunk is the clearest single indicator. The pathogen has a wide host range including rubber, cocoa and fruit trees.", ms:"Penyakit akar putih (Rigidoporus microporus) di Malaysia: rizomorf putih, berserabut dan berbenang melekat kuat pada kulit akar, mampu menjalar beberapa meter; struktur akar bertukar hitam ketika reput. Dalam ujian inokulasi, rizomorf muncul pada akar tunjang dalam sebulan selepas jangkitan manakala gejala pada daun hanya berkembang perlahan menjelang tiga bulan — bermakna apabila daun mula menguning, akar sudah reput berbulan-bulan. Jasad berbuah di pangkal batang ialah petunjuk tunggal yang paling jelas. Patogen ini mempunyai julat perumah yang luas termasuk getah, koko dan pokok buah-buahan.", ref:"Rigidoporus microporus virulence and morphology studies, Malaysian rubber (UPM)" },
+  { d:true,  zh:"榴莲天牛（Batocera rufomaculata）：母虫在树皮上咬出凹槽状小孔并把卵产在皮下；初孵幼虫先在韧皮部取食，长大后移入心材化蛹。幼龄幼虫的为害很难察觉，长大后树皮上才看得到虫孔、流胶与木屑。重度为害可致整株死亡。", en:"Durian longhorn borer (Batocera rufomaculata): the female chews a small tunnel-shaped depression in the bark and inserts an egg beneath it; the neonate larva first feeds in the phloem, then migrates into the heartwood to pupate. Damage from small larvae is difficult to observe — the hole, dripping sap and frass become visible only once they grow. Heavy infestation can kill the tree.", ms:"Penggerek tanduk panjang durian (Batocera rufomaculata): kumbang betina mengunyah lekuk kecil berbentuk terowong pada kulit kayu dan meletakkan telur di bawahnya; larva yang baru menetas makan dalam floem dahulu, kemudian berpindah ke teras kayu untuk menjadi pupa. Kerosakan daripada larva kecil sukar dilihat — lubang, getah yang menitis dan habuk kayu hanya kelihatan setelah ia membesar. Serangan yang berat boleh mematikan pokok.", ref:"ISHS Acta Horticulturae — biology and infestation of Batocera rufomaculata in durian" },
+  { d:false, zh:"针孔小蠹的化学防治证据：斯里兰卡茶树上的长期研究显示，杀虫剂即使在正确时机施用，也只有约 40% 的防效，作用是减少虫道形成、压低下一代数量。近缘的多食性小蠹（Euwallacea fornicatus / PSHB）方面，文献明确指出目前没有有效的防治手段；商品化生物制剂在实验室有效，但按现行的树皮外表施用方式，对成虫存活与繁殖影响有限。综述结论是除维持树势与清除严重受害木材外，可用手段很有限。", en:"Evidence on chemical control of shot-hole borers: long-term work on tea in Sri Lanka found that insecticides, even applied at the correct time, give only about 40% control over untreated, acting by reducing gallery formation and lowering the next generation. For the closely related polyphagous shot hole borer (Euwallacea fornicatus), the literature states plainly that there is currently no effective control measure; commercial entomopathogenic products effective in the laboratory had limited effect on beetle survival and reproduction under current outer-bark application methods. Reviews conclude options are limited beyond maintaining tree vigour and removing severely infested material.", ms:"Bukti kawalan kimia penggerek lubang jarum: kajian jangka panjang pada teh di Sri Lanka mendapati racun serangga, walaupun digunakan pada masa yang betul, hanya memberi kira-kira 40% kawalan berbanding tanpa rawatan, dengan mengurangkan pembentukan terowong dan menurunkan generasi seterusnya. Bagi penggerek lubang jarum polifagus yang berkait rapat (Euwallacea fornicatus), kajian menyatakan dengan jelas bahawa setakat ini tiada langkah kawalan yang berkesan; produk entomopatogen komersial yang berkesan di makmal memberi kesan terhad pada kemandirian dan pembiakan kumbang dengan kaedah sapuan kulit luar yang ada sekarang. Ulasan menyimpulkan pilihan adalah terhad selain mengekalkan kecergasan pokok dan membuang bahan yang teruk dijangkiti.", ref:"Chemical control of Xyleborus fornicatus in tea (Sri Lanka) + PSHB entomopathogen efficacy, South Africa (2023)" },
+  { d:true,  zh:"榴莲针孔小蠹（Xyleborus fornicatus）：成虫与幼虫钻蛀树干与主枝，多见于已有根腐病的树，虫孔又把病害带到树体其他部位。", en:"Durian shot-hole borer (Xyleborus fornicatus): adults and grubs bore into the trunk and boughs, and are found mostly on trees already affected by root rot disease; the holes they make carry that disease into other parts of the tree.", ms:"Penggerek lubang jarum durian (Xyleborus fornicatus): kumbang dewasa dan larvanya menggerek batang dan dahan besar, dan kebanyakannya ditemui pada pokok yang sudah dijangkiti penyakit reput akar; lubang yang dibuatnya membawa penyakit itu ke bahagian lain pokok.", ref:"Durian shot-hole borer species note" },
+  { d:true,  zh:"马来西亚农业局残留资料库（mymrl.doa.gov.my）榴莲条目：全表八项，杀菌剂仅三支——三乙膦酸铝 MRL 1 mg/kg／安全间隔 30 天；甲霜灵 0.2 mg/kg／21 天；苯醚甲环唑 0.8 mg/kg／1 天（待宪报）。其余为杀虫剂与除草剂。本app所有药剂的「大马登记」一栏据此标示。", en:"DOA pesticide residue database (mymrl.doa.gov.my), durian entry: eight items in total, of which three are fungicides — fosetyl-Al MRL 1 mg/kg / PHI 30 days; metalaxyl 0.2 mg/kg / 21 days; difenoconazole 0.8 mg/kg / 1 day (awaiting gazette). The rest are insecticides and herbicides. Every Malaysia badge in this app is set from this source.", ms:"Pangkalan data residu racun perosak DOA (mymrl.doa.gov.my), catatan durian: lapan item kesemuanya, tiga daripadanya racun kulat — fosetyl-Al MRL 1 mg/kg / TDMH 30 hari; metalaxyl 0.2 mg/kg / 21 hari; difenoconazole 0.8 mg/kg / 1 hari (menunggu warta). Selebihnya racun serangga dan racun rumpai. Setiap label Malaysia dalam aplikasi ini ditetapkan daripada sumber ini.", k:"g", ref:"DOA.Residu — Komoditi: Durian (mymrl.doa.gov.my/Commodities/15)" },
+  { d:true,  zh:"马来西亚禁用与限用农药名单（BKRPB，2025 年 8 月 26 日更新）：已核对，本app「药剂」页列出的三支活性成分均不在禁用或限用名单上。该名单每月更新，请自行复核最新版。", en:"Malaysian banned and restricted pesticide list (BKRPB, updated 26 August 2025): checked — none of the three actives listed on the Chemicals tab appears on the banned or restricted list. The list is updated monthly; verify the current version yourself.", ms:"Senarai racun perosak diharamkan dan dihadkan Malaysia (BKRPB, dikemas kini 26 Ogos 2025): disemak — tiada satu pun daripada tiga bahan aktif yang disenaraikan dalam tab Racun Kulat terdapat dalam senarai diharamkan atau dihadkan. Senarai ini dikemas kini setiap bulan; sahkan sendiri versi terkini.", k:"g", ref:"BKRPB Senarai Racun Makhluk Perosak Diharamkan, 26 Ogos 2025" },
+  { d:true,  zh:"镰刀菌通路的依据：泰国东部与海南的榴莲茎腐样本都分离到腐皮镰刀菌。本页的镰刀菌症状条目建立在这两项分离记录，加上镰刀菌属公认的形态特征（产孢座为粉白／粉红／橙色霉层，不形成分生孢子器），而非某一套榴莲专属的症状检索表。", en:"Basis for the Fusarium pathway: Fusarium solani was isolated from durian stem rot in both Eastern Thailand and Hainan. The Fusarium symptom entries here rest on those two isolation records plus the accepted morphology of the genus (sporodochia as white, pink or orange mould masses; no pycnidia) — not on a durian-specific symptom key.", ms:"Asas bagi laluan Fusarium: Fusarium solani dipencilkan daripada reput batang durian di Thailand Timur dan Hainan. Catatan gejala Fusarium di sini bersandar pada dua rekod pemencilan itu serta morfologi genus yang diterima umum (sporodokia sebagai gumpalan kulapuk putih, merah jambu atau jingga; tiada piknidia) — bukan pada kunci gejala khusus durian.", ref:"New Disease Reports 44 e12026 (2021) + Pathogens 15(8):849 (2025) + genus morphology" },
+  { d:true,  zh:"泰国东部榴莲茎腐：从病树皮与木质部分离出腐皮镰刀菌与拟可可毛色二孢，症状为树皮与树干溃疡、小枝枯萎、叶黄、萎蔫。", en:"Durian stem rot, Eastern Thailand: Fusarium solani and Lasiodiplodia pseudotheobromae isolated from diseased bark and wood; symptoms were bark and trunk canker, twig blight, yellow leaves and wilting.", ms:"Reput batang durian, Thailand Timur: Fusarium solani dan Lasiodiplodia pseudotheobromae dipencilkan daripada kulit kayu dan kayu yang berpenyakit; gejalanya ialah kanker kulit dan batang, hawar ranting, daun menguning dan layu.", ref:"New Disease Reports 44, e12026 (2021)" },
+  { d:true,  zh:"榴莲上木霉与杀菌剂兼容性：分离到四种病原；Tri-1 对拟茎点霉（Phomopsis）抑制率 86.17%。同研究比较多种杀菌剂对木霉的影响，差异极大：部分处理 60 天后土壤菌数维持 2.93–3.67×10³ CFU/g，另一些跌至 0.12×10³ CFU/g。", en:"Trichoderma–fungicide compatibility in durian: four pathogens isolated; Tri-1 inhibited Phomopsis by 86.17%. The study compared several fungicides for their effect on Trichoderma and found a wide spread: some treatments left soil counts at 2.93–3.67×10³ CFU/g at 60 days while others dropped them to 0.12×10³ CFU/g.", ms:"Keserasian Trichoderma–racun kulat pada durian: empat patogen dipencilkan; Tri-1 merencat Phomopsis sebanyak 86.17%. Kajian itu membandingkan beberapa racun kulat dari segi kesannya pada Trichoderma dan mendapati jurang yang luas: sesetengah rawatan mengekalkan kiraan tanah pada 2.93–3.67×10³ CFU/g pada hari ke-60 manakala yang lain menurunkannya kepada 0.12×10³ CFU/g.", ref:"Agriculture and Natural Resources / compatibility study" },
+  { d:true,  zh:"海南榴莲茎腐生物防治：枯草芽孢杆菌 SYST2（Bacillus subtilis）田间防效 53.51%，化学药 25.46%，商品微生物制剂 35.15%。", en:"Biocontrol of durian stem rot in Hainan: Bacillus subtilis SYST2 gave 53.51% field efficacy versus 25.46% for chemical fungicides and 35.15% for commercial microbial agents.", ms:"Kawalan biologi reput batang durian di Hainan: Bacillus subtilis SYST2 memberi keberkesanan ladang 53.51% berbanding 25.46% bagi racun kulat kimia dan 35.15% bagi agen mikrob komersial.", ref:"Pathogens 15(8):849 (2025)" },
+  { d:true,  zh:"榴莲果腐：篮状菌 KUFA1604（Talaromyces tratensis）与棘孢木霉 KUFA1606 粗提物 10,000 ppm 浸果，降低可可毛色二孢病害严重度 49.41–54.51%。", en:"Durian fruit rot: crude extracts of Talaromyces tratensis KUFA1604 and T. asperellum KUFA1606 at 10,000 ppm reduced Lasiodiplodia theobromae severity by 49.41–54.51%.", ms:"Reput buah durian: ekstrak kasar Talaromyces tratensis KUFA1604 dan T. asperellum KUFA1606 pada 10,000 ppm mengurangkan keterukan Lasiodiplodia theobromae sebanyak 49.41–54.51%.", ref:"European Journal of Plant Pathology (2026)" },
+  { d:false, zh:"扁桃溃疡生物防治：三株细菌对葡萄座腔菌类菌丝抑制 87／95／63%，均产水解酶，显著缩短接种枝条病斑；AC17 效果与木霉 T. atroviride 及标准化学处理相当。", en:"Almond canker biocontrol: three bacteria inhibited 87 / 95 / 63% of Botryosphaeriaceae mycelial growth, all producing hydrolytic enzymes and significantly shortening lesions on inoculated twigs; AC17 performed on a par with T. atroviride and standard chemical treatments.", ms:"Kawalan biologi kanker badam: tiga bakteria merencat 87 / 95 / 63% pertumbuhan miselium Botryosphaeriaceae, semuanya menghasilkan enzim hidrolitik dan memendekkan lesi dengan ketara pada ranting yang diinokulasi; AC17 setanding dengan T. atroviride dan rawatan kimia biasa.", ref:"Pest Management Science (2024)" },
+  { d:false, zh:"苹果干部溃疡：多种内吸杀菌剂按叶面推荐剂量点涂，可降低溃疡发生率与病斑大小；新鲜修剪伤口是分生孢子的主要入侵口。后一点是本app「当天封口」那一步的依据。", en:"Apple stem canker: several systemic fungicides applied topically at foliar rates reduced canker incidence and lesion size; fresh pruning wounds are the main entry site for conidia. That second finding is the basis for the same-day wound sealing step in this app.", ms:"Kanker batang epal: beberapa racun kulat sistemik yang disapu pada kadar semburan daun mengurangkan kejadian kanker dan saiz lesi; luka pangkasan baharu ialah tapak masuk utama bagi konidia. Penemuan kedua itulah asas langkah menutup luka pada hari yang sama dalam aplikasi ini.", ref:"Plant Disease / apple canker study" },
+  { d:false, zh:"紫荆干部溃疡：单格孢 U3（Ulocladium oudemansii）与哈茨木霉 T-22＋绿木霉 G-41 的伤口处理，为降低病斑长度与病原回收率最有效的处理之一。本app引用的是其中的生物防治部分。", en:"Redbud stem canker: wound treatments with Ulocladium oudemansii U3 and with T. harzianum T-22 + T. virens G-41 were among the most effective for reducing lesion length and pathogen recovery. It is the biocontrol part of this study that the app draws on.", ms:"Kanker batang redbud: rawatan luka dengan Ulocladium oudemansii U3 dan dengan T. harzianum T-22 + T. virens G-41 antara yang paling berkesan mengurangkan panjang lesi dan pemulihan patogen. Bahagian kawalan biologi kajian inilah yang dirujuk aplikasi ini.", ref:"Nut/ornamental Botryosphaeria management review" },
+  { d:false, zh:"木霉与杀菌剂兼容性：多项研究显示三唑类与苯并咪唑类对木霉抑制可达 100%，而部分甲氧基丙烯酸酯类在推荐剂量下兼容。这是「兼容」页原则的来源，具体药剂请以标签为准。", en:"Trichoderma–fungicide compatibility: across several studies, triazoles and benzimidazoles inhibited Trichoderma by up to 100%, while some strobilurins were compatible at recommended rates. This is the source for the principles on the Compatibility tab — for any specific product, go by the label.", ms:"Keserasian Trichoderma–racun kulat: merentas beberapa kajian, triazol dan benzimidazol merencat Trichoderma sehingga 100%, manakala sesetengah strobilurin serasi pada kadar disyorkan. Inilah sumber bagi prinsip dalam bahagian Keserasian — untuk mana-mana produk tertentu, ikut labelnya.", ref:"Crop Protection / Trichoderma compatibility studies" },
+  { d:false, zh:"壳梭孢属（Fusicoccum）溃疡与回枯在长势差的立地最严重；树势旺时溃疡扩展通常被遏止。", en:"Cankers and dieback caused by Fusicoccum spp. are most severe where trees grow poorly; canker development is usually arrested on vigorously growing trees.", ms:"Kanker dan mati rosot yang disebabkan Fusicoccum spp. paling teruk di tempat pokok tumbuh lemah; perkembangan kanker biasanya terhenti pada pokok yang tumbuh cergas.", ref:"Bugwoodwiki, Fusicoccum canker" }
+];
+
+/* ---------- UI ---------- */
+var TABS = [
+  { id:"triage", ic:"◈", zh:"判症",  en:"Triage", ms:"Kenal Pasti" },
+  { id:"chem",   ic:"⌬", zh:"药剂",  en:"Chemicals", ms:"Racun Kulat" },
+  { id:"bio",    ic:"✦", zh:"菌剂",  en:"Microbes", ms:"Mikrob" },
+  { id:"fruit",  ic:"◔", zh:"果实",  en:"Fruit", ms:"Buah" },
+  { id:"field",  ic:"✎", zh:"现场",  en:"Field", ms:"Di Ladang" },
+  { id:"src",    ic:"§", zh:"依据",  en:"Evidence", ms:"Rujukan" }
+];
+var TAB = localStorage.getItem("dct-tab") || "triage";
+
+var STR = {
+  mark:{ zh:"榴莲树干病辨症", en:"Durian Trunk Disease Triage", ms:"Kenal Pasti Penyakit Batang Durian" },
+  t_triage:{ zh:"这棵树得的是哪一种病？", en:"Which one is on this tree?", ms:"Pokok ini kena yang mana satu?" },
+  l_triage:{ zh:"三种病看起来很像，用药却完全不同。勾选你在树上真正看到的。", en:"The three diseases look alike but need entirely different chemistry. Tick only what you can actually see on the tree.", ms:"Ketiga-tiga penyakit ini nampak serupa tetapi memerlukan bahan kimia yang berlainan sama sekali. Tandakan hanya apa yang benar-benar anda nampak pada pokok." },
+  reset:{ zh:"清除重选", en:"Clear and start again", ms:"Kosongkan dan mula semula" },
+  mix_lead:{ zh:"两种都有实证支持。这不是判不出来，是树上真的有两个病——树势一弱就常常同时中。", en:"Both have real support. This is not an inconclusive result — the tree genuinely has two problems, which is common once vigour drops.", ms:"Kedua-duanya ada sokongan sebenar. Ini bukan keputusan yang tidak muktamad — pokok ini memang ada dua masalah, dan itu biasa apabila kecergasan pokok jatuh." },
+  t_fruit:{ zh:"果实：同一批病菌的另一个出口", en:"Fruit: the same pathogens, another outlet", ms:"Buah: patogen yang sama, saluran keluar yang lain" },
+  l_fruit:{ zh:"果腐才是真正掉钱的地方。引起果腐的就是树干上那两种——疫霉与可可毛色二孢，所以树上的病不处理，果实这边永远治不完。", en:"Fruit rot is where the money actually goes. It is caused by the same two you meet on the trunk — Phytophthora and Lasiodiplodia — so the fruit side never ends while the tree side is left alone.", ms:"Reput buah itulah tempat wang sebenarnya hilang. Ia disebabkan oleh dua yang sama seperti pada batang — Phytophthora dan Lasiodiplodia — jadi masalah di sebelah buah tidak akan habis selagi masalah pada pokok dibiarkan." },
+  t_nosrc:{ zh:"本app里没有出处的部分", en:"What in this app has no citation", ms:"Apa dalam aplikasi ini yang tiada rujukan" },
+  t_sani:{ zh:"工具消毒：最被低估的一步", en:"Tool hygiene: the most underrated step", ms:"Kebersihan alat: langkah yang paling dipandang ringan" },
+  l_sani:{ zh:"「剪一株消一次刀」说起来简单，但不说清楚怎么消，等于没说。", en:"Disinfect between trees is easy to say — and useless without a method.", ms:"“Nyahkuman antara pokok” senang disebut — dan tidak berguna tanpa kaedahnya." },
+  t_ask:{ zh:"自己判不了的时候，找谁", en:"When you cannot settle it yourself", ms:"Bila anda tidak dapat menentukannya sendiri" },
+  l_ask:{ zh:"本app只做到辨症方向，剩下的靠人。你把看到的讲得越清楚，对方越帮得上忙。", en:"This app only gets you a direction; the rest needs a person. The clearer you describe what you saw, the more they can help.", ms:"Aplikasi ini hanya memberi anda arah; selebihnya perlukan seorang manusia. Semakin jelas anda menerangkan apa yang dilihat, semakin banyak mereka boleh bantu." },
+  t_res:{ zh:"抗性：可选的药太少，这才是最大的风险", en:"Resistance: too few options is the real risk here", ms:"Kerintangan: pilihan yang terlalu sedikit itulah risiko sebenar di sini" },
+  t_borer:{ zh:"蛀虫：病菌进树的门", en:"Borers: the doorway into the tree", ms:"Penggerek: pintu masuk ke dalam pokok" },
+  l_borer:{ zh:"蛀虫本身不是这三种病，但天牛与小蠹钻的孔正是葡萄座腔菌类与镰刀菌的主要入口。虫不处理，伤口封了也白封。", en:"Borers are not one of the three diseases, but the holes made by longhorn and shot-hole beetles are the main entry for the Botryosphaeriaceae and Fusarium. Seal a wound while the insect is still working and you have sealed nothing.", ms:"Penggerek bukan salah satu daripada tiga penyakit itu, tetapi lubang yang dibuat kumbang tanduk panjang dan kumbang lubang jarum ialah pintu masuk utama bagi Botryosphaeriaceae dan Fusarium. Tutup luka sedangkan serangganya masih bekerja, dan anda sebenarnya tidak menutup apa-apa." },
+  b_do:{ zh:"做法", en:"Do this", ms:"Buat ini" }, b_watch:{ zh:"别这样做", en:"Do not", ms:"Jangan" }, b_note:{ zh:"注意", en:"Note", ms:"Perhatian" },
+  nudge:{ zh:"只勾了一两条就有结论，是好事——但别急着收工。树的其他部位也走一遍：根颈、修剪口、地下各看一眼。两种病并发在弱树上很常见，只治一种等于没治。", en:"Getting an answer from one or two ticks is a good sign — but do not stop there. Walk the rest of the tree: the collar, the pruning cuts, and underground. Two diseases at once is common on a weak tree, and treating only one is treating none.", ms:"Mendapat jawapan daripada satu atau dua tanda itu petanda baik — tetapi jangan berhenti di situ. Periksa seluruh pokok: pangkal batang, luka pangkasan, dan bawah tanah. Dua penyakit serentak adalah biasa pada pokok yang lemah, dan merawat satu sahaja sama seperti tidak merawat langsung." },
+  t_fast:{ zh:"先看这四条", en:"Start with these four", ms:"Mula dengan empat ini" },
+  l_fast:{ zh:"多数情况这四条就够了。前三条在树干上，看到哪一条病就基本定了；第四条不是特征，是提示你该往地下看。", en:"Four questions settle most cases. The first three are signs on the trunk — see one and you have your answer. The fourth is not a sign but a prompt to look underground.", ms:"Empat soalan ini menyelesaikan kebanyakan kes. Tiga yang pertama ialah tanda pada batang — nampak satu dan anda sudah ada jawapannya. Yang keempat bukan tanda, tetapi peringatan supaya anda melihat ke bawah tanah." },
+  show_all:{ zh:"还不确定？看全部症状", en:"Still unsure? See all symptoms", ms:"Masih tak pasti? Lihat semua gejala" },
+  hide_all:{ zh:"收起其余症状", en:"Hide the rest", ms:"Tutup selebihnya" },
+  t_rest:{ zh:"其余症状", en:"The rest", ms:"Gejala lain" },
+  t_chem:{ zh:"杀菌剂与蛀虫", en:"Fungicides and borers", ms:"Racun kulat dan penggerek" },
+  l_chem:{ zh:"每支药标出两个判定：对卵菌（疫霉）和对真菌（回枯、镰刀菌）分别有没有活性——依据是作用机理与已发表研究。判定的是病原类别，不是产品好坏；各产品对其标签所列的用途仍然有效。点开看理由与登记状态。往下是蛀虫。", en:"Each product carries two verdicts: activity against the oomycete (Phytophthora) and against the fungi (dieback, Fusarium), based on mode of action and published work. These describe pathogen groups, not product quality — every product remains effective for the uses on its own label. Tap for reasoning and registration status. Borers are below.", ms:"Setiap produk membawa dua penilaian: keaktifan terhadap oomiset (Phytophthora) dan terhadap kulat (mati rosot, Fusarium), berdasarkan cara tindakan dan kajian yang diterbitkan. Ini menerangkan kumpulan patogen, bukan mutu produk — setiap produk kekal berkesan untuk kegunaan pada labelnya sendiri. Ketik untuk melihat sebab dan status pendaftaran. Penggerek di bahagian bawah." },
+  t_bio:{ zh:"微生物组合方案", en:"Microbial combinations", ms:"Gabungan mikrob" },
+  l_bio:{ zh:"这些是研究里的菌株，不是购物清单。绿色「榴莲」标的才是榴莲本身的数据，其余来自扁桃、苹果、葡萄、开心果，不能当作榴莲防效看。", en:"These are strains from research, not a shopping list. Only the green DURIAN tag is durian data — the rest come from almond, apple, grapevine and pistachio, and cannot be read as durian efficacy.", ms:"Ini strain daripada kajian, bukan senarai belanja. Hanya label hijau DURIAN yang merupakan data durian — selebihnya daripada badam, epal, anggur dan pistasio, dan tidak boleh dibaca sebagai keberkesanan pada durian." },
+  t_stack:{ zh:"文献中的三层布置思路", en:"The three-layer approach used in the literature", ms:"Pendekatan tiga lapisan yang digunakan dalam kajian" },
+  t_brew:{ zh:"自制发酵菌液的几点提醒", en:"If you ferment your own culture", ms:"Jika anda menapai kultur sendiri" },
+  brew:{ zh:"若你自己发酵芽孢杆菌菌液：菌种可能与扁桃试验中抑制率最高的属相同，但菌株不同，平板数字不能直接套用；而且开放式糖蜜发酵液的实际活菌数没有人测过，属未知。<br><br><b>pH 值得留意。</b>有一份发酵记录第 11 天量得 pH 3.7，日搅拌到第 20 天升到 4.8。这个酸度直接接触新鲜刀口是伤口刺激而非治疗——若要用于树皮，稀释后再用；伤口本身宜用中性载体。具体倍数请依你所用产品的标签。",
+  en:"If you ferment your own Bacillus culture: the species may match the genus that scored highest in the almond trial, but the strain will not, so a plate number does not transfer. The viable count in an open molasses ferment is also unmeasured — treat it as unknown.<br><br><b>pH is worth watching.</b> One fermentation record measured pH 3.7 on day 11, rising to 4.8 by about day 20 with daily stirring. That acidity on a fresh cut is wound stress rather than treatment — dilute it before any bark use, and prefer a neutral carrier on the wound itself. For rates, follow the label of whatever product you are using.", ms:"Jika anda menapai kultur Bacillus sendiri: spesiesnya mungkin sepadan dengan genus yang mendapat markah tertinggi dalam ujian badam, tetapi strainnya tidak, jadi angka piring kultur tidak boleh dipindahkan. Kiraan sel hidup dalam tapaian molase terbuka juga tidak pernah diukur — anggap ia tidak diketahui.<br><br><b>pH patut diperhatikan.</b> Satu rekod penapaian mencatat pH 3.7 pada hari ke-11, naik ke 4.8 sekitar hari ke-20 dengan kacauan harian. Keasidan itu pada luka baharu ialah tekanan pada luka, bukan rawatan — cairkan sebelum digunakan pada kulit kayu, dan gunakan pembawa neutral pada luka itu sendiri. Untuk kadarnya, ikut label produk yang anda gunakan." },
+  t_compat:{ zh:"生物防治与药剂的相处原则", en:"How biologicals and fungicides coexist", ms:"Bagaimana agen biologi dan racun kulat boleh hidup bersama" },
+  l_compat:{ zh:"标签说明这一条讲的是什么：会伤菌剂＝会削弱你的木霉或芽孢杆菌；不伤菌剂＝可以并存；做法＝该怎么安排。文献数据多来自非榴莲作物，作原理参考，不作用药建议。", en:"The tag says what each card is about: harms microbes means it weakens your Trichoderma or Bacillus; spares microbes means they can coexist; practice means how to arrange things. The underlying data mostly comes from non-durian crops — reasoning, not product advice.", ms:"Label itu menerangkan tentang apa setiap kad: memudaratkan mikrob bermakna ia melemahkan Trichoderma atau Bacillus anda; tidak memudaratkan mikrob bermakna kedua-duanya boleh hidup bersama; amalan bermakna cara mengaturnya. Datanya kebanyakannya daripada tanaman bukan durian — asas pertimbangan, bukan nasihat produk." },
+  th_prod:{ zh:"药剂", en:"Product", ms:"Produk" }, th_st:{ zh:"木霉", en:"Trichoderma", ms:"Trichoderma" }, th_note:{ zh:"依据", en:"Evidence", ms:"Bukti" },
+  c_harm:{ zh:"会伤菌剂", en:"Harms microbes", ms:"Memudaratkan mikrob" }, c_partharm:{ zh:"部分伤菌剂", en:"Partly harmful", ms:"Separa memudaratkan" },
+  c_spare:{ zh:"不伤菌剂", en:"Spares microbes", ms:"Tidak memudaratkan mikrob" }, c_do:{ zh:"做法", en:"Practice", ms:"Amalan" },
+  
+  l_field:{ zh:"按顺序做。勾选会保存在这台设备上。", en:"In order. Ticks are saved on this device.", ms:"Ikut susunan. Tanda disimpan pada peranti ini." },
+  t_src:{ zh:"数据依据", en:"Where the numbers come from", ms:"Dari mana angka-angka ini datang", ms:"Dari mana angka-angka ini datang" },
+  l_src:{ zh:"每一条标明作物来源。榴莲专属的数据不多，大部分葡萄座腔菌类生防数据来自其他木本作物——这一点必须对农友讲清楚。", en:"Each entry is labelled with its crop. Durian-specific data is limited; most Botryosphaeriaceae biocontrol figures come from other woody crops, and farmers should be told that plainly.", ms:"Setiap catatan dilabelkan dengan tanamannya. Data khusus durian adalah terhad; kebanyakan angka kawalan biologi Botryosphaeriaceae datang daripada tanaman berkayu yang lain, dan pekebun patut diberitahu perkara itu dengan jelas." },
+  pin_p:{ zh:"疫霉", en:"PHY", ms:"PHY" }, pin_b:{ zh:"回枯", en:"BOT", ms:"BOT" }, pin_f:{ zh:"镰刀", en:"FUS", ms:"FUS" }, pin_r:{ zh:"根部", en:"ROOT", ms:"AKAR" }, pin_n:{ zh:"共有", en:"ALL", ms:"SEMUA" },
+  legend_p:{ zh:"疫霉茎溃疡", en:"Phytophthora canker", ms:"Kanker batang Phytophthora" },
+  legend_b:{ zh:"葡萄座腔菌回枯", en:"Botryosphaeriaceae dieback", ms:"Mati rosot Botryosphaeriaceae" },
+  legend_f:{ zh:"镰刀菌茎腐", en:"Fusarium stem rot", ms:"Reput batang Fusarium" },
+  legend_r:{ zh:"根部病害", en:"Root disease", ms:"Penyakit akar" },
+  legend_n:{ zh:"三病共有，判不了", en:"all three — decides nothing", ms:"semua — tidak menentukan apa-apa" },
+  tag_d:{ zh:"榴莲", en:"DURIAN", ms:"DURIAN" }, tag_g:{ zh:"官方数据", en:"OFFICIAL DATA", ms:"DATA RASMI" }, tag_o:{ zh:"其他作物", en:"OTHER CROP", ms:"TANAMAN LAIN" },
+  tier_field:{ zh:"田间防效", en:"FIELD TRIAL", ms:"UJIAN LADANG" }, tier_inoc:{ zh:"接种试验", en:"INOCULATED", ms:"UJIAN INOKULASI" },
+  tier_plate:{ zh:"仅培养皿", en:"PLATE ONLY", ms:"PIRING SAHAJA" }, tier_moa:{ zh:"机理判定", en:"MODE OF ACTION", ms:"CARA TINDAKAN" },
+  k_tier:{ zh:"证据等级", en:"Evidence", ms:"Bukti" }, k_risk:{ zh:"抗性与风险", en:"Resistance & risk", ms:"Kerintangan & risiko" },
+  k_reg:{ zh:"大马登记", en:"Malaysia", ms:"Malaysia" },
+  reg_mrl:{ zh:"榴莲已列 MRL", en:"DURIAN MRL SET", ms:"MRL DURIAN ADA" }, reg_pend:{ zh:"榴莲 MRL 待宪报", en:"DURIAN MRL PENDING", ms:"MRL DURIAN MENUNGGU" },
+  reg_none:{ zh:"榴莲无 MRL", en:"NO DURIAN MRL", ms:"TIADA MRL DURIAN" },
+  f_kick:{ zh:"大马榴莲只有三支杀菌剂有残留标准，其中两支是卵菌药，对真菌性干腐无效。标示「榴莲无 MRL」的属标签外使用，责任自负——真正管用的在「现场」页。", en:"Only three fungicides carry a durian residue standard in Malaysia, and two of those are oomycete products that do nothing for fungal trunk rot. Anything marked NO DURIAN MRL is off-label and on you — what works is on the Field tab.", ms:"Hanya tiga racun kulat mempunyai piawai residu durian di Malaysia, dan dua daripadanya ialah racun oomiset yang tiada kesan pada reput batang kulat. Apa-apa yang bertanda TIADA MRL DURIAN adalah di luar label dan risikonya milik anda — apa yang berkesan ada di tab Di Ladang." },
+  t_lever:{ zh:"最有效的四件事（按效果排序）", en:"What actually works, ranked", ms:"Apa yang benar-benar berkesan, mengikut susunan" },
+  l_lever:{ zh:"树干病害的现实：化学药排最后。先做前两项，再谈喷什么。", en:"The reality of trunk disease: chemistry comes last. Do the first two before discussing what to spray.", ms:"Realiti penyakit batang: bahan kimia datang paling akhir. Buat dua yang pertama sebelum berbincang apa hendak disembur." },
+  t_steps:{ zh:"现场九步", en:"Nine steps in the field", ms:"Sembilan langkah di ladang" },
+  t_evid:{ zh:"证据等级说明", en:"What the evidence badges mean", ms:"Maksud label bukti" },
+  l_evid:{ zh:"培养皿抑菌率不是田间防效。一个 95% 的平板数字和一个 53.51% 的田间数字，后者才是你能期望的。", en:"Plate inhibition is not field control. Between a 95% petri-dish number and a 53.51% field number, the second is what you can expect.", ms:"Perencatan piring bukan kawalan ladang. Antara angka 95% dalam piring kultur dan angka 53.51% di ladang, yang kedua itulah yang boleh anda jangkakan." },
+  k_frac:{ zh:"作用机理组", en:"FRAC group", ms:"Kumpulan FRAC" }, k_why:{ zh:"理由", en:"Why", ms:"Sebab" }, k_tri:{ zh:"木霉", en:"Trichoderma", ms:"Trichoderma" },
+  st_no:{ zh:"无活性", en:"not active", ms:"tiada kesan" }, st_yes:{ zh:"有活性", en:"active", ms:"aktif" }, st_part:{ zh:"部分／保护", en:"partial", ms:"separa" },
+  grp_oo:{ zh:"卵菌", en:"Oomycete", ms:"Oomiset" }, grp_fu:{ zh:"真菌", en:"Fungi", ms:"Kulat" },
+  crop:{ zh:"来源作物", en:"Source crop", ms:"Tanaman sumber" },
+};
+
+var picked = JSON.parse(localStorage.getItem("dct-sym") || "{}");
+var done = JSON.parse(localStorage.getItem("dct-steps") || "{}");
+
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+function renderChrome(){
+  document.documentElement.lang = LANG;
+  document.getElementById("mark").textContent = T(STR.mark);
+  var nextL = LANGS[(LANGS.indexOf(LANG) + 1) % LANGS.length];
+  document.getElementById("lang").textContent = { zh:"中文", en:"EN", ms:"BM" }[nextL];
+  document.getElementById("nav").innerHTML = TABS.map(function(t){
+    return '<button type="button" data-tab="' + t.id + '" aria-current="' + (TAB === t.id) + '"><b>' + t.ic + "</b>" + esc(T(t)) + "</button>";
+  }).join("");
+  TABS.forEach(function(t){ document.getElementById("s-" + t.id).classList.toggle("on", TAB === t.id); });
+}
+
+/* ---------- illustration plates ----------
+   Shared helpers. cap() places a coloured title plus wrapped grey lines and
+   returns the y it ended at, so no panel can clip its own label again. */
+function cap(t, lines, c, y){
+  var o = "<text x='60' y='" + y + "' text-anchor='middle' font-size='11' fill='" + c + "'>" + t + "</text>";
+  lines.forEach(function(w, i){
+    o += "<text x='60' y='" + (y + 15 + i * 13) + "' text-anchor='middle' font-size='9' fill='var(--muted)'>" + w + "</text>";
+  });
+  return o;
+}
+function wrap(box, title, svg, h, cap2){
+  return "<div class='plate'>" + (title ? "<h3>" + esc(title) + "</h3>" : "") +
+    "<svg viewBox='0 0 360 " + h + "' xmlns='http://www.w3.org/2000/svg' role='img'>" + svg +
+    "<line x1='118' y1='12' x2='118' y2='" + (h - 12) + "' stroke='var(--line)'/>" +
+    "<line x1='238' y1='12' x2='238' y2='" + (h - 12) + "' stroke='var(--line)'/></svg>" +
+    (cap2 ? "<p>" + esc(cap2) + "</p>" : "") + "</div>";
+}
+function trio(a, b2, c){ return "<g>" + a + "</g><g transform='translate(120,0)'>" + b2 + "</g><g transform='translate(240,0)'>" + c + "</g>"; }
+var TRUNK = "<rect x='46' y='34' width='26' height='124' rx='3' fill='var(--bark3)' stroke='var(--line)'/>";
+var GROUND = "<line x1='10' y1='158' x2='110' y2='158' stroke='var(--muted)' stroke-width='1.4'/>";
+
+/* 1 — where each disease sits. Four panels of 90 now that root disease is in. */
+function plate(){
+  var T4 = "<rect x='32' y='40' width='26' height='100' rx='3' fill='var(--bark3)' stroke='var(--line)'/>";
+  var G4 = "<line x1='6' y1='140' x2='84' y2='140' stroke='var(--muted)' stroke-width='1.4'/>";
+  var c4 = function(t, d, c){
+    return "<text x='45' y='162' text-anchor='middle' font-size='10' fill='" + c + "'>" + t + "</text>" +
+      "<text x='45' y='176' text-anchor='middle' font-size='8.5' fill='var(--muted)'>" + d + "</text>";
+  };
+  /* base, weeping, splashed from wet soil */
+  var p1 = T4 + G4 +
+    "<path d='M33 106 q12 -7 22 2 q3 14 -2 26 q-11 7 -20 -2 z' fill='var(--rust)' opacity='.85'/>" +
+    "<path d='M40 132 q-2 8 1 13' stroke='var(--rust)' stroke-width='2.6' fill='none' stroke-linecap='round'/>" +
+    "<circle cx='41' cy='148' r='2.2' fill='var(--rust)'/><circle cx='50' cy='147' r='1.8' fill='var(--rust)'/>" +
+    "<path d='M14 138 q5 -14 13 -19' stroke='var(--rust)' stroke-width='1.1' fill='none' stroke-dasharray='3 3'/>" +
+    "<path d='M76 138 q-5 -14 -13 -19' stroke='var(--rust)' stroke-width='1.1' fill='none' stroke-dasharray='3 3'/>" +
+    c4(P("疫霉", "Phytophthora", "Phytophthora"), P("低位 · 流胶", "low, weeping", "bawah, meleleh"), "var(--rust)");
+  /* from a pruning cut, travels down */
+  var p2 = T4 + G4 +
+    "<path d='M48 64 L74 46' stroke='var(--bark3)' stroke-width='8' stroke-linecap='round'/>" +
+    "<line x1='71' y1='41' x2='77' y2='51' stroke='var(--cream)' stroke-width='1.8'/>" +
+    "<path d='M35 56 q13 -10 23 -3 q3 12 -3 20 q-13 5 -21 -3 z' fill='var(--ink)' opacity='.75'/>" +
+    "<g fill='#17110C'><circle cx='41' cy='61' r='1.5'/><circle cx='47' cy='58' r='1.5'/><circle cx='52' cy='63' r='1.5'/>" +
+    "<circle cx='44' cy='68' r='1.5'/><circle cx='50' cy='70' r='1.4'/></g>" +
+    "<ellipse cx='64' cy='63' rx='3.4' ry='2' fill='var(--muted)' opacity='.7' transform='rotate(35 64 63)'/>" +
+    "<path d='M45 82 L45 106' stroke='var(--ink)' stroke-width='1.5' stroke-dasharray='4 3'/>" +
+    "<path d='M41 102 L45 110 L49 102' fill='none' stroke='var(--ink)' stroke-width='1.5'/>" +
+    c4(P("回枯", "Dieback", "Mati rosot"), P("伤口 · 黑点", "wound, dots", "luka, bintik"), "var(--ink)");
+  /* at the collar, travels up */
+  var p3 = T4 + G4 +
+    "<path d='M12 140 q17 -12 33 -12 q16 0 33 12 z' fill='var(--bark3)' stroke='var(--line)' stroke-width='.8'/>" +
+    "<line x1='32' y1='116' x2='58' y2='116' stroke='var(--muted)' stroke-width='1.1' stroke-dasharray='2 2'/>" +
+    "<path d='M33 112 q11 -5 21 2 q3 14 0 26 l-22 0 q-3 -14 1 -28 z' fill='var(--fus)' opacity='.8'/>" +
+    "<g fill='var(--cream)' opacity='.92'><circle cx='40' cy='124' r='3'/><circle cx='50' cy='121' r='2.4'/>" +
+    "<circle cx='45' cy='132' r='2.7'/><circle cx='36' cy='133' r='2'/></g>" +
+    "<path d='M45 104 L45 80' stroke='var(--fus)' stroke-width='1.5' stroke-dasharray='4 3'/>" +
+    "<path d='M41 84 L45 76 L49 84' fill='none' stroke='var(--fus)' stroke-width='1.5'/>" +
+    c4(P("镰刀菌", "Fusarium", "Fusarium"), P("根颈 · 粉白霉", "collar, mould", "pangkal, kulapuk"), "var(--fus)");
+  /* underground: rhizomorphs on the roots, bracket at the base, spread along the row */
+  var p4 = T4 + G4 +
+    "<path d='M45 140 q-16 6 -28 14 M45 140 q16 6 28 14 M45 140 q-6 10 -8 20 M45 140 q6 10 8 20' " +
+    "stroke='var(--bark3)' stroke-width='4' fill='none' stroke-linecap='round'/>" +
+    "<g stroke='var(--root)' stroke-width='1.8' fill='none' stroke-linecap='round'>" +
+    "<path d='M45 142 q-15 6 -26 13'/><path d='M45 142 q15 6 26 13'/><path d='M44 143 q-5 9 -7 18'/></g>" +
+    "<path d='M30 136 q-9 -3 -9 4 q9 3 9 -4 z' fill='var(--root)' opacity='.9'/>" +
+    "<path d='M23 138 q4 1 6 0' stroke='var(--bark)' stroke-width='.8' fill='none'/>" +
+    "<g stroke='var(--root)' stroke-width='1' stroke-dasharray='3 3'><line x1='6' y1='168' x2='84' y2='168'/></g>" +
+    "<g fill='var(--root)' opacity='.6'><circle cx='14' cy='168' r='2'/><circle cx='45' cy='168' r='2'/><circle cx='76' cy='168' r='2'/></g>" +
+    c4(P("根部病害", "Root disease", "Penyakit akar"), P("地下 · 菌索", "underground", "bawah tanah"), "var(--root)");
+  return "<div class='plate'><h3>" + esc(P("远看：病在树的哪个位置", "From a distance: where it sits", "Dari jauh: di mana ia berada")) + "</h3>" +
+    "<svg viewBox='0 0 360 190' xmlns='http://www.w3.org/2000/svg' role='img'>" +
+    "<g>" + p1 + "</g><g transform='translate(90,0)'>" + p2 + "</g>" +
+    "<g transform='translate(180,0)'>" + p3 + "</g><g transform='translate(270,0)'>" + p4 + "</g>" +
+    "<line x1='88' y1='12' x2='88' y2='150' stroke='var(--line)'/>" +
+    "<line x1='178' y1='12' x2='178' y2='150' stroke='var(--line)'/>" +
+    "<line x1='268' y1='12' x2='268' y2='150' stroke='var(--line)'/></svg>" +
+    "<p>" + esc(P("先看部位。两个箭头是关键：回枯往下走，镰刀菌往上走。第四种在地下——树干干净不等于树没病。", "Read the position first. The two arrows matter: dieback travels down, Fusarium travels up. The fourth is underground — a clean trunk does not mean a healthy tree.", "Baca kedudukannya dahulu. Dua anak panah itu penting: mati rosot bergerak ke bawah, Fusarium ke atas. Yang keempat di bawah tanah — batang yang bersih tidak bermakna pokok sihat.")) + "</p></div>";
+}
+
+/* 2 — the three decisive signs, at hand-lens range */
+function plateSigns(){
+  var lens = function(inner){
+    return "<circle cx='60' cy='62' r='42' fill='var(--bark3)' stroke='var(--line)' stroke-width='1.2'/>" +
+      "<clipPath id='c" + Math.random().toString(36).slice(2, 7) + "'></clipPath>" + inner +
+      "<circle cx='60' cy='62' r='42' fill='none' stroke='var(--muted)' stroke-width='2' opacity='.5'/>";
+  };
+  var bark = "<g opacity='.5' stroke='var(--line)' stroke-width='1'>" +
+    "<path d='M26 46 q34 6 68 -2'/><path d='M24 66 q34 -6 72 4'/><path d='M28 84 q30 8 64 -4'/></g>";
+  var s1 = lens(bark +
+    "<circle cx='58' cy='60' r='13' fill='var(--rust)' opacity='.9'/>" +
+    "<circle cx='53' cy='55' r='4' fill='var(--cream)' opacity='.45'/>" +
+    "<path d='M58 73 q-2 14 2 22' stroke='var(--rust)' stroke-width='4' fill='none' stroke-linecap='round'/>") +
+    cap(P("铁锈色胶滴", "rust-coloured bead", "titisan warna karat"), [P("湿、有光泽、会流", "wet, glossy, it runs", "basah, berkilat, meleleh")], "var(--rust)", 124);
+  var s2 = lens(bark +
+    "<g fill='#140F0A' stroke='var(--ink)' stroke-width='.8'>" +
+    "<circle cx='48' cy='52' r='3.4'/><circle cx='62' cy='46' r='3'/><circle cx='72' cy='58' r='3.4'/>" +
+    "<circle cx='54' cy='66' r='3.6'/><circle cx='68' cy='74' r='3'/><circle cx='44' cy='74' r='2.8'/>" +
+    "<circle cx='60' cy='60' r='2.6'/><circle cx='78' cy='44' r='2.4'/></g>") +
+    cap(P("针尖黑点", "pinhead black dots", "bintik hitam halus"), [P("硬、突出表皮、刮不掉", "hard, will not rub off", "keras, tak boleh digosok")], "var(--ink)", 124);
+  var s3 = lens(bark +
+    "<g fill='var(--cream)' opacity='.9'><circle cx='50' cy='56' r='7'/><circle cx='62' cy='50' r='5.5'/>" +
+    "<circle cx='68' cy='64' r='6.5'/><circle cx='55' cy='70' r='6'/><circle cx='44' cy='68' r='4.5'/></g>" +
+    "<g fill='var(--fus)' opacity='.55'><circle cx='58' cy='60' r='5'/><circle cx='70' cy='55' r='3.5'/></g>") +
+    cap(P("粉白／粉红霉层", "white or pink mould", "kulapuk pucat"), [P("松、粉状、一抹就散", "soft, powdery, smears away", "lembut, berdebu, comot")], "var(--fus)", 124);
+  return wrap(0, P("近看：刮开后的三个决定性特征", "Close up: the three decisive signs", "Lihat dekat: tiga tanda yang menentukan"),
+    trio(s1, s2, s3), 156,
+    P("分不清黑点还是霉层？用手指抹一下：抹不掉的是黑点（回枯），抹散的是霉层（镰刀菌）。", "Unsure which? Rub it with a finger: what will not come off is pycnidia (dieback); what smears is mould (Fusarium).", "Tak pasti yang mana? Gosok dengan jari: yang tidak tanggal ialah piknidia (mati rosot); yang comot ialah kulapuk (Fusarium)."));
+}
+
+/* 3 — cross-section: read the boundary */
+function plateWood(){
+  var ring = "<circle cx='60' cy='62' r='38' fill='var(--bark3)' stroke='var(--line)' stroke-width='1.2'/>" +
+    "<circle cx='60' cy='62' r='31' fill='none' stroke='var(--line)' stroke-width='1'/>" +
+    "<circle cx='60' cy='62' r='4' fill='none' stroke='var(--muted)' stroke-width='1'/>";
+  var w1 = ring +
+    "<path d='M60 62 L86 34 A38 38 0 0 1 95 68 Z' fill='var(--rust)' opacity='.2'/>" +
+    "<path d='M60 62 L83 37 A34 34 0 0 1 90 66 Z' fill='var(--rust)' opacity='.3'/>" +
+    "<path d='M60 62 L79 42 A28 28 0 0 1 84 64 Z' fill='var(--rust)' opacity='.45'/>" +
+    cap(P("疫霉", "Phytophthora", "Phytophthora"), P(["湿腐，边界模糊", "多限于皮层"], ["wet rot, blurred edge", "mostly in the bark"], ["reput basah, pinggir kabur", "banyak pada kulit kayu"]), "var(--rust)", 124);
+  var w2 = ring +
+    "<g stroke='var(--ink)' stroke-width='3' stroke-linecap='round' opacity='.9'>" +
+    "<line x1='68' y1='36' x2='74' y2='48'/><line x1='80' y1='44' x2='72' y2='56'/>" +
+    "<line x1='86' y1='60' x2='74' y2='64'/><line x1='78' y1='78' x2='70' y2='70'/>" +
+    "<line x1='62' y1='32' x2='64' y2='46'/></g>" +
+    cap(P("回枯", "Dieback", "Mati rosot"), P(["木质部变色条纹", "沿上下延伸"], ["streaks in the wood", "running up and down"], ["jalur dalam kayu", "menjalar ke atas dan bawah"]), "var(--ink)", 124);
+  var w3 = ring +
+    "<path d='M60 62 L88 32 A38 38 0 0 1 96 62 Z' fill='var(--fus)' opacity='.85' stroke='var(--cream)' stroke-width='1'/>" +
+    cap(P("镰刀菌", "Fusarium", "Fusarium"), P(["褐至紫褐，界限清楚", "深入木质部"], ["brown-purple, sharp edge", "reaches into the wood"], ["perang ungu, pinggir tajam", "masuk ke dalam kayu"]), "var(--fus)", 124);
+  return wrap(0, P("剖开看：木质部的三种样子", "Cut it open: three looks in the wood", "Belah dan lihat: tiga rupa dalam kayu"),
+    trio(w1, w2, w3), 170,
+    P("表面判不准就横切一刀，看边界：糊的是疫霉，条纹状的是回枯，切口干净利落的是镰刀菌。", "When the surface will not settle it, cut across and read the boundary: blurred is Phytophthora, streaked is dieback, clean-edged is Fusarium.", "Bila permukaan tidak dapat menentukannya, belah melintang dan baca sempadannya: kabur ialah Phytophthora, berjalur ialah mati rosot, bersempadan bersih ialah Fusarium."));
+}
+
+/* 4 — sampling: scrape the advancing margin, not the dead centre */
+function plateSample(){
+  var stem = "<rect x='60' y='20' width='40' height='120' rx='4' fill='var(--bark3)' stroke='var(--line)'/>" +
+    "<path d='M62 54 q20 -10 36 2 q6 30 -2 56 q-18 8 -34 -2 q-6 -30 0 -56 z' fill='var(--ink)' opacity='.35'/>" +
+    "<path d='M66 66 q16 -8 28 2 q4 22 -2 40 q-14 6 -26 -2 q-4 -22 0 -40 z' fill='var(--ink)' opacity='.55'/>";
+  var wrong = stem +
+    "<circle cx='80' cy='92' r='11' fill='none' stroke='var(--rust)' stroke-width='2.4'/>" +
+    "<path d='M73 85 L87 99 M87 85 L73 99' stroke='var(--rust)' stroke-width='2.4'/>" +
+    "<text x='90' y='158' text-anchor='middle' font-size='11' fill='var(--rust)'>" + (P("别刮中间", "not the centre", "bukan di tengah")) + "</text>" +
+    "<text x='90' y='173' text-anchor='middle' font-size='9' fill='var(--muted)'>" + (P("已经死透，多是杂菌", "already dead — mostly saprophytes", "sudah mati — kebanyakannya saprofit")) + "</text>";
+  var right = stem +
+    "<circle cx='64' cy='60' r='10' fill='none' stroke='var(--husk)' stroke-width='2.4'/>" +
+    "<path d='M59 60 L63 65 L70 55' fill='none' stroke='var(--husk)' stroke-width='2.4' stroke-linecap='round'/>" +
+    "<path d='M40 60 L52 60' stroke='var(--husk)' stroke-width='1.6'/><path d='M48 56 L53 60 L48 64' fill='none' stroke='var(--husk)' stroke-width='1.6'/>" +
+    "<text x='90' y='158' text-anchor='middle' font-size='11' fill='var(--husk)'>" + (P("刮病健交界", "scrape the margin", "kikis di pinggir")) + "</text>" +
+    "<text x='90' y='173' text-anchor='middle' font-size='9' fill='var(--muted)'>" + (P("病菌正在这里活动", "this is where it is alive", "di sinilah ia masih hidup")) + "</text>";
+  return "<div class='plate'><h3>" + esc(P("刮哪里：取样位置决定你看到什么", "Where to scrape — sampling decides what you see", "Di mana hendak dikikis — cara ambil sampel menentukan apa yang anda nampak")) + "</h3>" +
+    "<svg viewBox='0 0 360 186' xmlns='http://www.w3.org/2000/svg' role='img'>" +
+    "<g>" + wrong + "</g><g transform='translate(180,0)'>" + right + "</g>" +
+    "<line x1='178' y1='12' x2='178' y2='174' stroke='var(--line)'/></svg>" +
+    "<p>" + esc(P("刮在病斑正中，你多半只找到腐生杂菌，白忙一趟。要刮边缘——变色刚开始的那一圈。", "Scrape the middle of a lesion and you will mostly find saprophytes and waste the trip. Take the margin — the ring where discoloration is just starting.", "Kikis di tengah lesi dan kebanyakan yang anda jumpa hanyalah saprofit, membazir masa. Ambil di pinggir — lingkaran tempat perubahan warna baru bermula.")) + "</p></div>";
+}
+
+/* 5 — how each one arrives */
+function plateSpread(){
+  var r1 = TRUNK + GROUND +
+    "<g stroke='var(--rust)' stroke-width='1.4' fill='none'><path d='M22 152 q8 -22 22 -30'/><path d='M98 152 q-8 -22 -22 -30'/></g>" +
+    "<g fill='var(--rust)'><circle cx='24' cy='142' r='2'/><circle cx='34' cy='130' r='1.6'/><circle cx='96' cy='142' r='2'/><circle cx='86' cy='130' r='1.6'/></g>" +
+    "<g stroke='var(--muted)' stroke-width='1.2'><line x1='16' y1='150' x2='16' y2='158'/><line x1='30' y1='152' x2='30' y2='158'/><line x1='90' y1='152' x2='90' y2='158'/><line x1='104' y1='150' x2='104' y2='158'/></g>" +
+    cap(P("雨水溅射", "rain splash", "percikan hujan"), P(["从湿土带上树皮"], ["off wet soil onto bark"], ["dari tanah basah ke kulit"]), "var(--rust)", 182);
+  var r2 = TRUNK + GROUND +
+    "<path d='M64 62 L94 44' stroke='var(--bark3)' stroke-width='9' stroke-linecap='round'/>" +
+    "<line x1='90' y1='38' x2='98' y2='50' stroke='var(--cream)' stroke-width='2'/>" +
+    "<g stroke='var(--ink)' stroke-width='1.3' fill='none' stroke-dasharray='3 3'>" +
+    "<path d='M22 116 q18 -46 62 -66'/><path d='M34 132 q22 -40 54 -54'/></g>" +
+    "<g fill='var(--ink)'><circle cx='20' cy='120' r='2'/><circle cx='32' cy='136' r='2'/></g>" +
+    "<path d='M12 140 l22 -6 l-4 12 z' fill='var(--bark3)' stroke='var(--line)'/>" +
+    "<path d='M10 150 l26 -4' stroke='var(--line)' stroke-width='2'/>" +
+    cap(P("空中孢子", "airborne spores", "spora di udara"), P(["从病枝堆飞向新刀口"], ["prunings to fresh cut"], ["sisa pangkasan ke luka"]), "var(--ink)", 182);
+  var r3 = TRUNK + GROUND +
+    "<path d='M20 158 q22 -16 39 -16 q17 0 39 16 z' fill='var(--bark3)' stroke='var(--line)' stroke-width='.8'/>" +
+    "<path d='M44 140 l-14 -6' stroke='var(--fus)' stroke-width='1.6'/><path d='M44 140 l-7 -1 M44 140 l-5 5' stroke='var(--fus)' stroke-width='1.6' fill='none'/>" +
+    "<path d='M74 140 l14 -6' stroke='var(--fus)' stroke-width='1.6'/><path d='M74 140 l7 -1 M74 140 l5 5' stroke='var(--fus)' stroke-width='1.6' fill='none'/>" +
+    "<path d='M50 146 q9 -5 18 0' stroke='var(--fus)' stroke-width='3' fill='none'/>" +
+    "<path d='M78 120 q6 6 0 12 q-6 -6 0 -12' fill='var(--muted)' opacity='.7'/>" +
+    cap(P("根颈伤口", "collar wounds", "luka pangkal batang"), P(["白蚁、机械伤 ＋ 长期潮湿"], ["termites, strimmer + damp"], ["anai-anai, mesin + lembap"]), "var(--fus)", 182);
+  return wrap(0, P("怎么进来的：三条侵染路线", "How each one arrives", "Bagaimana setiap satu masuk"),
+    trio(r1, r2, r3), 212,
+    P("知道路线才知道挡在哪：疫霉挡在土面，回枯挡在刀口，镰刀菌挡在根颈。", "Knowing the route tells you where to block it: Phytophthora at the soil surface, dieback at the cut, Fusarium at the collar.", "Mengetahui laluannya memberitahu di mana hendak disekat: Phytophthora di permukaan tanah, mati rosot di luka pangkasan, Fusarium di pangkal batang."));
+}
+
+/* 6 — wound care, three steps */
+function plateWound(){
+  var s1 = "<path d='M14 78 L100 46' stroke='var(--bark3)' stroke-width='16' stroke-linecap='round'/>" +
+    "<path d='M62 66 L100 46' stroke='var(--ink)' stroke-width='16' stroke-linecap='round' opacity='.55'/>" +
+    "<line x1='44' y1='58' x2='56' y2='88' stroke='var(--husk)' stroke-width='2.4'/>" +
+    "<path d='M62 66 L74 94' stroke='var(--rust)' stroke-width='1.6' stroke-dasharray='3 3' opacity='.8'/>" +
+    "<text x='30' y='44' font-size='9' fill='var(--husk)'>" + (P("在这里剪", "cut here", "potong sini")) + "</text>" +
+    "<text x='80' y='104' font-size='9' fill='var(--rust)'>" + (P("别在这里", "not here", "bukan sini")) + "</text>" +
+    cap(P("1 剪到病斑以外", "1 Cut past the lesion", "1 Potong lepas lesi"), P(["进入健康木质部"], ["into clean wood"], ["sampai ke kayu bersih"]), "var(--husk)", 126);
+  var s2 = "<path d='M20 84 L92 52' stroke='var(--bark3)' stroke-width='16' stroke-linecap='round'/>" +
+    "<ellipse cx='92' cy='52' rx='6' ry='9' fill='var(--husk)' transform='rotate(-24 92 52)'/>" +
+    "<path d='M82 38 q11 -7 20 2' stroke='var(--husk)' stroke-width='2' fill='none' stroke-linecap='round'/>" +
+    "<circle cx='32' cy='44' r='10' fill='none' stroke='var(--muted)' stroke-width='1.4'/>" +
+    "<path d='M32 37 L32 44 L38 47' stroke='var(--muted)' stroke-width='1.4' fill='none' stroke-linecap='round'/>" +
+    cap(P("2 当天封口", "2 Seal the same day", "2 Tutup pada hari yang sama"), P(["刀口是主要入侵口"], ["the cut is the main entry"], ["luka ialah pintu masuk utama"]), "var(--husk)", 126);
+  var s3 = "<rect x='48' y='24' width='24' height='72' rx='3' fill='var(--bark3)' stroke='var(--line)'/>" +
+    "<line x1='12' y1='96' x2='108' y2='96' stroke='var(--muted)' stroke-width='1.4'/>" +
+    "<path d='M12 96 q12 -16 26 -16 l0 4 q-12 0 -20 12 z' fill='var(--bark3)' stroke='var(--line)' stroke-width='.8'/>" +
+    "<path d='M108 96 q-12 -16 -26 -16 l0 4 q12 0 20 12 z' fill='var(--bark3)' stroke='var(--line)' stroke-width='.8'/>" +
+    "<path d='M42 88 L30 82' stroke='var(--husk)' stroke-width='1.8'/><path d='M30 82 L36 81 M30 82 L31 88' stroke='var(--husk)' stroke-width='1.8' fill='none'/>" +
+    "<path d='M78 88 L90 82' stroke='var(--husk)' stroke-width='1.8'/><path d='M90 82 L84 81 M90 82 L89 88' stroke='var(--husk)' stroke-width='1.8' fill='none'/>" +
+    cap(P("3 扒开根颈", "3 Clear the collar", "3 Bersihkan pangkal"), P(["覆盖物离开树干"], ["mulch back off the trunk"], ["jauhkan sungkupan"]), "var(--husk)", 126);
+  return wrap(0, P("伤口处理三步", "Wound care in three steps", "Rawatan luka dalam tiga langkah"), trio(s1, s2, s3), 158,
+    P("这三步不花钱，却是「现场」页把它们排第一的原因。", "These three cost nothing, and they are why the Field tab ranks them first.", "Ketiga-tiganya tidak memerlukan kos, dan itulah sebabnya tab Di Ladang meletakkannya di tempat pertama."));
+}
+
+/* 7 — when to prune */
+function plateTiming(){
+  var branch = "<path d='M22 76 L98 54' stroke='var(--bark3)' stroke-width='14' stroke-linecap='round'/>";
+  var ok = branch +
+    "<circle cx='34' cy='30' r='11' fill='none' stroke='var(--husk)' stroke-width='2'/>" +
+    "<g stroke='var(--husk)' stroke-width='1.6'><line x1='34' y1='13' x2='34' y2='18'/><line x1='34' y1='42' x2='34' y2='47'/>" +
+    "<line x1='17' y1='30' x2='22' y2='30'/><line x1='46' y1='30' x2='51' y2='30'/></g>" +
+    "<ellipse cx='98' cy='54' rx='5' ry='8' fill='var(--husk)' transform='rotate(-16 98 54)'/>" +
+    cap(P("干燥天下刀", "Cut in dry weather", "Potong masa kering"), P(["伤口有时间封口"], ["the wound has time to seal"], ["luka sempat menutup"]), "var(--husk)", 104);
+  var bad = branch +
+    "<path d='M22 26 q0 -12 12 -12 q4 -8 14 -6 q10 -4 14 8 q10 0 8 10 z' fill='var(--muted)' opacity='.6'/>" +
+    "<g stroke='var(--rust)' stroke-width='1.6' stroke-linecap='round'>" +
+    "<line x1='30' y1='34' x2='26' y2='44'/><line x1='42' y1='34' x2='38' y2='46'/><line x1='54' y1='34' x2='50' y2='44'/></g>" +
+    "<ellipse cx='98' cy='54' rx='5' ry='8' fill='var(--rust)' opacity='.6' transform='rotate(-16 98 54)'/>" +
+    "<path d='M88 40 L108 66 M108 40 L88 66' stroke='var(--rust)' stroke-width='2'/>" +
+    cap(P("雨前别动刀", "Never before rain", "Jangan sebelum hujan"), P(["等于替病菌开门"], ["it is opening the door"], ["sama seperti membuka pintu"]), "var(--rust)", 104);
+  return "<div class='plate'><h3>" + esc(P("修剪时机", "When to prune", "Bila hendak memangkas")) + "</h3>" +
+    "<svg viewBox='0 0 360 140' xmlns='http://www.w3.org/2000/svg' role='img'>" +
+    "<g transform='translate(30,0)'>" + ok + "</g><g transform='translate(210,0)'>" + bad + "</g>" +
+    "<line x1='178' y1='12' x2='178' y2='128' stroke='var(--line)'/></svg></div>";
+}
+
+/* 13 — the year, anchored to MetMalaysia's east-coast rainfall pattern */
+function plateYear(){
+  var M = P(["1","2","3","4","5","6","7","8","9","10","11","12"], ["J","F","M","A","M","J","J","A","S","O","N","D"], ["J","F","M","A","M","J","J","O","S","O","N","D"]);
+  var x0 = 30, w = (352 - x0) / 12;
+  var head = M.map(function(m, i){
+    return "<text x='" + (x0 + w * i + w / 2).toFixed(1) + "' y='19' text-anchor='middle' font-size='8.5' fill='var(--muted)'>" + m + "</text>";
+  }).join("");
+  var bar = function(y, a2, b2, col, op, h){
+    var out = "", hh = h || 12;
+    var seg = function(f, t){
+      out += "<rect x='" + (x0 + w * (f - 1)).toFixed(1) + "' y='" + y + "' width='" + (w * (t - f + 1)).toFixed(1) +
+        "' height='" + hh + "' rx='2' fill='" + col + "' opacity='" + op + "'/>";
+    };
+    if (a2 <= b2) seg(a2, b2); else { seg(a2, 12); seg(1, b2); }
+    return out;
+  };
+  var lab = function(y, t, c){ return "<text x='3' y='" + (y + 9.5) + "' font-size='8.5' fill='" + c + "'>" + t + "</text>"; };
+  var rows =
+    bar(24, 11, 3, "var(--rust)", ".35") + bar(24, 11, 1, "var(--rust)", ".85") +
+      lab(24, P("雨季", "Wet", "Hujan"), "var(--rust)") +
+    bar(42, 4, 5, "var(--amber)", ".6") + bar(42, 10, 11, "var(--amber)", ".6") +
+      lab(42, P("雷雨", "Storms", "Ribut"), "var(--amber)") +
+    bar(60, 6, 7, "var(--husk)", ".65") + lab(60, P("最干", "Driest", "Kering"), "var(--husk)") +
+    bar(78, 6, 8, "var(--ink)", ".6")   + lab(78, P("产季", "Crop", "Buah"), "var(--ink)") +
+    bar(96, 8, 9, "var(--fus)", ".7")   + lab(96, P("修剪", "Prune", "Pangkas"), "var(--fus)") +
+    bar(114, 9, 10, "var(--root)", ".7") + lab(114, P("清园", "Clean", "Bersih"), "var(--root)");
+  var notes = P([
+    "东北季风 11–3 月，东海岸各州以 11、12、1 月雨量最大；多数地区最干的是 6、7 月（马来西亚气象局）。深色那一段就是疫霉压力最高的时候——这几个月不动刀。",
+    "4–5 月与 10–11 月是季风过渡期，午后雷雨多。修剪要挑连续晴天，别赶在雷雨前下刀。",
+    "修剪与清园安排在采后到雨季来临之间那一段，伤口才有时间封口；排水要在雨季前修好，不是等淹了再挖。",
+    "产季与修剪的月份按你自己的园调整——本app只标出雨量规律，那部分才是查得到的。"
+  ], [
+    "The northeast monsoon runs November to March, and for east-coast states November, December and January carry the maximum rainfall, while June and July are the driest months in most districts (MetMalaysia). The darker band is peak Phytophthora pressure — do not cut in those months.",
+    "April–May and October–November are the inter-monsoon transitions, with frequent afternoon thunderstorms. Pick a run of clear days to prune; never cut ahead of a storm.",
+    "Put pruning and sanitation between harvest and the onset of the rains so wounds have time to seal, and fix drainage before the wet season rather than during it.",
+    "Adjust the crop and pruning bands to your own orchard — only the rainfall pattern here is something that can be looked up."
+  ], [
+    "Monsun timur laut berlangsung November hingga Mac, dan bagi negeri pantai timur, November, Disember dan Januari membawa hujan maksimum, manakala Jun dan Julai ialah bulan paling kering di kebanyakan daerah (MetMalaysia). Jalur yang lebih gelap ialah puncak tekanan Phytophthora — jangan memotong pada bulan-bulan itu.",
+    "April–Mei dan Oktober–November ialah peralihan antara monsun, dengan ribut petir petang yang kerap. Pilih beberapa hari cerah berturut-turut untuk memangkas; jangan memotong sebelum ribut.",
+    "Letakkan pemangkasan dan pembersihan kebun antara musim menuai dan permulaan hujan supaya luka ada masa menutup, dan baiki saliran sebelum musim hujan, bukan ketika hujan.",
+    "Sesuaikan jalur buah dan pemangkasan dengan kebun anda sendiri — hanya corak hujan di sini yang boleh dirujuk daripada sumber rasmi."
+  ]);
+  return "<div class='plate'><h3>" + esc(P("一年怎么排：雨量按气象局，农事按你的园", "The year: rainfall from MetMalaysia, fieldwork from your orchard", "Setahun: hujan daripada MetMalaysia, kerja ladang ikut kebun anda")) + "</h3>" +
+    "<svg viewBox='0 0 360 136' xmlns='http://www.w3.org/2000/svg' role='img'>" + head +
+    "<g stroke='var(--line)' stroke-width='.7'>" +
+    M.map(function(m, i){ var x = (x0 + w * i).toFixed(1); return "<line x1='" + x + "' y1='22' x2='" + x + "' y2='128'/>"; }).join("") +
+    "<line x1='352' y1='22' x2='352' y2='128'/></g>" + rows + "</svg>" +
+    "<p>" + notes.map(esc).join("<br><br>") + "</p></div>";
+}
+
+/* 12 — the two fruit rots, and where each starts */
+function plateFruit(){
+  var fruit = function(){
+    return "<ellipse cx='60' cy='78' rx='34' ry='38' fill='var(--bark3)' stroke='var(--line)' stroke-width='1.2'/>" +
+      "<g stroke='var(--line)' stroke-width='1' opacity='.85'>" +
+      "<path d='M40 52 l4 6 l-6 2 z'/><path d='M58 44 l4 6 l-6 2 z'/><path d='M76 54 l4 6 l-6 2 z'/>" +
+      "<path d='M34 74 l5 5 l-6 3 z'/><path d='M84 76 l-5 5 l6 3 z'/><path d='M46 100 l5 5 l-6 3 z'/>" +
+      "<path d='M72 100 l-5 5 l6 3 z'/><path d='M60 110 l4 6 l-6 2 z'/></g>" +
+      "<path d='M60 40 q2 -12 -2 -18' stroke='var(--bark3)' stroke-width='5' fill='none' stroke-linecap='round'/>";
+  };
+  var cap5 = function(t, d, c){
+    return "<text x='60' y='140' text-anchor='middle' font-size='10.5' fill='" + c + "'>" + t + "</text>" +
+      d.map(function(w, i){ return "<text x='60' y='" + (154 + i * 12) + "' text-anchor='middle' font-size='8.5' fill='var(--muted)'>" + w + "</text>"; }).join("");
+  };
+  var a = fruit() +
+    "<path d='M44 100 q18 10 34 -2 q-4 14 -18 16 q-14 -1 -16 -14 z' fill='var(--rust)' opacity='.75'/>" +
+    "<g fill='var(--cream)' opacity='.75'><circle cx='56' cy='108' r='3'/><circle cx='66' cy='106' r='2.4'/></g>" +
+    "<line x1='20' y1='120' x2='100' y2='120' stroke='var(--muted)' stroke-width='1.2'/>" +
+    cap5(P("疫霉果腐", "Phytophthora rot", "Reput Phytophthora"), P(["贴地那一面先烂", "水渍状 · 有白霉"], ["the contact side first", "water-soaked, white mould"], ["bahagian bersentuhan dahulu", "berair, kulapuk putih"]), "var(--rust)");
+  var b = fruit() +
+    "<path d='M58 22 q4 14 2 20 q-8 6 -14 14 q22 6 32 -6 q-6 -12 -14 -14 q-2 -8 2 -16 z' fill='var(--ink)' opacity='.75'/>" +
+    "<path d='M60 40 q2 -12 -2 -18' stroke='var(--ink)' stroke-width='5' fill='none' stroke-linecap='round' opacity='.9'/>" +
+    "<path d='M46 58 L60 50 L74 58' fill='none' stroke='var(--ink)' stroke-width='1.4' stroke-dasharray='3 2'/>" +
+    cap5(P("蒂腐", "Stem-end rot", "Reput hujung tangkai"), P(["从果柄往下走", "常在采后才显出来"], ["down from the stalk", "often shows after picking"], ["turun dari tangkai", "selalunya selepas dipetik"]), "var(--ink)");
+  var c = fruit() +
+    /* a long stalk, with the right cut marked high and the wrong cut marked at the shoulder */
+    "<path d='M60 40 q3 -22 -1 -34' stroke='var(--bark3)' stroke-width='7' fill='none' stroke-linecap='round'/>" +
+    "<line x1='46' y1='16' x2='72' y2='16' stroke='var(--husk)' stroke-width='2.4'/>" +
+    "<path d='M40 11 L45 16 L40 21' fill='none' stroke='var(--husk)' stroke-width='2'/>" +
+    "<text x='78' y='19' font-size='9' fill='var(--husk)'>" + (P("剪这里", "cut here", "potong sini")) + "</text>" +
+    "<line x1='48' y1='42' x2='72' y2='42' stroke='var(--rust)' stroke-width='2'/>" +
+    "<path d='M74 36 L84 48 M84 36 L74 48' stroke='var(--rust)' stroke-width='2'/>" +
+    "<text x='4' y='46' font-size='9' fill='var(--rust)'>" + (P("别在这", "not here", "bukan sini")) + "</text>" +
+    cap5(P("采收：留一段果柄", "Leave stalk length", "Tinggalkan tangkai"),
+         P(["剪高一点，别齐着果蒂", "蒂腐就从那个切口进"], ["cut high, not flush", "stem-end rot enters there"], ["potong tinggi, bukan rapat", "reput masuk di situ"]), "var(--husk)");
+  return "<div class='plate'><h3>" + esc(P("两种果腐，起点不同", "Two fruit rots, two starting points", "Dua jenis reput buah, dua titik permulaan")) + "</h3>" +
+    "<svg viewBox='0 0 360 176' xmlns='http://www.w3.org/2000/svg' role='img'>" +
+    "<g>" + a + "</g><g transform='translate(120,0)'>" + b + "</g><g transform='translate(240,0)'>" + c + "</g>" +
+    "<line x1='118' y1='12' x2='118' y2='164' stroke='var(--line)'/><line x1='238' y1='12' x2='238' y2='164' stroke='var(--line)'/></svg>" +
+    "<p>" + esc(P("看起点就分得开：从贴地那一面烂进去的是疫霉，从果柄往下走的是蒂腐。所以采收时果柄留长一点——齐着果蒂剪，等于把切口直接开在病菌最容易进的地方。", "The starting point separates them: rot working in from the side that touched something is Phytophthora; rot running down from the stalk is stem-end rot. So leave a length of stalk when you pick — cutting flush puts the wound exactly where the fungus finds it easiest to enter.", "Titik permulaannya yang membezakan: reput yang masuk dari bahagian yang tersentuh ialah Phytophthora; reput yang turun dari tangkai ialah reput hujung tangkai. Jadi tinggalkan tangkai yang panjang semasa memetik — memotong rapat meletakkan luka tepat di tempat kulat paling mudah masuk.")) + "</p></div>";
+}
+
+/* 11 — borers: two kinds, and the test for whether one is still alive */
+function plateBorer(){
+  var stem = "<rect x='40' y='18' width='40' height='108' rx='3' fill='var(--bark3)' stroke='var(--line)'/>";
+  var cap4 = function(t, d, c){
+    return "<text x='60' y='142' text-anchor='middle' font-size='10.5' fill='" + c + "'>" + t + "</text>" +
+      d.map(function(w, i){ return "<text x='60' y='" + (156 + i * 12) + "' text-anchor='middle' font-size='8.5' fill='var(--muted)'>" + w + "</text>"; }).join("");
+  };
+  /* one big tunnel, sap and coarse frass */
+  var a = stem +
+    "<ellipse cx='58' cy='58' rx='5' ry='4' fill='#140F0A'/>" +
+    "<path d='M58 62 q-3 16 1 26' stroke='var(--amber)' stroke-width='3' fill='none' stroke-linecap='round'/>" +
+    "<g fill='var(--muted)' opacity='.85'><ellipse cx='52' cy='122' rx='9' ry='4'/>" +
+    "<circle cx='47' cy='116' r='1.8'/><circle cx='56' cy='115' r='1.6'/><circle cx='51' cy='110' r='1.4'/></g>" +
+    cap4(P("天牛类", "Longhorn borer", "Penggerek tanduk"), P(["孔大、流胶", "木屑粗，一孔一虫"], ["big hole, sap", "coarse frass, one larva"], ["lubang besar, getah", "habuk kasar, satu larva"]), "var(--rust)");
+  /* many pinholes with toothpick frass */
+  var b = stem +
+    "<g fill='#140F0A'><circle cx='48' cy='36' r='1.5'/><circle cx='62' cy='44' r='1.5'/><circle cx='54' cy='56' r='1.5'/>" +
+    "<circle cx='69' cy='62' r='1.5'/><circle cx='46' cy='70' r='1.5'/><circle cx='60' cy='78' r='1.5'/>" +
+    "<circle cx='71' cy='90' r='1.5'/><circle cx='50' cy='96' r='1.5'/><circle cx='63' cy='108' r='1.5'/></g>" +
+    "<g stroke='var(--cream)' stroke-width='1.6' opacity='.85' stroke-linecap='round'>" +
+    "<line x1='48' y1='36' x2='40' y2='32'/><line x1='62' y1='44' x2='70' y2='40'/>" +
+    "<line x1='54' y1='56' x2='46' y2='53'/><line x1='60' y1='78' x2='68' y2='75'/></g>" +
+    cap4(P("小蠹（针孔）", "Shot-hole borer", "Penggerek lubang jarum"), P(["针孔成片、细白粉", "多在已病的树上"], ["pinholes, pale dust", "on already-sick trees"], ["lubang halus, habuk pucat", "pada pokok yang sudah sakit"]), "var(--ink)");
+  /* the frass date test */
+  var c = stem +
+    "<ellipse cx='58' cy='52' rx='5' ry='4' fill='#140F0A'/>" +
+    "<path d='M40 74 L80 74' stroke='var(--husk)' stroke-width='1.2' stroke-dasharray='3 3'/>" +
+    "<rect x='30' y='84' width='24' height='20' rx='2' fill='none' stroke='var(--husk)' stroke-width='1.4'/>" +
+    "<line x1='30' y1='90' x2='54' y2='90' stroke='var(--husk)' stroke-width='1.4'/>" +
+    "<text x='42' y='100' text-anchor='middle' font-size='8' fill='var(--husk)'>" + (P("日期", "date", "tarikh")) + "</text>" +
+    "<path d='M60 88 L74 88' stroke='var(--husk)' stroke-width='1.4'/><path d='M69 84 L74 88 L69 92' fill='none' stroke='var(--husk)' stroke-width='1.4'/>" +
+    "<g fill='var(--muted)'><circle cx='84' cy='96' r='1.8'/><circle cx='89' cy='92' r='1.5'/><circle cx='80' cy='91' r='1.4'/></g>" +
+    cap4(P("判活：刮净，记日期", "Alive? the frass test", "Ujian habuk kayu"), P(["3–7 天有新木屑", "＝虫还活着"], ["clear it, note the date", "new frass = still alive"], ["bersihkan, catat tarikh", "habuk baharu = masih hidup"]), "var(--husk)");
+  return "<div class='plate'><h3>" + esc(P("两种蛀虫，和判断虫还在不在的方法", "Two kinds of borer, and how to tell if one is still there", "Dua jenis penggerek, dan cara mengetahui sama ada ia masih ada")) + "</h3>" +
+    "<svg viewBox='0 0 360 178' xmlns='http://www.w3.org/2000/svg' role='img'>" +
+    "<g>" + a + "</g><g transform='translate(120,0)'>" + b + "</g><g transform='translate(240,0)'>" + c + "</g>" +
+    "<line x1='118' y1='12' x2='118' y2='166' stroke='var(--line)'/><line x1='238' y1='12' x2='238' y2='166' stroke='var(--line)'/></svg>" +
+    "<p>" + esc(P("先分清是哪一种，做法完全不同。判活只要一个动作：把木屑刮干净，记下日期，3–7 天后回来看有没有新的。", "Tell the two apart first — the response is completely different. The alive test is one action: scrape the frass clean, note the date, come back in 3–7 days and see whether new frass has appeared.", "Bezakan kedua-duanya dahulu — tindakannya berbeza sama sekali. Ujian hidup hanya satu langkah: kikis habuk kayu sampai bersih, catat tarikh, dan kembali dalam 3–7 hari untuk lihat sama ada ada habuk baharu.")) + "</p></div>";
+}
+
+/* 10 — girdling: when treatment can no longer win */
+function plateStop(){
+  var ring = function(frac, col){
+    var a0 = -Math.PI / 2, a1 = a0 + frac * 2 * Math.PI, R = 34, cx = 60, cy = 60;
+    var x0 = cx + R * Math.cos(a0), y0 = cy + R * Math.sin(a0);
+    var x1 = cx + R * Math.cos(a1), y1 = cy + R * Math.sin(a1);
+    var big = frac > 0.5 ? 1 : 0;
+    return "<circle cx='60' cy='60' r='34' fill='var(--bark3)' stroke='var(--line)' stroke-width='1.2'/>" +
+      "<circle cx='60' cy='60' r='26' fill='none' stroke='var(--line)' stroke-width='1'/>" +
+      "<path d='M" + x0.toFixed(1) + " " + y0.toFixed(1) + " A34 34 0 " + big + " 1 " + x1.toFixed(1) + " " + y1.toFixed(1) +
+      "' fill='none' stroke='" + col + "' stroke-width='8' stroke-linecap='butt'/>" +
+      "<text x='60' y='64' text-anchor='middle' font-size='12' fill='var(--muted)'>" + Math.round(frac * 100) + "%</text>";
+  };
+  var cap3 = function(t, d, c){
+    return "<text x='60' y='114' text-anchor='middle' font-size='11' fill='" + c + "'>" + t + "</text>" +
+      d.map(function(w, i){ return "<text x='60' y='" + (128 + i * 12) + "' text-anchor='middle' font-size='8.5' fill='var(--muted)'>" + w + "</text>"; }).join("");
+  };
+  var a = ring(0.25, "var(--husk)") + cap3(P("不到一半", "under half", "kurang separuh"),
+    P(["还有活的输导组织", "剪到病斑以外，封口"], ["living tissue remains", "cut past it, seal"], ["masih ada tisu hidup", "potong melepasinya, tutup"]), "var(--husk)");
+  var b = ring(0.5, "var(--amber)") + cap3(P("约一半", "about half", "lebih kurang separuh"),
+    P(["看边缘有没有愈伤", "几周后再判一次"], ["watch for callus", "judge again in weeks"], ["perhatikan kalus", "nilai semula kemudian"]), "var(--amber)");
+  var c = ring(0.8, "var(--rust)") + cap3(P("超过一半，接近环剥", "more than half", "lebih separuh"),
+    P(["这一段已经保不住", "从病斑以下砍掉"], ["this section is finished", "cut below it"], ["tidak boleh diselamatkan", "potong di bawahnya"]), "var(--rust)");
+  return "<div class='plate'><h3>" + esc(P("什么时候不该再治：看环剥了多少", "When treatment can no longer win: how far it has girdled", "Bila rawatan sudah tidak boleh menang: sejauh mana ia melingkari")) + "</h3>" +
+    "<svg viewBox='0 0 360 148' xmlns='http://www.w3.org/2000/svg' role='img'>" +
+    "<g>" + a + "</g><g transform='translate(120,0)'>" + b + "</g><g transform='translate(240,0)'>" + c + "</g>" +
+    "<line x1='118' y1='12' x2='118' y2='136' stroke='var(--line)'/><line x1='238' y1='12' x2='238' y2='136' stroke='var(--line)'/></svg>" +
+    "<p>" + esc(P("病斑绕树干或枝条一圈超过一半，上面的部分就等于断了水源，再喷什么都救不回来。这时候唯一有意义的动作是砍到病斑以下、搬走烧掉——不是继续用药。主干根颈若已过半，整棵树要列入替换计划，留着只是园里的孢子源。", "Once a lesion wraps more than half the circumference, everything above it has lost its water supply and no spray will bring it back. The only useful action then is to cut below the lesion and carry it out to burn — not to keep treating. If the main trunk at the collar is past half, plan to replace the tree; leaving it standing just keeps a spore source in the orchard.", "Apabila lesi melingkari lebih separuh lilitan, semua bahagian di atasnya sudah kehilangan bekalan air dan tiada semburan boleh memulihkannya. Tindakan yang berguna hanyalah memotong di bawah lesi dan membawanya keluar untuk dibakar — bukan meneruskan rawatan. Jika batang utama di pangkal sudah melebihi separuh, rancang untuk menggantikan pokok itu; membiarkannya berdiri hanya mengekalkan sumber spora dalam kebun.")) + "</p></div>";
+}
+
+/* 9 — things that look alarming and are not any of these three */
+function plateNot(){
+  var W = 90;
+  var stem = function(){ return "<rect x='30' y='20' width='30' height='104' rx='3' fill='var(--bark3)' stroke='var(--line)'/>"; };
+  var cap2 = function(t, d){
+    return "<text x='45' y='140' text-anchor='middle' font-size='10' fill='var(--husk)'>" + t + "</text>" +
+      "<text x='45' y='153' text-anchor='middle' font-size='8' fill='var(--muted)'>" + d + "</text>";
+  };
+  /* clear resin from a small injury — no lesion under it */
+  var a = stem() +
+    "<path d='M44 52 q4 10 0 18 q-4 -8 0 -18' fill='var(--amber)' opacity='.85'/>" +
+    "<circle cx='44' cy='76' r='3' fill='var(--amber)' opacity='.85'/>" +
+    "<line x1='38' y1='50' x2='52' y2='50' stroke='var(--line)' stroke-width='1.4'/>" +
+    cap2(P("自然流胶", "Natural gum", "Getah asli"), P("树皮完好", "bark intact", "kulit masih elok"));
+  /* borer holes with frass */
+  var b = stem() +
+    "<g fill='#140F0A'><circle cx='40' cy='58' r='2.6'/><circle cx='50' cy='74' r='2.4'/><circle cx='42' cy='92' r='2.2'/></g>" +
+    "<path d='M40 62 q-3 8 -1 14' stroke='var(--muted)' stroke-width='2.4' fill='none'/>" +
+    "<path d='M50 78 q3 7 1 12' stroke='var(--muted)' stroke-width='2.2' fill='none'/>" +
+    "<ellipse cx='38' cy='120' rx='7' ry='3' fill='var(--muted)' opacity='.7'/>" +
+    cap2(P("蛀虫／白蚁", "Borers, termites", "Penggerek"), P("有木屑虫粪", "frass, not rot", "habuk, bukan reput"));
+  /* lichen and moss lying flat on sound bark */
+  var c = stem() +
+    "<g fill='var(--husk)' opacity='.55'><ellipse cx='40' cy='48' rx='9' ry='6'/><ellipse cx='52' cy='66' rx='7' ry='5'/>" +
+    "<ellipse cx='38' cy='82' rx='8' ry='5'/><ellipse cx='48' cy='100' rx='6' ry='4'/></g>" +
+    "<path d='M64 66 L78 60' stroke='var(--husk)' stroke-width='1.2'/>" +
+    "<path d='M78 60 l-5 0 M78 60 l-1 4' stroke='var(--husk)' stroke-width='1.2' fill='none'/>" +
+    cap2(P("苔藓地衣", "Moss, lichen", "Lumut, liken"), P("刮掉是好皮", "sound bark beneath", "kulit elok di bawah"));
+  /* straight-edged mechanical wound at a consistent height */
+  var d = stem() +
+    "<path d='M30 88 L60 88 L60 100 L30 100 Z' fill='var(--bark2)' stroke='var(--cream)' stroke-width='1.2'/>" +
+    "<line x1='14' y1='94' x2='26' y2='94' stroke='var(--muted)' stroke-width='1' stroke-dasharray='2 2'/>" +
+    "<line x1='64' y1='94' x2='76' y2='94' stroke='var(--muted)' stroke-width='1' stroke-dasharray='2 2'/>" +
+    "<line x1='16' y1='124' x2='74' y2='124' stroke='var(--muted)' stroke-width='1.2'/>" +
+    cap2(P("机械伤", "Strimmer scar", "Parut mesin"), P("边缘平直", "straight edges", "pinggir lurus"));
+  return "<div class='plate'><h3>" + esc(P("这些不是病，别喷药", "Not a disease — do not spray", "Bukan penyakit — jangan sembur")) + "</h3>" +
+    "<svg viewBox='0 0 360 162' xmlns='http://www.w3.org/2000/svg' role='img'>" +
+    "<g>" + a + "</g><g transform='translate(90,0)'>" + b + "</g>" +
+    "<g transform='translate(180,0)'>" + c + "</g><g transform='translate(270,0)'>" + d + "</g>" +
+    "<line x1='88' y1='12' x2='88' y2='150' stroke='var(--line)'/>" +
+    "<line x1='178' y1='12' x2='178' y2='150' stroke='var(--line)'/>" +
+    "<line x1='268' y1='12' x2='268' y2='150' stroke='var(--line)'/></svg>" +
+    "<p>" + esc(P("先排除这四种，再谈治病。刮开看是最快的分辨法：底下是好皮，树干上的病就排除了。机械伤直接处理伤口即可；蛀虫孔不一样——先确认虫还在不在，虫还活着就封口，等于把它关在里面继续啃。做法见「药剂」页的蛀虫一节。", "Rule these four out before treating anything. Scraping is the quickest test: sound bark underneath rules out the trunk diseases. A machine wound you simply dress. A borer hole is different — check first whether the insect is still there, because sealing a live tunnel just shuts it in to keep chewing. See the borer section on the Chemicals tab.", "Singkirkan empat ini dahulu sebelum merawat apa-apa. Mengikis ialah ujian terpantas: kulit kayu yang elok di bawahnya menyingkirkan penyakit batang. Luka mesin cukup dirawat luka sahaja. Lubang penggerek lain — periksa dahulu sama ada serangga itu masih ada, kerana menutup terowong yang masih berpenghuni hanya mengurungnya untuk terus menggerek. Lihat bahagian penggerek dalam tab Racun Kulat.")) + "</p></div>";
+}
+
+/* 8 — where the biologicals go on the tree.
+   Tree on the left, all three labels in one left-aligned column on the right,
+   so neither language can run off the edge. */
+function plateBio(){
+  var LX = 172;                       /* label column starts here */
+  var rows = [
+    { y:46,  c:"var(--husk)", n:P("① 伤口涂抹", "1 Wound paste", "1 Sapuan pada luka"),
+      d:P("木霉膏，修剪后当天", "Trichoderma, same day", "Trichoderma, pada hari yang sama"), fx:140, fy:56 },
+    { y:104, c:"var(--fus)",  n:P("② 树干喷施", "2 Trunk spray", "2 Semburan batang"),
+      d:P("芽孢杆菌，病斑周围", "Bacillus, around the lesion", "Bacillus, sekeliling lesi"), fx:126, fy:108 },
+    { y:162, c:"var(--ink)",  n:P("③ 灌根", "3 Soil drench", "3 Siraman tanah"),
+      d:P("根区，滴水线内外", "root zone, at the drip line", "zon akar, di garisan titisan silara"), fx:128, fy:176 }
+  ];
+  var tree =
+    "<rect x='74' y='40' width='26' height='118' rx='4' fill='var(--bark3)' stroke='var(--line)'/>" +
+    "<path d='M87 74 L134 50' stroke='var(--bark3)' stroke-width='11' stroke-linecap='round'/>" +
+    "<path d='M87 94 L46 72' stroke='var(--bark3)' stroke-width='11' stroke-linecap='round'/>" +
+    "<line x1='16' y1='158' x2='158' y2='158' stroke='var(--muted)' stroke-width='1.4'/>" +
+    "<path d='M78 158 q-16 20 -34 26 M96 158 q16 20 34 26' stroke='var(--line)' stroke-width='2' fill='none'/>" +
+    /* wound paste on both cut ends */
+    "<ellipse cx='134' cy='50' rx='5' ry='7' fill='var(--husk)' transform='rotate(-28 134 50)'/>" +
+    "<ellipse cx='46' cy='72' rx='5' ry='7' fill='var(--husk)' transform='rotate(28 46 72)'/>" +
+    /* spray onto the trunk */
+    "<g stroke='var(--fus)' stroke-width='1.2' opacity='.9'>" +
+    "<path d='M56 100 L70 104'/><path d='M56 110 L70 112'/><path d='M56 120 L70 120'/>" +
+    "<path d='M118 100 L104 104'/><path d='M118 110 L104 112'/><path d='M118 120 L104 120'/></g>" +
+    /* drench across the root zone */
+    "<g fill='var(--ink)' opacity='.8'><circle cx='34' cy='176' r='2.6'/><circle cx='60' cy='182' r='2.6'/>" +
+    "<circle cx='87' cy='178' r='2.6'/><circle cx='114' cy='182' r='2.6'/><circle cx='140' cy='176' r='2.6'/></g>";
+
+  var labels = rows.map(function(r){
+    return "<line x1='" + r.fx + "' y1='" + r.fy + "' x2='" + (LX - 6) + "' y2='" + (r.y - 4) + "' stroke='" + r.c + "' stroke-width='1' opacity='.8'/>" +
+      "<text x='" + LX + "' y='" + r.y + "' font-size='11' fill='" + r.c + "'>" + r.n + "</text>" +
+      "<text x='" + LX + "' y='" + (r.y + 14) + "' font-size='8.5' fill='var(--muted)'>" + r.d + "</text>";
+  }).join("");
+
+  return "<div class='plate'><h3>" + esc(P("菌剂用在树的哪三个位置", "Where the biologicals go", "Di mana agen biologi digunakan")) + "</h3>" +
+    "<svg viewBox='0 0 360 200' xmlns='http://www.w3.org/2000/svg' role='img'>" + tree + labels + "</svg>" +
+    "<p>" + esc(P("三个位置对应三个入侵口。只灌根不涂伤口，等于把大门开着。", "Three placements for three entry points. Drenching the soil while leaving wounds untreated is leaving the front door open.", "Tiga tempat untuk tiga pintu masuk. Menyiram tanah sambil membiarkan luka tanpa rawatan sama seperti membiarkan pintu depan terbuka.")) + "</p></div>";
+}
+
+/* "still cannot tell?" — one plate at a time, in the order the work happens:
+   scrape first, then look close, then cut. */
+var HELP = "not";
+var SHOWALL = false;
+var SHOWMIX = true;   /* mixing principles: open by default, foldable */
+var FAST = ["s2", "s6", "s13", "r5"];   /* one opening question per pathway */
+function renderHelper(){
+  var tabs = [
+    { k:"not",    n:P("① 排除", "1 Rule out", "1 Singkir"), d:P("不是病", "not a disease", "bukan penyakit") },
+    { k:"sample", n:P("② 取样", "2 Sample", "2 Sampel"),  d:P("刮对位置", "scrape right", "kikis tempat betul") },
+    { k:"signs",  n:P("③ 近看", "3 Look", "3 Lihat"),    d:P("找特征", "find the sign", "cari tandanya") },
+    { k:"wood",   n:P("④ 剖开", "4 Cut", "4 Belah"),     d:P("最后一步", "last resort", "langkah akhir") }
+  ];
+  var body = HELP === "not" ? plateNot() : (HELP === "signs" ? plateSigns() : (HELP === "wood" ? plateWood() : plateSample()));
+  return "<div class='helper'><h3>" + esc(P("还分不清？按这个顺序做", "Still cannot tell? Work in this order", "Masih tak dapat pastikan? Ikut susunan ini")) + "</h3>" +
+    "<div class='htabs'>" + tabs.map(function(t){
+      return "<button type='button' data-help='" + t.k + "' aria-pressed='" + (HELP === t.k) + "'>" +
+        "<b>" + esc(t.n) + "</b>" + esc(t.d) + "</button>";
+    }).join("") + "</div>" + body + "</div>";
+}
+
+function mixedCard(m){
+  var both = m.map(function(q){ return T(q); }).join(P(" ＋ ", " + ", " + "));
+  var oomy = m.some(function(q){ return q.k === "p"; });
+  var pts = P([
+    "两个入侵口要分开处理：疫霉与镰刀菌走根颈——排水、扒开覆盖物；葡萄座腔菌类走上方伤口——剪到健康木质部、当天封口。",
+    oomy ? "没有一支药同时管卵菌和真菌。卵菌药对真菌无效，真菌药对卵菌无效——想一次喷完是行不通的。"
+         : "两者都是真菌，但镰刀菌对多数药的敏感性低于葡萄座腔菌类，别用同一支药套两个病。",
+    "先救主干与根颈，枝条其次。主干保不住，救回来的枝条也没用。",
+    "并发几乎都指向同一个根因：树势弱。排水、根系、挂果量——这些不解决，治好也会再来。"
+  ], [
+    "Treat the two entry points separately: Phytophthora and Fusarium come in at the collar — drainage, clear the mulch; the Botryosphaeriaceae come in through wounds above — cut to clean wood and seal the same day.",
+    oomy ? "No single product covers both an oomycete and a fungus. Oomycete products do nothing to fungi and vice versa — one spray will not do it."
+         : "Both are fungi, but Fusarium is less sensitive to most products than the Botryosphaeriaceae. Do not stretch one product across both.",
+    "Save the trunk and collar first, branches second. A branch saved on a failing trunk is wasted work.",
+    "A double infection almost always points at one root cause: a weak tree. Drainage, roots, crop load — fix those or it returns."
+  ], [
+    "Rawat dua pintu masuk itu secara berasingan: Phytophthora dan Fusarium masuk di pangkal batang — saliran, alihkan sungkupan; Botryosphaeriaceae masuk melalui luka di atas — potong sampai kayu bersih dan tutup pada hari yang sama.",
+    "Tiada satu produk pun meliputi oomiset dan kulat sekali gus. Racun oomiset tiada kesan pada kulat dan begitu juga sebaliknya — satu semburan tidak akan mencukupi.",
+    "Selamatkan batang dan pangkal dahulu, dahan kemudian. Dahan yang diselamatkan pada pokok yang batangnya gagal hanyalah kerja terbuang.",
+    "Jangkitan berganda hampir selalu menunjuk kepada satu punca: pokok yang lemah. Saliran, akar, beban buah — baiki itu atau ia akan berulang."
+  ]);
+  return "<div class='mixed'><h4>" + esc(P("两种并发：", "Two at once: ")) + esc(both) + "</h4><ul>" +
+    pts.map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>";
+}
+
+function symRow(s){
+  var mx = 0;
+  PATH.forEach(function(q){ if ((s[q.k] || 0) > mx) mx = s[q.k]; });
+  var pins = "";
+  if (mx === 0) pins = '<span class="pin n">' + esc(T(STR.pin_n)) + "</span>";
+  else pins = PATH.filter(function(q){ return s[q.k] >= mx - 1 && s[q.k] > 0; })
+    .map(function(q){ return '<span class="pin ' + q.k + '">' + esc(T(STR["pin_" + q.k])) + "</span>"; }).join("");
+  return '<div class="sym" data-sym="' + s.id + '" data-on="' + (picked[s.id] ? 1 : 0) + '" role="checkbox" tabindex="0" aria-checked="' + (picked[s.id] ? "true" : "false") + '">' +
+    '<div class="box">\u2713</div><p>' + esc(T(s)) + "<em>" + esc(body2(s)) + "</em></p>" +
+    '<span class="pins">' + pins + "</span></div>";
+}
+
+function renderTriage(){
+  var sc = {}, n = 0;
+  PATH.forEach(function(q){ sc[q.k] = 0; });
+  SYMPTOMS.forEach(function(s){
+    if (picked[s.id]) { PATH.forEach(function(q){ sc[q.k] += (s[q.k] || 0); }); n++; }
+  });
+  var ranked = PATH.map(function(q){ return sc[q.k]; }).sort(function(x, y){ return y - x; });
+  var top = ranked[0];
+
+  var order = PATH.slice().sort(function(a, b2){ return sc[b2.k] - sc[a.k]; });
+  var sec = ranked[1];
+  var v, mixed = null;
+  if (n === 0) v = VERDICT.n;
+  else if (top === 0) v = VERDICT.z;
+  else if (sec >= 4 && sec >= top * 0.6) {
+    /* both have real support — call it a double infection, not "inconclusive" */
+    mixed = [order[0], order[1]];
+    v = { zh: "两种并发：" + order[0].zh + " ＋ " + order[1].zh,
+          en: "Two at once: " + order[0].en, ms: "Dua serentak: " + T(order[0]) + " + " + order[1].en,
+          zh2: T(STR.mix_lead), en2: STR.mix_lead.en };
+  } else if (top - sec >= 2) {
+    var lead = order[0];
+    v = { zh:"倾向 " + lead.zh, en:"Leaning " + lead.en, zh2:lead.zh2, en2:lead.en2 };
+  } else v = VERDICT.x;
+
+  var h = "<h2>" + esc(T(STR.t_triage)) + "</h2><p class='lede'>" + esc(T(STR.l_triage)) + "</p>";
+  h += plate();
+  h += "<div class='gauge'>";
+  h += PATH.map(function(q){
+    var w = top > 0 ? Math.round((sc[q.k] / top) * 100) : 0;
+    return "<div class='grow'><div class='glabel'><span class='gname' style='color:" + q.c + "'>" + esc(T(q)) +
+      "</span><span class='gval'>" + sc[q.k] + "</span></div>" +
+      "<div class='gtrack'><div class='gfill' style='width:" + w + "%;background:" + q.c + "'></div></div></div>";
+  }).join("");
+  h += "<div class='readout'><b>" + esc(T(v)) + "</b><br>" + esc(body2(v)) + "</div>" +
+       "<div class='legend'>" +
+         "<div class='lrow'><span class='pin p'>" + esc(T(STR.pin_p)) + "</span>" + esc(T(STR.legend_p)) + "</div>" +
+         "<div class='lrow'><span class='pin b'>" + esc(T(STR.pin_b)) + "</span>" + esc(T(STR.legend_b)) + "</div>" +
+         "<div class='lrow'><span class='pin f'>" + esc(T(STR.pin_f)) + "</span>" + esc(T(STR.legend_f)) + "</div>" +
+         "<div class='lrow'><span class='pin r'>" + esc(T(STR.pin_r)) + "</span>" + esc(T(STR.legend_r)) + "</div>" +
+         "<div class='lrow'><span class='pin n'>" + esc(T(STR.pin_n)) + "</span>" + esc(T(STR.legend_n)) + "</div>" +
+       "</div></div>";
+
+  h += "<div class='mini'><span class='mini-v'>" + esc(T(v)) + "</span>" +
+       "<span class='mini-b'>" + PATH.map(function(q){
+         var w = top > 0 ? Math.round((sc[q.k] / top) * 100) : 0;
+         return "<span class='mini-t'><span class='mini-f' style='width:" + w + "%;background:" + q.c + "'></span></span>";
+       }).join("") + "</span>" +
+       "<span class='mini-n'>" + n + "/" + SYMPTOMS.length + "</span></div>";
+
+  var fastRows = SYMPTOMS.filter(function(x){ return FAST.indexOf(x.id) > -1; });
+  var restRows = SYMPTOMS.filter(function(x){ return FAST.indexOf(x.id) < 0; });
+  h += "<h3>" + esc(T(STR.t_fast)) + "</h3><p class='lede'>" + esc(T(STR.l_fast)) + "</p>";
+  h += "<div class='fast'>" + fastRows.map(symRow).join("") + "</div>";
+  h += "<button class='reset' type='button' id='showall'>" +
+       esc(SHOWALL ? T(STR.hide_all) : T(STR.show_all)) + "</button>";
+  if (SHOWALL) h += "<h3>" + esc(T(STR.t_rest)) + "</h3>" + restRows.map(symRow).join("");
+  h += "";
+  h += '<button class="reset" type="button" id="reset">' + esc(T(STR.reset)) + "</button>";
+  h += renderHelper();
+  document.getElementById("s-triage").innerHTML = h;
+}
+
+function tierBadge(t){
+  var m = { field:STR.tier_field, inoc:STR.tier_inoc, plate:STR.tier_plate, moa:STR.tier_moa };
+  return '<span class="basis ' + t + '">' + esc(T(m[t] || STR.tier_moa)) + "</span>";
+}
+
+function renderChem(){
+  var h = "<h2>" + esc(T(STR.t_chem)) + "</h2><p class='lede'>" + esc(T(STR.l_chem)) + "</p>";
+  h += "<div class='finding'>" + esc(T(STR.f_kick)) + "</div>";
+  h += "<div class='mixed'><h4>" + esc(T(STR.t_res)) + "</h4><ul>" +
+    PL([
+      "真正对真菌有效的只有两个单位点组：三唑类（FRAC 3）与甲氧基丙烯酸酯类（FRAC 11）。两个组来回换，不叫轮替，只是把失效推迟几季。FRAC 11 更是一个点突变就全组报废。",
+      "SDHI（FRAC 7）能补上第三组，但它同样是单位点，只是多一张牌，不是安全牌。",
+      "真正压低抗性压力的是多位点保护剂（铜、代森锰锌）：作用点多，病菌躲不开，几十年下来抗性一直很小。单位点药与它们搭配或交替，是国际通行的做法。",
+      "关键一句：选择这么少的时候，抗性管理的核心不是「换着用」，而是「少用」。把伤口封好、排水做好、病株清掉，才是真正减少喷药次数的办法——喷得越少，剩下这几支才留得住。"
+    ], [
+      "Only two single-site groups are genuinely active on the fungi: the triazoles (FRAC 3) and the strobilurins (FRAC 11). Swapping between two groups is not rotation — it just postpones failure by a few seasons. And FRAC 11 can be lost entirely to one point mutation.",
+      "SDHIs (FRAC 7) add a third group, but they are single-site too. One more card to play, not a safe one.",
+      "What actually lowers resistance pressure is the multi-site protectants — copper and mancozeb. Many targets at once, nothing for the fungus to mutate around, and resistance has stayed minor after decades. Pairing or alternating single-site products with them is standard practice worldwide.",
+      "The key point: when the choices are this few, resistance management is not about switching products — it is about spraying less. Sealed wounds, working drainage and removed diseased trees are what cut the number of sprays. The fewer you make, the longer these few keep working."
+    ]).map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>";
+  h += CHEMS.map(function(c, i){
+    var mark = function(v){
+      return v === "no" ? ["s-no", T(STR.st_no)] : (v === "yes" ? ["s-yes", T(STR.st_yes)] : ["s-part", T(STR.st_part)]);
+    };
+    var mo = mark(c.oo || "no"), mf = mark(c.v);
+    var body = '<div class="kv"><b>' + esc(T(STR.k_why)) + "</b><div>" + (body2(c)) + "</div></div>" +
+      '<div class="kv"><b>' + esc(T(STR.k_tier)) + "</b><div>" + esc(c.frac) + " &nbsp; " + tierBadge(c.tier) + "</div></div>";
+    var rg = c.my || { s:"none" };
+    var rl = rg.s === "mrl" ? T(STR.reg_mrl) : (rg.s === "pend" ? T(STR.reg_pend) : T(STR.reg_none));
+    body += '<div class="kv"><b>' + esc(T(STR.k_reg)) + "</b><div><span class='reg " + rg.s + "'>" + esc(rl) + "</span>" +
+      (rg.mrl ? " &nbsp;<span style='font-family:var(--mono);font-size:11.5px;color:var(--muted)'>MRL " + esc(rg.mrl) + " · PHI " + esc(T(rg.phi)) + "</span>" : "") + "</div></div>";
+    if (c.risk) body += '<div class="risk"><b>' + esc(T(STR.k_risk)) + "：</b>" + esc(T(c.risk)) + "</div>";
+    return '<div class="chem" data-chem="' + i + '" data-open="0"><div class="chem-h">' +
+      '<div class="chem-n"><b>' + esc(T(c)) + "</b><span>" + esc(LANG === "zh" ? c.en : c.zh) + " · " + esc(c.frac) + "</span></div>" +
+      "<div class='stamps'>" +
+        "<div class='srow'><span class='sgrp'>" + esc(T(STR.grp_oo)) + "</span><span class='stamp " + mo[0] + "'>" + esc(mo[1]) + "</span></div>" +
+        "<div class='srow'><span class='sgrp'>" + esc(T(STR.grp_fu)) + "</span><span class='stamp " + mf[0] + "'>" + esc(mf[1]) + "</span></div>" +
+      "</div></div>" +
+      '<div class="chem-b">' + body + "</div></div>";
+  }).join("");
+  h += "<h3 style='margin-top:30px'>" + esc(T(STR.t_borer)) + "</h3>";
+  h += "<p class='lede'>" + esc(T(STR.l_borer)) + "</p>";
+  h += plateBorer();
+  h += BORER.map(function(c){
+    var M = { harm:[STR.b_watch, "bad"], do:[STR.b_do, "ok"], note:[STR.b_note, "note"] };
+    var m = M[c.s] || M.note;
+    return "<div class='crow'><div class='crow-h'><b>" + esc(T(c)) + "</b>" +
+      "<span class='pill " + m[1] + "'>" + esc(T(m[0])) + "</span></div>" +
+      "<p>" + (body2(c)) + "</p></div>";
+  }).join("");
+  document.getElementById("s-chem").innerHTML = h;
+}
+
+function renderBio(){
+  var h = "<h2>" + esc(T(STR.t_bio)) + "</h2><p class='lede'>" + esc(T(STR.l_bio)) + "</p>";
+  var STACK = [
+    { l:{zh:"抗生（脂肽）",en:"Antibiosis (lipopeptides)", ms:"Antibiosis (lipopeptida)"},
+      o:{zh:"贝莱斯／解淀粉芽孢杆菌 — 你的发酵液",en:"B. velezensis + B. amyloliquefaciens — your brew", ms:"B. velezensis + B. amyloliquefaciens — tapaian anda"},
+      p:{zh:"树干喷施、灌根",en:"Trunk spray, soil drench", ms:"Semburan batang, siraman tanah"} },
+    { l:{zh:"重寄生／伤口占位",en:"Mycoparasite / wound coloniser", ms:"Mikoparasit / penghuni luka"},
+      o:{zh:"棘孢木霉（Trichoderma asperellum），或哈茨木霉＋绿木霉",en:"T. asperellum, or T. harzianum + T. virens", ms:"T. asperellum, atau T. harzianum + T. virens"},
+      p:{zh:"涂进修剪伤口与刮净的病斑边缘",en:"Painted into pruning cuts and scraped lesion margins", ms:"Disapu pada luka pangkasan dan pinggir lesi yang dikikis"} },
+    { l:{zh:"根际压制",en:"Rhizosphere suppression", ms:"Penindasan rizosfera"},
+      o:{zh:"木霉＋芽孢杆菌，随堆肥或 EM 灌施",en:"Trichoderma + Bacillus in compost or EM drench", ms:"Trichoderma + Bacillus dalam kompos atau siraman EM"},
+      p:{zh:"根区",en:"Root zone", ms:"Zon akar"} }
+  ];
+  h += plateBio();
+  h += "<h3>" + esc(T(STR.t_stack)) + "</h3>";
+  h += STACK.map(function(s){
+    return "<div class='crow'><div class='lyr'>" + esc(T(s.l)) + "</div>" +
+      "<b style='font-weight:500;font-size:15px'>" + esc(T(s.o)) + "</b>" +
+      "<p class='where'><b>" + P("施用位置", "Where", "Di mana") + "</b> · " + esc(T(s.p)) + "</p></div>";
+  }).join("");
+
+  h += "<h3>" + esc(T(STR.t_evid)) + "</h3><div class='card'><p style='margin:0 0 9px;font-size:13px'>" + esc(T(STR.l_evid)) + "</p>" +
+    ["field","inoc","plate","moa"].map(function(t){ return tierBadge(t); }).join(" ") + "</div>";
+  h += "<h3>" + P("已发表的菌株与数据 · 按证据强度排序，不是按效果排序", "Published strains — ordered by strength of evidence, not by result", "Strain yang diterbitkan — disusun mengikut kekuatan bukti, bukan mengikut keputusan") + "</h3>";
+  h += BIO.map(function(b){
+    return "<div class='card'><div style='display:flex;gap:8px;align-items:baseline;margin-bottom:6px'>" +
+      "<b style='flex:1;font-weight:500'>" + esc(T(b)) + "</b>" +
+      "<span style='font-family:var(--mono);font-size:15px;color:" + (b.tier === "field" ? "var(--husk)" : "var(--muted)") + "'>" + esc(T(b.fig)) + "</span></div>" +
+      "<div style='margin-bottom:7px'>" + tierBadge(b.tier) + " <span class='tag " + (b.dur ? "d" : "") + "'>" + esc(b.dur ? T(STR.tag_d) : T(STR.tag_o)) + "</span>" +
+      "<span style='font-size:11.5px;color:var(--muted)'>" + esc(T(STR.crop)) + ": " + esc(T(b.crop)) + "</span></div>" +
+      "<p style='margin:0;font-size:13px'>" + esc(body2(b)) + "</p></div>";
+  }).join("");
+
+  h += "<h3>" + esc(T(STR.t_brew)) + "</h3><div class='card' style='border-color:var(--husk)'>" + T(STR.brew) + "</div>";
+  h += renderCompat();
+  document.getElementById("s-bio").innerHTML = h;
+}
+
+function renderCompat(){
+  var h = "<div class='fold'><h3 style='margin-top:30px'><button type='button' id='foldcompat' aria-expanded='" +
+    (SHOWMIX ? "true" : "false") + "'><span class='caret'>" + (SHOWMIX ? "\u2212" : "+") + "</span>" +
+    esc(T(STR.t_compat)) + " <em>(" + COMPAT.length + ")</em></button></h3></div>";
+  if (!SHOWMIX) return h;
+  h += "<p class='lede'>" + esc(T(STR.l_compat)) + "</p>";
+  h += COMPAT.map(function(c){
+    var M = { harm:[STR.c_harm, "bad"], partharm:[STR.c_partharm, "part"], spare:[STR.c_spare, "ok"], do:[STR.c_do, "note"] };
+    var m = M[c.s] || M.do;
+    return "<div class='crow'><div class='crow-h'><b>" + esc(T(c)) + "</b>" +
+      "<span class='pill " + m[1] + "'>" + esc(T(m[0])) + "</span></div>" +
+      "<p>" + (body2(c)) + "</p></div>";
+  }).join("");
+  return h;
+}
+
+function renderFruit(){
+  var h = "<h2>" + esc(T(STR.t_fruit)) + "</h2><p class='lede'>" + esc(T(STR.l_fruit)) + "</p>";
+  h += plateFruit();
+  h += FRUIT.map(function(c){
+    var M = { p:[STR.pin_p, "bad"], b:[STR.pin_b, "note"], do:[STR.b_do, "ok"], note:[STR.b_note, "note"] };
+    var m = M[c.s] || M.note;
+    return "<div class='crow'><div class='crow-h'><b>" + esc(T(c)) + "</b>" +
+      "<span class='pill " + m[1] + "'>" + esc(T(m[0])) + "</span></div>" +
+      "<p>" + esc(body2(c)) + "</p></div>";
+  }).join("");
+  document.getElementById("s-fruit").innerHTML = h;
+}
+
+function renderField(){
+  var h = "<h2>" + esc(T(STR.t_lever)) + "</h2><p class='lede'>" + esc(T(STR.l_lever)) + "</p>";
+  h += "<div class='card'>" + LEVER.map(function(l, i){
+    return "<div class='lever'><div class='lever-h'><b>" + (i + 1) + ". " + esc(T(l)) + "</b></div>" +
+      "<div class='lever-t'><div class='lever-f' style='width:" + l.w + "%'></div></div>" +
+      "<p>" + esc(body2(l)) + "</p></div>";
+  }).join("") + "</div>";
+
+  h += plateYear() + plateSpread() + plateWound() + plateTiming() + plateStop();
+  h += "<h3>" + esc(T(STR.t_steps)) + "</h3><p class='lede'>" + esc(T(STR.l_field)) + "</p>";
+  h += STEPS.map(function(s, i){
+    return '<div class="step" data-step="' + i + '" data-done="' + (done[i] ? 1 : 0) + '" role="checkbox" tabindex="0" aria-checked="' + (done[i] ? "true" : "false") + '">' +
+      '<div class="step-n">' + (i + 1) + '</div><div><p class="step-t">' + esc(T(s)) + '</p><p class="step-d">' + esc(body2(s)) + "</p></div></div>";
+  }).join("");
+  h += "<h3 style='margin-top:30px'>" + esc(T(STR.t_sani)) + "</h3>";
+  h += "<p class='lede'>" + esc(T(STR.l_sani)) + "</p>";
+  h += SANI.map(function(c){
+    var M = { do:[STR.b_do, "ok"], harm:[STR.b_watch, "bad"], note:[STR.b_note, "note"] };
+    var m = M[c.s] || M.note;
+    return "<div class='crow'><div class='crow-h'><b>" + esc(T(c)) + "</b>" +
+      "<span class='pill " + m[1] + "'>" + esc(T(m[0])) + "</span></div>" +
+      "<p>" + esc(body2(c)) + "</p></div>";
+  }).join("");
+
+  h += "<h3 style='margin-top:30px'>" + esc(T(STR.t_ask)) + "</h3>";
+  h += "<p class='lede'>" + esc(T(STR.l_ask)) + "</p>";
+  h += ASK.map(function(c){
+    var M = { do:[STR.b_do, "ok"], note:[STR.b_note, "note"] };
+    var m = M[c.s] || M.note;
+    return "<div class='crow'><div class='crow-h'><b>" + esc(T(c)) + "</b>" +
+      "<span class='pill " + m[1] + "'>" + esc(T(m[0])) + "</span></div>" +
+      "<p>" + esc(body2(c)) + "</p></div>";
+  }).join("");
+  document.getElementById("s-field").innerHTML = h;
+}
+
+function renderSrc(){
+  var h = "<h2>" + esc(T(STR.t_src)) + "</h2><p class='lede'>" + esc(T(STR.l_src)) + "</p>";
+  h += "<div class='mixed'><h4>" + esc(T(STR.t_nosrc)) + "</h4><ul>" +
+    PL([
+      "判症的分数与权重：哪一条症状值几分、并发怎么判、领先多少才下结论——这些是按病理逻辑定的，没有田间验证过。方向可信，分数本身不是数据。",
+      "环剥过半就停止治疗：这条来自树木生理的通则（输导组织断了就恢复不了），不是榴莲上的试验结论。",
+      "年历中的产季、修剪与清园月份：按一般做法写的，不同州、不同园差别很大，请按你自己的情况改。（雨量那几条有气象局出处，见下。）",
+      "工具消毒的浓度与时间：园艺通用做法，不是榴莲专属研究。",
+      "所有插图：按病理特征画的示意图，不是马来西亚榴莲实物照片。"
+    ], [
+      "The triage scores and weights: how much each symptom counts, how a double infection is called, how far ahead a verdict must be — these follow pathology logic and have not been validated in the field. The direction is sound; the numbers themselves are not data.",
+      "Stopping treatment past half-girdled: a general principle of tree physiology (severed conducting tissue does not recover), not a durian trial result.",
+      "The crop, pruning and sanitation bands on the calendar: written to general practice. States and orchards differ widely — adjust to your own. (The rainfall bands are sourced from MetMalaysia, below.)",
+      "Tool disinfection rates and times: standard horticultural practice, not durian-specific research.",
+      "All illustrations: schematic drawings from pathology, not photographs of Malaysian durian."
+    ]).map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>";
+  h += SRC.map(function(s){
+    var k = s.k || (s.d ? "d" : "o");
+    var lbl = k === "d" ? T(STR.tag_d) : (k === "g" ? T(STR.tag_g) : T(STR.tag_o));
+    return "<div class='src'><b><span class='tag " + (k === "o" ? "" : k) + "'>" + esc(lbl) + "</span>" + esc(s.ref) + "</b><span>" + esc(T(s)) + "</span></div>";
+  }).join("");
+  document.getElementById("s-src").innerHTML = h;
+}
+
+function renderAll(){ renderChrome(); renderTriage(); renderChem(); renderBio(); renderFruit(); renderField(); renderSrc(); }
+
+document.addEventListener("click", function(e){
+  var t = e.target.closest("[data-tab]");
+  if (t) { TAB = t.dataset.tab; localStorage.setItem("dct-tab", TAB); renderChrome(); window.scrollTo(0, 0); return; }
+
+  if (e.target.closest("#lang")) {
+    LANG = LANGS[(LANGS.indexOf(LANG) + 1) % LANGS.length];
+    localStorage.setItem("dct-lang", LANG); renderAll(); return;
+  }
+  var s = e.target.closest("[data-sym]");
+  if (s) { var id = s.dataset.sym; picked[id] = !picked[id]; localStorage.setItem("dct-sym", JSON.stringify(picked)); renderTriage(); return; }
+
+  if (e.target.closest("#reset")) { picked = {}; localStorage.setItem("dct-sym", "{}"); renderTriage(); return; }
+
+
+  var c = e.target.closest("[data-chem]");
+  if (c) { c.dataset.open = c.dataset.open === "1" ? "0" : "1"; return; }
+
+  if (e.target.closest("#foldcompat")) {
+    SHOWMIX = !SHOWMIX;
+    renderBio();
+    return;
+  }
+
+  if (e.target.closest("#showall")) {
+    SHOWALL = !SHOWALL;
+    renderTriage();
+    return;
+  }
+
+  var hp = e.target.closest("[data-help]");
+  if (hp) {
+    HELP = hp.dataset.help;
+    var host = document.querySelector(".helper");
+    if (host) host.outerHTML = renderHelper();
+    return;
+  }
+
+  var st = e.target.closest("[data-step]");
+  if (st) { var i = st.dataset.step; done[i] = !done[i]; localStorage.setItem("dct-steps", JSON.stringify(done)); renderField(); return; }
+});
+
+document.addEventListener("keydown", function(e){
+  if (e.key !== "Enter" && e.key !== " ") return;
+  var el = e.target.closest("[data-sym],[data-step]");
+  if (el) { e.preventDefault(); el.click(); }
+});
+
+
+renderAll();
+
+/* ---------- PWA: install, offline, and a visible update path ---------- */
+(function () {
+  if (!("serviceWorker" in navigator) || location.protocol.indexOf("http") !== 0) return;
+
+  var reloading = false;
+  navigator.serviceWorker.addEventListener("controllerchange", function () {
+    if (reloading) return;
+    reloading = true;
+    location.reload();
+  });
+
+  function offerUpdate(worker) {
+    if (document.getElementById("upd")) return;
+    var msg = { zh: "有新版本，点一下更新", en: "A new version is ready — tap to update",
+                ms: "Versi baharu sedia — ketik untuk kemas kini" };
+    var bar = document.createElement("button");
+    bar.id = "upd";
+    bar.type = "button";
+    bar.textContent = msg[LANG] || msg.en;
+    bar.addEventListener("click", function () {
+      bar.disabled = true;
+      worker.postMessage("SKIP_WAITING");
+    });
+    document.body.appendChild(bar);
+  }
+
+  navigator.serviceWorker.register("./sw.js").then(function (reg) {
+    // a worker already waiting from a previous visit
+    if (reg.waiting && navigator.serviceWorker.controller) offerUpdate(reg.waiting);
+
+    reg.addEventListener("updatefound", function () {
+      var nw = reg.installing;
+      if (!nw) return;
+      nw.addEventListener("statechange", function () {
+        // installed + an existing controller means this is an update, not a first install
+        if (nw.state === "installed" && navigator.serviceWorker.controller) offerUpdate(nw);
+      });
+    });
+
+    // check for a new build on launch, when the app is brought back, and hourly
+    var check = function () { reg.update().catch(function () {}); };
+    check();
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "visible") check();
+    });
+    setInterval(check, 60 * 60 * 1000);
+  }).catch(function () { /* offline first run, or file:// — app still works */ });
+})();
+</script>
+</body>
+</html>
