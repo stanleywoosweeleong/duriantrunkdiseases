@@ -85,6 +85,19 @@ html[lang="zh"] .fold button{font-size:13px;letter-spacing:.04em}
 .htabs button[aria-pressed="true"]{border-color:var(--husk);background:var(--bark3)}
 .htabs button[aria-pressed="true"] b{color:var(--husk)}
 html[lang="zh"] .htabs button{font-size:12.5px}
+.share{background:var(--bark2);border:1px solid var(--line);border-radius:3px;
+  padding:14px;margin-top:22px}
+.share h3{margin:0 0 12px}
+.share-row{display:flex;gap:14px;align-items:center}
+.qr{width:132px;height:132px;flex:none;border-radius:4px;background:#F6F0E5;
+  padding:0;shape-rendering:crispEdges}
+.share-txt{flex:1;min-width:0}
+.share-txt p{margin:0;font-size:13px;color:var(--muted);line-height:1.65}
+.share-url{margin-top:8px!important;font-family:var(--mono);font-size:11px;
+  color:var(--husk);word-break:break-all}
+html[lang="zh"] .share-txt p{font-size:14.5px}
+@media (max-width:400px){.share-row{flex-direction:column;align-items:flex-start}
+  .qr{width:100%;max-width:200px;height:auto;align-self:center}}
 .plate{background:var(--bark2);border:1px solid var(--line);border-radius:3px;padding:10px 8px 4px;margin-bottom:10px}
 .plate svg{width:100%;height:auto;display:block}
 .plate h3{margin:2px 6px 6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--muted)}
@@ -987,6 +1000,27 @@ function plateTiming(){
     "<line x1='178' y1='12' x2='178' y2='128' stroke='var(--line)'/></svg></div>";
 }
 
+/* 14 — QR to the live app, so one phone can pass it to the next.
+   Light panel on purpose: scanners want dark modules on a light field. */
+var QR_N = 33;
+var QR_PATH = "M0 0h7v1h-7zM8 0h2v1h-2zM11 0h3v1h-3zM16 0h1v1h-1zM18 0h4v1h-4zM23 0h1v1h-1zM26 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h2v1h-2zM12 1h2v1h-2zM16 1h3v1h-3zM22 1h2v1h-2zM26 1h1v1h-1zM32 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM9 2h2v1h-2zM15 2h1v1h-1zM18 2h3v1h-3zM22 2h1v1h-1zM24 2h1v1h-1zM26 2h1v1h-1zM28 2h3v1h-3zM32 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h2v1h-2zM11 3h2v1h-2zM14 3h4v1h-4zM22 3h2v1h-2zM26 3h1v1h-1zM28 3h3v1h-3zM32 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM11 4h4v1h-4zM17 4h1v1h-1zM19 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM26 4h1v1h-1zM28 4h3v1h-3zM32 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM9 5h2v1h-2zM12 5h2v1h-2zM18 5h3v1h-3zM26 5h1v1h-1zM32 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h7v1h-7zM8 7h1v1h-1zM11 7h2v1h-2zM17 7h4v1h-4zM22 7h1v1h-1zM24 7h1v1h-1zM0 8h1v1h-1zM2 8h2v1h-2zM5 8h3v1h-3zM9 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h4v1h-4zM21 8h1v1h-1zM23 8h1v1h-1zM26 8h1v1h-1zM29 8h1v1h-1zM31 8h2v1h-2zM1 9h2v1h-2zM5 9h1v1h-1zM7 9h4v1h-4zM12 9h1v1h-1zM14 9h1v1h-1zM16 9h1v1h-1zM18 9h6v1h-6zM26 9h2v1h-2zM29 9h2v1h-2zM32 9h1v1h-1zM1 10h1v1h-1zM3 10h1v1h-1zM6 10h3v1h-3zM10 10h3v1h-3zM14 10h1v1h-1zM17 10h1v1h-1zM21 10h1v1h-1zM23 10h1v1h-1zM25 10h5v1h-5zM31 10h2v1h-2zM0 11h4v1h-4zM9 11h1v1h-1zM12 11h4v1h-4zM18 11h1v1h-1zM20 11h1v1h-1zM22 11h4v1h-4zM27 11h1v1h-1zM29 11h1v1h-1zM0 12h1v1h-1zM4 12h3v1h-3zM9 12h1v1h-1zM17 12h1v1h-1zM20 12h1v1h-1zM22 12h4v1h-4zM27 12h3v1h-3zM31 12h1v1h-1zM1 13h1v1h-1zM3 13h1v1h-1zM7 13h2v1h-2zM12 13h1v1h-1zM16 13h1v1h-1zM18 13h2v1h-2zM21 13h2v1h-2zM24 13h2v1h-2zM27 13h1v1h-1zM29 13h1v1h-1zM31 13h1v1h-1zM0 14h1v1h-1zM3 14h1v1h-1zM5 14h2v1h-2zM8 14h1v1h-1zM10 14h3v1h-3zM15 14h2v1h-2zM18 14h3v1h-3zM22 14h1v1h-1zM24 14h1v1h-1zM26 14h2v1h-2zM30 14h1v1h-1zM1 15h2v1h-2zM4 15h2v1h-2zM7 15h1v1h-1zM10 15h1v1h-1zM12 15h3v1h-3zM16 15h1v1h-1zM18 15h1v1h-1zM21 15h2v1h-2zM24 15h3v1h-3zM28 15h1v1h-1zM30 15h1v1h-1zM1 16h1v1h-1zM3 16h2v1h-2zM6 16h2v1h-2zM9 16h2v1h-2zM12 16h1v1h-1zM15 16h1v1h-1zM18 16h2v1h-2zM21 16h3v1h-3zM25 16h2v1h-2zM28 16h3v1h-3zM0 17h1v1h-1zM2 17h4v1h-4zM7 17h1v1h-1zM10 17h2v1h-2zM13 17h1v1h-1zM15 17h2v1h-2zM20 17h1v1h-1zM23 17h2v1h-2zM26 17h1v1h-1zM28 17h2v1h-2zM32 17h1v1h-1zM4 18h1v1h-1zM6 18h1v1h-1zM9 18h4v1h-4zM14 18h5v1h-5zM20 18h3v1h-3zM25 18h1v1h-1zM27 18h2v1h-2zM30 18h2v1h-2zM1 19h1v1h-1zM3 19h2v1h-2zM9 19h1v1h-1zM11 19h10v1h-10zM22 19h2v1h-2zM25 19h2v1h-2zM28 19h1v1h-1zM32 19h1v1h-1zM4 20h4v1h-4zM11 20h1v1h-1zM13 20h1v1h-1zM16 20h4v1h-4zM21 20h1v1h-1zM29 20h4v1h-4zM0 21h4v1h-4zM5 21h1v1h-1zM7 21h1v1h-1zM13 21h1v1h-1zM15 21h1v1h-1zM18 21h4v1h-4zM23 21h1v1h-1zM25 21h3v1h-3zM29 21h1v1h-1zM32 21h1v1h-1zM6 22h2v1h-2zM11 22h1v1h-1zM13 22h2v1h-2zM16 22h3v1h-3zM20 22h5v1h-5zM26 22h7v1h-7zM1 23h4v1h-4zM7 23h2v1h-2zM10 23h2v1h-2zM13 23h3v1h-3zM18 23h3v1h-3zM26 23h2v1h-2zM29 23h1v1h-1zM31 23h2v1h-2zM0 24h1v1h-1zM2 24h5v1h-5zM8 24h1v1h-1zM10 24h5v1h-5zM17 24h1v1h-1zM20 24h1v1h-1zM22 24h7v1h-7zM32 24h1v1h-1zM8 25h1v1h-1zM10 25h1v1h-1zM15 25h3v1h-3zM19 25h1v1h-1zM21 25h1v1h-1zM23 25h2v1h-2zM28 25h2v1h-2zM0 26h7v1h-7zM8 26h1v1h-1zM11 26h2v1h-2zM14 26h1v1h-1zM16 26h1v1h-1zM18 26h4v1h-4zM23 26h2v1h-2zM26 26h1v1h-1zM28 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM8 27h1v1h-1zM11 27h1v1h-1zM13 27h2v1h-2zM16 27h1v1h-1zM19 27h3v1h-3zM23 27h2v1h-2zM28 27h3v1h-3zM0 28h1v1h-1zM2 28h3v1h-3zM6 28h1v1h-1zM9 28h1v1h-1zM13 28h1v1h-1zM15 28h1v1h-1zM18 28h11v1h-11zM30 28h3v1h-3zM0 29h1v1h-1zM2 29h3v1h-3zM6 29h1v1h-1zM8 29h5v1h-5zM14 29h5v1h-5zM20 29h3v1h-3zM27 29h1v1h-1zM30 29h1v1h-1zM32 29h1v1h-1zM0 30h1v1h-1zM2 30h3v1h-3zM6 30h1v1h-1zM8 30h2v1h-2zM11 30h2v1h-2zM14 30h4v1h-4zM20 30h1v1h-1zM22 30h6v1h-6zM29 30h2v1h-2zM0 31h1v1h-1zM6 31h1v1h-1zM9 31h1v1h-1zM15 31h1v1h-1zM17 31h4v1h-4zM22 31h3v1h-3zM26 31h3v1h-3zM32 31h1v1h-1zM0 32h7v1h-7zM8 32h3v1h-3zM12 32h1v1h-1zM16 32h3v1h-3zM21 32h1v1h-1zM23 32h1v1h-1zM25 32h2v1h-2zM28 32h1v1h-1zM30 32h1v1h-1z";
+function plateShare(){
+  var url = "stanleywoosweeleong.github.io/duriantrunkdiseases/";
+  var q = QR_N + 8;   /* 4-module quiet zone each side, required by the spec */
+  return "<div class='share'><h3>" + esc(P("把这个软件传给别的果农", "Pass this app to another farmer", "Kongsi aplikasi ini dengan pekebun lain")) + "</h3>" +
+    "<div class='share-row'>" +
+      "<svg class='qr' viewBox='0 0 " + q + " " + q + "' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='QR'>" +
+        "<rect width='" + q + "' height='" + q + "' fill='#F6F0E5'/>" +
+        "<g transform='translate(4,4)' fill='#241C15'><path d='" + QR_PATH + "'/></g>" +
+      "</svg>" +
+      "<div class='share-txt'><p>" +
+        esc(P("用相机扫一扫就能打开，装到手机后没有信号也能用。",
+              "Scan it with any camera to open. Once added to the home screen it works with no signal.",
+              "Imbas dengan kamera untuk membukanya. Setelah ditambah ke skrin utama, ia berfungsi tanpa isyarat.")) +
+      "</p><p class='share-url'>" + url + "</p></div>" +
+    "</div></div>";
+}
+
 /* 13 — the year, anchored to MetMalaysia's east-coast rainfall pattern */
 function plateYear(){
   var M = P(["1","2","3","4","5","6","7","8","9","10","11","12"], ["J","F","M","A","M","J","J","A","S","O","N","D"], ["J","F","M","A","M","J","J","O","S","O","N","D"]);
@@ -1533,6 +1567,7 @@ function renderSrc(){
     var lbl = k === "d" ? T(STR.tag_d) : (k === "g" ? T(STR.tag_g) : T(STR.tag_o));
     return "<div class='src'><b><span class='tag " + (k === "o" ? "" : k) + "'>" + esc(lbl) + "</span>" + esc(s.ref) + "</b><span>" + esc(T(s)) + "</span></div>";
   }).join("");
+  h += plateShare();
   document.getElementById("s-src").innerHTML = h;
 }
 
