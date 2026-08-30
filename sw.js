@@ -10,20 +10,20 @@
  *
  * Bump CACHE_VERSION on every deploy. That is the whole update mechanism.
  */
-const CACHE_VERSION = 'dtd-v2026-08-30-1';
+const CACHE_VERSION = 'dtd-v2026-08-30-2';
 const CACHE = CACHE_VERSION;
 
 const PRECACHE = [
   './',
   './index.html',
-  './manifest.webmanifest',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/maskable-192.png',
-  './icons/maskable-512.png',
-  './icons/apple-touch-icon.png',
-  './icons/favicon-64.png',
-  './icons/favicon-32.png'
+  './manifest.webmanifest?v=2',
+  './icons/icon-192.png?v=2',
+  './icons/icon-512.png?v=2',
+  './icons/maskable-192.png?v=2',
+  './icons/maskable-512.png?v=2',
+  './icons/apple-touch-icon.png?v=2',
+  './icons/favicon-64.png?v=2',
+  './icons/favicon-32.png?v=2'
 ];
 
 self.addEventListener('install', (event) => {
