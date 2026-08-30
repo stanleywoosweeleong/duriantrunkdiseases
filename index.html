@@ -743,8 +743,12 @@ function renderChrome(){
   document.documentElement.lang = LANG;
   document.title = T(STR.mark);
   document.getElementById("mark").textContent = T(STR.mark);
+  var names = { zh:"中文", en:"EN", ms:"BM" };
   var nextL = LANGS[(LANGS.indexOf(LANG) + 1) % LANGS.length];
-  document.getElementById("lang").textContent = { zh:"中文", en:"EN", ms:"BM" }[nextL];
+  var langBtn = document.getElementById("lang");
+  langBtn.textContent = names[LANG];                     /* shows where you are */
+  langBtn.setAttribute("aria-label", names[LANG] + " \u2192 " + names[nextL]);
+  langBtn.title = names[nextL];
   document.getElementById("nav").innerHTML = TABS.map(function(t){
     return '<button type="button" data-tab="' + t.id + '" aria-current="' + (TAB === t.id) + '"><b>' + t.ic + "</b>" + esc(T(t)) + "</button>";
   }).join("");
