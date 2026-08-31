@@ -313,6 +313,24 @@ html[lang="zh"] .pin,
 html[lang="zh"] .stamp,
 html[lang="zh"] .pill{font-weight:600}
 
+/* disease filter chips — turn the 22-row list into a browsable field guide */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 16px}
+.chip{display:flex;align-items:center;gap:7px;min-height:40px;padding:8px 13px;
+  background:var(--bark2);border:1px solid var(--line);border-radius:20px;
+  color:var(--cream);font-family:var(--body);font-size:13px;cursor:pointer}
+.chip .chip-n{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.chip.on{background:var(--bark3)}
+.chip.on .chip-n{color:var(--cream)}
+.chip.c-p.on{border-color:var(--rust)}
+.chip.c-b.on{border-color:var(--ink)}
+.chip.c-f.on{border-color:var(--fus)}
+.chip.c-r.on{border-color:var(--root)}
+.chip.c-all.on,.chip.c-n.on{border-color:var(--husk)}
+.offnote{font-size:12.5px;color:var(--amber);margin:0 0 10px}
+html[lang="zh"] .chip{font-size:14.5px;font-weight:500}
+html[lang="zh"] .chip .chip-n{font-size:11.5px}
+html[lang="zh"] .offnote{font-size:13.5px}
+
 /* card rows — replace tables where CJK columns collapse on a phone */
 .crow{background:var(--bark2);border:1px solid var(--line);border-radius:3px;padding:13px;margin-bottom:8px}
 .crow-h{display:flex;align-items:flex-start;gap:10px;margin-bottom:7px}
@@ -447,8 +465,8 @@ var PATH = [
   { k:"b", c:"var(--ink)",  zh:"葡萄座腔菌类回枯", en:"Botryosphaeriaceae dieback", ms:"Mati rosot Botryosphaeriaceae",
     zh2:"真正的真菌（壳梭孢、可可毛色二孢）。疫霉药完全无效——见「药剂」页。", en2:"A true fungus (Fusicoccum, Lasiodiplodia). Phytophthora products do nothing — see the Chemicals tab.", ms2:"Kulat sebenar (Fusicoccum, Lasiodiplodia). Racun untuk Phytophthora tidak memberi apa-apa kesan — lihat tab Racun Kulat." },
   { k:"r", c:"var(--root)", zh:"根部病害（含白根病）", en:"Root disease (incl. white root)", ms:"Penyakit akar (termasuk akar putih)",
-    zh2:"病在地下，树干上往往找不到病斑。要紧的是时间差：接种试验里根面一个月就长出菌索，叶片却要三个月才开始变——你看到叶子黄的时候，根下面已经烂了几个月，邻株多半也开始了。白根病靠菌索沿根系在行内一棵传一棵，喷树干完全没有用：挖开表土看根、隔开病株与邻株、树头连根清掉。",
-    en2:"The problem is underground and there is often no trunk lesion at all. The lag is what matters: in inoculation trials rhizomorphs appear on the roots within a month while the leaves only start changing at three — so by the time you see yellowing, the roots have been rotting for months and the neighbours have probably started too. White root disease travels root to root along the row, so spraying the trunk does nothing: open the topsoil and look at the roots, isolate the tree from its neighbours, and take out the stump.", ms2:"Masalahnya di bawah tanah dan selalunya tiada lesi langsung pada batang. Yang penting ialah jarak masanya: dalam ujian inokulasi, rizomorf muncul pada akar dalam sebulan sementara daun baru mula berubah pada bulan ketiga — jadi apabila anda nampak daun menguning, akar sudah reput berbulan-bulan dan pokok sebelah pun berkemungkinan sudah mula. Penyakit akar putih merebak dari akar ke akar sepanjang barisan, jadi menyembur batang tidak berguna: buka tanah atas dan periksa akar, asingkan pokok itu daripada jirannya, dan keluarkan tunggulnya." },
+    zh2:"病在地下，树干上往往找不到病斑。要紧的是时间差：接种试验里根面一个月就长出菌索，叶片却要三个月才开始变——你看到叶子黄的时候，根下面已经烂了几个月，邻株多半也开始了。白根病靠菌索沿根系在行内一棵传一棵，喷树干完全没有用：先挖开表土看根，确认根面确实有白色菌索；再隔开病株与邻株的根系接触。清除整株是最后一步，只用在已经救不回来的树上——单凭本页的勾选结果，不足以决定砍一棵树。",
+    en2:"The problem is underground and there is often no trunk lesion at all. The lag is what matters: in inoculation trials rhizomorphs appear on the roots within a month while the leaves only start changing at three — so by the time you see yellowing, the roots have been rotting for months and the neighbours have probably started too. White root disease travels root to root along the row, so spraying the trunk does nothing: open the topsoil and look at the roots first, confirm the white strands are actually there, then break root contact between the tree and its neighbours. Taking the whole tree out is the last step and only for a tree already beyond saving — the tick-list on this page is not on its own enough to decide to fell a tree.", ms2:"Masalahnya di bawah tanah dan selalunya tiada lesi langsung pada batang. Yang penting ialah jarak masanya: dalam ujian inokulasi, rizomorf muncul pada akar dalam sebulan sementara daun baru mula berubah pada bulan ketiga — jadi apabila anda nampak daun menguning, akar sudah reput berbulan-bulan dan pokok sebelah pun berkemungkinan sudah mula. Penyakit akar putih merebak dari akar ke akar sepanjang barisan, jadi menyembur batang tidak berguna: buka tanah atas dan periksa akar dahulu, sahkan benang putih itu memang ada, kemudian putuskan sentuhan akar antara pokok itu dengan jirannya. Membuang keseluruhan pokok ialah langkah terakhir dan hanya untuk pokok yang memang tidak dapat diselamatkan — senarai tanda di halaman ini sahaja tidak memadai untuk memutuskan penebangan." },
   { k:"f", c:"var(--fus)",  zh:"镰刀菌茎腐",       en:"Fusarium stem rot", ms:"Reput batang Fusarium",
     zh2:"也是真菌，疫霉药同样无效。海南试验中枯草芽孢杆菌 SYST2 田间防效 53.51%，高于化学药的 25.46%。", en2:"Also a true fungus, so Phytophthora products fail here too. In the Hainan trial Bacillus subtilis SYST2 gave 53.51% field efficacy versus 25.46% for chemical fungicides.", ms2:"Juga kulat sebenar, jadi racun Phytophthora gagal di sini. Dalam ujian di Hainan, Bacillus subtilis SYST2 memberi keberkesanan ladang 53.51% berbanding 25.46% bagi racun kulat kimia." }
 ];
@@ -626,9 +644,9 @@ var STEPS = [
   { zh:"轮替机理，别连用同一组", en:"Rotate modes of action, never repeat a group", ms:"Gilirkan cara tindakan, jangan ulang kumpulan yang sama",
     zh2:"甲氧基丙烯酸酯类（FRAC 11）一个点突变就能完全失效；三唑类（FRAC 3）抗性逐步累积。同一 FRAC 号一季不要用超过两次。", en2:"A single point mutation can knock out the strobilurins (FRAC 11) entirely; triazole (FRAC 3) sensitivity shifts gradually. Do not use the same FRAC number more than twice in a season.", ms2:"Satu mutasi titik boleh melumpuhkan strobilurin (FRAC 11) sepenuhnya; kepekaan triazol (FRAC 3) berubah secara beransur. Jangan gunakan nombor FRAC yang sama lebih daripada dua kali dalam satu musim." },
   { zh:"判到根部病害，换一套做法", en:"If it is root disease, change the whole approach", ms:"Jika ia penyakit akar, tukar seluruh pendekatan",
-    zh2:"喷树干没有意义。扒开树头周围表土检查根面有没有白色菌索；确认后，在病株与健康邻株之间挖一道隔离沟切断根系接触；病株连树头挖除、搬走烧掉，别把树桩留在园里。这条行上的邻株要盯住，通常是下一个。", en2:"Spraying the trunk is pointless. Open the topsoil around the collar and check the root surfaces for white strands. Once confirmed, dig an isolation trench between the affected tree and its healthy neighbours to break root contact; take the tree out with its stump and burn it rather than leaving the stump standing. Watch the neighbours down that row — they are usually next.", ms2:"Menyembur batang tidak berguna. Buka tanah atas di sekeliling pangkal batang dan periksa permukaan akar untuk benang putih. Setelah disahkan, gali parit pengasingan antara pokok yang dijangkiti dan jiran sihatnya untuk memutuskan sentuhan akar; keluarkan pokok itu bersama tunggulnya dan bakar, jangan biarkan tunggul itu tinggal. Perhatikan pokok jiran di barisan itu — biasanya merekalah yang seterusnya." },
-  { zh:"环剥过半就别再治了", en:"Past half-girdled, stop treating", ms:"Melebihi separuh lilitan, berhenti merawat",
-    zh2:"病斑绕枝条或树干超过一半，上面就断了水源。砍到病斑以下，搬走烧掉。主干根颈过半，整棵列入替换——留着是园里的孢子源。", en2:"Once a lesion wraps more than half the circumference, everything above it has lost its water supply. Cut below it and carry it out to burn. If the trunk at the collar is past half, plan replacement — a standing dead tree is a spore source.", ms2:"Apabila lesi melingkari lebih separuh lilitan, semua di atasnya sudah kehilangan bekalan air. Potong di bawahnya dan bawa keluar untuk dibakar. Jika batang di pangkal sudah melebihi separuh, rancang penggantian — pokok mati yang dibiarkan berdiri ialah sumber spora." },
+    zh2:"喷树干没有意义。第一步是扒开树头周围表土，检查根面有没有白色扁平菌索——没看到菌索，就不要按白根病处理。确认后，在病株与健康邻株之间挖一道隔离沟切断根系接触，并盯住这条行上的邻株，通常是下一个。挖除整株是最后手段，只用在树势已经垮掉、明显救不回来的树上；树还有叶、还在抽新梢的，先隔离、先观察。真要砍之前，请先送样或请植保单位确诊——砍错了退不回来。", en2:"Spraying the trunk is pointless. The first step is to open the topsoil around the collar and check the root surfaces for flat white strands — if you cannot see the strands, do not treat this as white root disease. Once confirmed, dig an isolation trench between the affected tree and its healthy neighbours to break root contact, and watch the neighbours down that row, as they are usually next. Taking the whole tree out is the last resort, only for a tree that has already collapsed and clearly cannot be brought back; a tree still holding leaves or pushing new flush should be isolated and watched first. Before you fell anything, get the diagnosis confirmed by a lab or a plant protection officer — a tree cut down by mistake cannot be put back.", ms2:"Menyembur batang tidak berguna. Langkah pertama ialah membuka tanah atas di sekeliling pangkal batang dan memeriksa permukaan akar untuk benang putih yang leper — jika benang itu tidak kelihatan, jangan rawat sebagai penyakit akar putih. Setelah disahkan, gali parit pengasingan antara pokok yang dijangkiti dan jiran sihatnya untuk memutuskan sentuhan akar, dan perhatikan pokok jiran di barisan itu kerana biasanya merekalah yang seterusnya. Membuang keseluruhan pokok ialah jalan terakhir, hanya untuk pokok yang sudah runtuh dan jelas tidak dapat dipulihkan; pokok yang masih berdaun atau masih mengeluarkan pucuk baharu perlu diasingkan dan diperhatikan dahulu. Sebelum menebang, dapatkan pengesahan diagnosis daripada makmal atau pegawai perlindungan tumbuhan — pokok yang tersalah tebang tidak boleh dikembalikan." },
+  { zh:"环剥过半：别再指望喷药", en:"Past half-girdled: spray alone will not do it", ms:"Melebihi separuh lilitan: semburan sahaja tidak cukup",
+    zh2:"病斑绕枝条或树干超过一半，光靠喷药已经解决不了问题——但这不等于树判了死刑。环剥断掉的是韧皮部与形成层，木质部里的水流还在，所以过半的树往往还能撑很久，边缘停住、长出愈伤组织的也不少。枝条上的，砍到病斑以下、搬走烧掉。主干或根颈过半的，先别列入替换：每两周量一次病斑边缘，看还在不在扩。停住的留着继续养；确实在扩、树势又垮下去的，请植保单位确诊后再决定。", en2:"Once a lesion wraps more than half the circumference, spray alone will no longer solve it — but that does not mean the tree is finished. Girdling destroys the phloem and cambium; the water column in the sapwood is still running, so a tree past half often holds on for a long time, and margins do stop and callus over. On a branch, cut below the lesion and carry it out to burn. On the trunk or collar, do not schedule replacement yet: measure the lesion margin every fortnight and see whether it is still advancing. A margin that has stopped is a tree worth keeping; one still genuinely spreading on a tree losing vigour is a case to have confirmed before you decide.", ms2:"Apabila lesi melingkari lebih separuh lilitan, semburan sahaja tidak lagi menyelesaikannya — tetapi itu tidak bermakna pokok itu sudah mati. Lilitan itu memusnahkan floem dan kambium; turus air dalam kayu gubal masih berjalan, jadi pokok yang melebihi separuh selalunya masih bertahan lama, dan pinggir lesi memang boleh berhenti serta menutup. Pada dahan, potong di bawah lesi dan bawa keluar untuk dibakar. Pada batang atau pangkal, jangan jadualkan penggantian dahulu: ukur pinggir lesi setiap dua minggu dan lihat sama ada ia masih merebak. Pinggir yang sudah berhenti bermakna pokok itu berbaloi dikekalkan; jika ia benar-benar masih merebak dan pokok semakin lemah, dapatkan pengesahan sebelum membuat keputusan." },
   { zh:"回头看伤口有没有在愈合", en:"Go back and see whether the wound is closing", ms:"Kembali dan lihat sama ada luka itu sedang menutup",
     zh2:"不用尺。看边缘：新长出一圈微微隆起的愈伤组织，颜色比病斑浅，就是止住了；边缘还是湿的、还在往外扩，就是没止住。隔几周看同一棵，比记数字管用。", en2:"No ruler needed. Look at the margin: a slightly raised ring of callus, paler than the lesion, means it has stopped; a margin still wet and still creeping means it has not. Revisit the same tree a few weeks later — that tells you more than any number.", ms2:"Tidak perlu pembaris. Lihat pinggirnya: lingkaran kalus yang timbul sedikit dan lebih pucat daripada lesi bermakna ia sudah berhenti; pinggir yang masih basah dan masih merayap bermakna belum. Lawati semula pokok yang sama beberapa minggu kemudian — itu memberitahu lebih banyak daripada sebarang angka." }
 ];
@@ -745,6 +763,10 @@ var STR = {
   show_all:{ zh:"还不确定？看全部症状", en:"Still unsure? See all symptoms", ms:"Masih tak pasti? Lihat semua gejala" },
   hide_all:{ zh:"收起其余症状", en:"Hide the rest", ms:"Tutup selebihnya" },
   t_rest:{ zh:"其余症状", en:"The rest", ms:"Gejala lain" },
+  t_filter:{ zh:"按病害筛选症状", en:"Filter symptoms by disease", ms:"Tapis gejala mengikut penyakit" },
+  l_filter:{ zh:"不知道该看什么？先选一种病，把它的全部症状看一遍，再到树上去对。", en:"Not sure what to look for? Pick a disease, read every sign it shows, then go and check the tree.", ms:"Tidak pasti apa yang perlu dicari? Pilih satu penyakit, baca semua tandanya, kemudian pergi periksa pokok itu." },
+  f_all:{ zh:"全部症状", en:"All signs", ms:"Semua tanda" },
+  off_filter:{ zh:"你勾选的另有 {n} 条不在此筛选内——它们仍然计入判断。", en:"{n} more of your ticked signs sit outside this filter — they still count.", ms:"{n} lagi tanda yang anda pilih berada di luar tapisan ini — ia masih dikira." },
   t_chem:{ zh:"杀菌剂与蛀虫", en:"Fungicides and borers", ms:"Racun kulat dan penggerek" },
   l_chem:{ zh:"每支药标出两个判定：对卵菌（疫霉）和对真菌（回枯、镰刀菌）分别有没有活性——依据是作用机理与已发表研究。判定的是病原类别，不是产品好坏；各产品对其标签所列的用途仍然有效。点开看理由与登记状态。往下是蛀虫。", en:"Each product carries two verdicts: activity against the oomycete (Phytophthora) and against the fungi (dieback, Fusarium), based on mode of action and published work. These describe pathogen groups, not product quality — every product remains effective for the uses on its own label. Tap for reasoning and registration status. Borers are below.", ms:"Setiap produk membawa dua penilaian: keaktifan terhadap oomiset (Phytophthora) dan terhadap kulat (mati rosot, Fusarium), berdasarkan cara tindakan dan kajian yang diterbitkan. Ini menerangkan kumpulan patogen, bukan mutu produk — setiap produk kekal berkesan untuk kegunaan pada labelnya sendiri. Ketik untuk melihat sebab dan status pendaftaran. Penggerek di bahagian bawah." },
   t_bio:{ zh:"微生物组合方案", en:"Microbial combinations", ms:"Gabungan mikrob" },
@@ -1223,12 +1245,12 @@ function plateStop(){
   var b = ring(0.5, "var(--amber)") + cap3(P("约一半", "about half", "lebih kurang separuh"),
     P(["看边缘有没有愈伤", "几周后再判一次"], ["watch for callus", "judge again in weeks"], ["perhatikan kalus", "nilai semula kemudian"]), "var(--amber)");
   var c = ring(0.8, "var(--rust)") + cap3(P("超过一半，接近环剥", "more than half", "lebih separuh"),
-    P(["这一段已经保不住", "从病斑以下砍掉"], ["this section is finished", "cut below it"], ["tidak boleh diselamatkan", "potong di bawahnya"]), "var(--rust)");
+    P(["别再指望喷药", "盯住病斑边缘"], ["spray will not fix it", "watch the margin"], ["semburan tak cukup", "perhati pinggir lesi"]), "var(--rust)");
   return "<div class='plate'><h3>" + esc(P("什么时候不该再治：看环剥了多少", "When treatment can no longer win: how far it has girdled", "Bila rawatan sudah tidak boleh menang: sejauh mana ia melingkari")) + "</h3>" +
     "<svg viewBox='0 0 360 148' xmlns='http://www.w3.org/2000/svg' role='img'>" +
     "<g>" + a + "</g><g transform='translate(120,0)'>" + b + "</g><g transform='translate(240,0)'>" + c + "</g>" +
     "<line x1='118' y1='12' x2='118' y2='136' stroke='var(--line)'/><line x1='238' y1='12' x2='238' y2='136' stroke='var(--line)'/></svg>" +
-    "<p>" + esc(P("病斑绕树干或枝条一圈超过一半，上面的部分就等于断了水源，再喷什么都救不回来。这时候唯一有意义的动作是砍到病斑以下、搬走烧掉——不是继续用药。主干根颈若已过半，整棵树要列入替换计划，留着只是园里的孢子源。", "Once a lesion wraps more than half the circumference, everything above it has lost its water supply and no spray will bring it back. The only useful action then is to cut below the lesion and carry it out to burn — not to keep treating. If the main trunk at the collar is past half, plan to replace the tree; leaving it standing just keeps a spore source in the orchard.", "Apabila lesi melingkari lebih separuh lilitan, semua bahagian di atasnya sudah kehilangan bekalan air dan tiada semburan boleh memulihkannya. Tindakan yang berguna hanyalah memotong di bawah lesi dan membawanya keluar untuk dibakar — bukan meneruskan rawatan. Jika batang utama di pangkal sudah melebihi separuh, rancang untuk menggantikan pokok itu; membiarkannya berdiri hanya mengekalkan sumber spora dalam kebun.")) + "</p></div>";
+    "<p>" + esc(P("病斑绕树干或枝条一圈超过一半，再靠喷药已经没有意义了。但要说清楚：环剥断的是韧皮部与形成层，木质部的水流还在，所以「过半」不是死刑判决——很多树能撑很久，病斑边缘也可能停下来愈合。枝条上的，砍到病斑以下、搬走烧掉。主干或根颈过半的，改成盯住它：每两周量一次病斑边缘，停住的就继续养，确实还在扩、树势也垮了的，再请植保单位确诊后决定。砍树是不可逆的，别单凭一次判断做。", "Once a lesion wraps more than half the circumference, there is no more point relying on spray. But to be clear about why: girdling destroys the phloem and cambium while the water column in the sapwood keeps running, so past half is not a death sentence — many trees hold on for a long time and the lesion margin can stop and callus over. On a branch, cut below the lesion and carry it out to burn. On the trunk or collar, switch to watching it: measure the margin every fortnight, keep the tree if the margin has stopped, and if it is genuinely still spreading on a tree that has lost vigour, get the diagnosis confirmed before deciding. Felling is irreversible — do not do it on one reading.", "Apabila lesi melingkari lebih separuh lilitan, tiada gunanya lagi bergantung pada semburan. Tetapi perlu dijelaskan sebabnya: lilitan itu memusnahkan floem dan kambium sementara turus air dalam kayu gubal masih berjalan, jadi melebihi separuh bukanlah hukuman mati — banyak pokok bertahan lama dan pinggir lesi boleh berhenti serta menutup. Pada dahan, potong di bawah lesi dan bawa keluar untuk dibakar. Pada batang atau pangkal, tukar kepada memerhatikannya: ukur pinggir lesi setiap dua minggu, kekalkan pokok itu jika pinggirnya sudah berhenti, dan jika ia benar-benar masih merebak pada pokok yang semakin lemah, dapatkan pengesahan diagnosis sebelum membuat keputusan. Penebangan tidak boleh diundurkan — jangan lakukannya berdasarkan satu bacaan sahaja.")) + "</p></div>";
 }
 
 /* 9 — things that look alarming and are not any of these three */
@@ -1321,6 +1343,9 @@ function plateBio(){
    scrape first, then look close, then cut. */
 var HELP = "not";
 var SHOWALL = false;
+/* Deliberately not persisted: a farmer reopening the app tomorrow should land on
+   the whole list, never on yesterday's narrowed view. */
+var SYMFILTER = "all";
 var SHOWMIX = true;   /* mixing principles: open by default, foldable */
 var FAST = ["s2", "s6", "s13", "r5"];   /* one opening question per pathway */
 function renderHelper(){
@@ -1364,13 +1389,22 @@ function mixedCard(m){
     pts.map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>";
 }
 
-function symRow(s){
+/* Which pathways a sign points at. symRow draws its pins from this and the
+   filter chips select on it, so the chip you tap always returns exactly the
+   rows wearing that pin — nothing to learn twice. */
+function symKeys(s){
   var mx = 0;
   PATH.forEach(function(q){ if ((s[q.k] || 0) > mx) mx = s[q.k]; });
-  var pins = "";
-  if (mx === 0) pins = '<span class="pin n">' + esc(T(STR.pin_n)) + "</span>";
-  else pins = PATH.filter(function(q){ return s[q.k] >= mx - 1 && s[q.k] > 0; })
-    .map(function(q){ return '<span class="pin ' + q.k + '">' + esc(T(STR["pin_" + q.k])) + "</span>"; }).join("");
+  if (mx === 0) return ["n"];
+  return PATH.filter(function(q){ return s[q.k] >= mx - 1 && s[q.k] > 0; })
+             .map(function(q){ return q.k; });
+}
+
+function symRow(s){
+  var ks = symKeys(s);
+  var pins = ks.map(function(k){
+    return '<span class="pin ' + k + '">' + esc(T(STR["pin_" + k])) + "</span>";
+  }).join("");
   return '<div class="sym" data-sym="' + s.id + '" data-on="' + (picked[s.id] ? 1 : 0) + '" role="checkbox" tabindex="0" aria-checked="' + (picked[s.id] ? "true" : "false") + '">' +
     '<div class="box">\u2713</div><p>' + esc(T(s)) + "<em>" + esc(body2(s)) + "</em></p>" +
     '<span class="pins">' + pins + "</span></div>";
@@ -1428,14 +1462,37 @@ function renderTriage(){
        }).join("") + "</span>" +
        "<span class='mini-n'>" + n + "/" + SYMPTOMS.length + "</span></div>";
 
-  var fastRows = SYMPTOMS.filter(function(x){ return FAST.indexOf(x.id) > -1; });
-  var restRows = SYMPTOMS.filter(function(x){ return FAST.indexOf(x.id) < 0; });
-  h += "<h3>" + esc(T(STR.t_fast)) + "</h3><p class='lede'>" + esc(T(STR.l_fast)) + "</p>";
-  h += "<div class='fast'>" + fastRows.map(symRow).join("") + "</div>";
-  h += "<button class='reset' type='button' id='showall'>" +
-       esc(SHOWALL ? T(STR.hide_all) : T(STR.show_all)) + "</button>";
-  if (SHOWALL) h += "<h3>" + esc(T(STR.t_rest)) + "</h3>" + restRows.map(symRow).join("");
-  h += "";
+  var chips = [{ k:"all", lab:T(STR.f_all) }]
+    .concat(PATH.map(function(q){ return { k:q.k, lab:T(STR["pin_" + q.k]) }; }))
+    .concat([{ k:"n", lab:T(STR.pin_n) }]);
+  h += "<h3>" + esc(T(STR.t_filter)) + "</h3><p class='lede'>" + esc(T(STR.l_filter)) + "</p>";
+  h += "<div class='chips'>" + chips.map(function(c){
+      var cnt = c.k === "all" ? SYMPTOMS.length
+        : SYMPTOMS.filter(function(x){ return symKeys(x).indexOf(c.k) > -1; }).length;
+      return "<button type='button' class='chip c-" + c.k + (SYMFILTER === c.k ? " on" : "") +
+        "' data-filt='" + c.k + "' aria-pressed='" + (SYMFILTER === c.k ? "true" : "false") + "'>" +
+        esc(c.lab) + "<span class='chip-n'>" + cnt + "</span></button>";
+    }).join("") + "</div>";
+
+  if (SYMFILTER === "all") {
+    var fastRows = SYMPTOMS.filter(function(x){ return FAST.indexOf(x.id) > -1; });
+    var restRows = SYMPTOMS.filter(function(x){ return FAST.indexOf(x.id) < 0; });
+    h += "<h3>" + esc(T(STR.t_fast)) + "</h3><p class='lede'>" + esc(T(STR.l_fast)) + "</p>";
+    h += "<div class='fast'>" + fastRows.map(symRow).join("") + "</div>";
+    h += "<button class='reset' type='button' id='showall'>" +
+         esc(SHOWALL ? T(STR.hide_all) : T(STR.show_all)) + "</button>";
+    if (SHOWALL) h += "<h3>" + esc(T(STR.t_rest)) + "</h3>" + restRows.map(symRow).join("");
+  } else {
+    var fq = PATH.filter(function(x){ return x.k === SYMFILTER; })[0];
+    var rows = SYMPTOMS.filter(function(x){ return symKeys(x).indexOf(SYMFILTER) > -1; });
+    h += "<h3>" + esc(fq ? T(fq) : T(STR.legend_n)) + "</h3>";
+    if (fq) h += "<p class='lede'>" + esc(body2(fq)) + "</p>";
+    /* ticks made under another chip are still scoring — say so, or they look lost */
+    var off = SYMPTOMS.filter(function(x){
+      return picked[x.id] && symKeys(x).indexOf(SYMFILTER) < 0; }).length;
+    if (off) h += "<p class='offnote'>" + esc(T(STR.off_filter).replace("{n}", off)) + "</p>";
+    h += rows.map(symRow).join("");
+  }
   h += '<button class="reset" type="button" id="reset">' + esc(T(STR.reset)) + "</button>";
   h += renderHelper();
   if (mixed) h += mixedCard(mixed);
@@ -1461,6 +1518,11 @@ function renderChem(){
       "SDHIs (FRAC 7) add a third group, but they are single-site too. One more card to play, not a safe one.",
       "What actually lowers resistance pressure is the multi-site protectants — copper and mancozeb. Many targets at once, nothing for the fungus to mutate around, and resistance has stayed minor after decades. Pairing or alternating single-site products with them is standard practice worldwide.",
       "The key point: when the choices are this few, resistance management is not about switching products — it is about spraying less. Sealed wounds, working drainage and removed diseased trees are what cut the number of sprays. The fewer you make, the longer these few keep working."
+    ], [
+      "Hanya dua kumpulan tapak-tunggal yang benar-benar berkesan terhadap kulat ini: kumpulan triazol (FRAC 3) dan strobilurin (FRAC 11). Bertukar antara dua kumpulan sahaja bukanlah putaran — ia cuma menangguhkan kegagalan beberapa musim. FRAC 11 pula boleh hilang keberkesanannya sepenuhnya hanya kerana satu mutasi titik.",
+      "SDHI (FRAC 7) menambah kumpulan ketiga, tetapi ia juga tapak-tunggal. Satu lagi kad untuk dimainkan, bukan kad yang selamat.",
+      "Yang benar-benar menurunkan tekanan rintangan ialah racun pelindung pelbagai-tapak — kuprum dan mankozeb. Banyak sasaran serentak, tiada ruang untuk kulat bermutasi mengelaknya, dan rintangan kekal kecil walaupun selepas berpuluh tahun. Menggandingkan atau menyelang-nyelikan racun tapak-tunggal dengannya ialah amalan biasa di seluruh dunia.",
+      "Perkara pentingnya: apabila pilihan sesedikit ini, pengurusan rintangan bukan tentang bertukar produk — ia tentang mengurangkan semburan. Luka yang ditutup, saliran yang berfungsi dan pokok berpenyakit yang dibuang itulah yang mengurangkan bilangan semburan. Semakin kurang anda menyembur, semakin lama racun yang sedikit ini kekal berguna."
     ]).map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>";
   h += CHEMS.map(function(c, i){
     var mark = function(v){
@@ -1603,16 +1665,22 @@ function renderSrc(){
   h += "<div class='mixed'><h4>" + esc(T(STR.t_nosrc)) + "</h4><ul>" +
     PL([
       "判症的分数与权重：哪一条症状值几分、并发怎么判、领先多少才下结论——这些是按病理逻辑定的，没有田间验证过。方向可信，分数本身不是数据。",
-      "环剥过半就停止治疗：这条来自树木生理的通则（输导组织断了就恢复不了），不是榴莲上的试验结论。",
+      "环剥过半：这是树木生理的通则，不是榴莲上的试验结论。要说清楚的是，环剥断的是韧皮部与形成层，木质部的水流还在——所以过半并不等于树会死。本软件因此不把过半当作判死的界线，只当作「别再指望喷药、要盯住病斑边缘」的提示。",
       "年历中的产季、修剪与清园月份：按一般做法写的，不同州、不同园差别很大，请按你自己的情况改。（雨量那几条有气象局出处，见下。）",
       "工具消毒的浓度与时间：园艺通用做法，不是榴莲专属研究。",
       "所有插图：按病理特征画的示意图，不是马来西亚榴莲实物照片。"
     ], [
       "The triage scores and weights: how much each symptom counts, how a double infection is called, how far ahead a verdict must be — these follow pathology logic and have not been validated in the field. The direction is sound; the numbers themselves are not data.",
-      "Stopping treatment past half-girdled: a general principle of tree physiology (severed conducting tissue does not recover), not a durian trial result.",
+      "Past half-girdled: a general principle of tree physiology, not a durian trial result. To be precise about the mechanism, girdling destroys phloem and cambium while the water column in the sapwood keeps running — so past half does not mean the tree will die. This app therefore does not treat half as a death line, only as a signal to stop relying on spray and start watching the lesion margin.",
       "The crop, pruning and sanitation bands on the calendar: written to general practice. States and orchards differ widely — adjust to your own. (The rainfall bands are sourced from MetMalaysia, below.)",
       "Tool disinfection rates and times: standard horticultural practice, not durian-specific research.",
       "All illustrations: schematic drawings from pathology, not photographs of Malaysian durian."
+    ], [
+      "Skor dan pemberat dalam penilaian gejala: berapa nilai setiap gejala, bagaimana jangkitan berganda ditentukan, dan sejauh mana satu penyakit perlu mendahului sebelum keputusan diberi — semua ini mengikut logik patologi dan belum disahkan di ladang. Arahnya boleh dipercayai; angkanya sendiri bukan data.",
+      "Melebihi separuh lilitan: ini prinsip am fisiologi pokok, bukan hasil ujian ke atas durian. Untuk jelasnya, lilitan itu memusnahkan floem dan kambium sementara turus air dalam kayu gubal masih berjalan — jadi melebihi separuh tidak bermakna pokok itu akan mati. Oleh itu perisian ini tidak menganggap separuh sebagai garis kematian, hanya sebagai isyarat untuk berhenti bergantung pada semburan dan mula memerhati pinggir lesi.",
+      "Musim buah, pangkasan dan pembersihan kebun dalam kalendar: ditulis mengikut amalan umum. Setiap negeri dan setiap kebun sangat berbeza — sesuaikan dengan keadaan anda sendiri. (Jalur hujan ada sumbernya daripada MetMalaysia, lihat di bawah.)",
+      "Kadar dan tempoh pembasmian kuman pada alat: amalan hortikultur biasa, bukan kajian khusus durian.",
+      "Semua ilustrasi: lukisan skema berdasarkan ciri patologi, bukan gambar sebenar durian Malaysia."
     ]).map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>";
   h += SRC.map(function(s){
     var k = s.k || (s.d ? "d" : "o");
@@ -1655,6 +1723,10 @@ document.addEventListener("click", function(e){
     renderBio();
     return;
   }
+
+  var fl = e.target.closest("[data-filt]");
+  if (fl) { SYMFILTER = fl.dataset.filt; SHOWALL = false; renderTriage();
+    refocus("[data-filt='" + SYMFILTER + "']"); return; }
 
   if (e.target.closest("#showall")) {
     SHOWALL = !SHOWALL;
