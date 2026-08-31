@@ -296,6 +296,15 @@ html[lang="zh"] .crow .where{font-size:14px}
    where a 5-stroke Latin word survives. PingFang SC ships a true Medium, so
    every line that carries the diagnosis steps up one weight. */
 html[lang="zh"]{--muted:#D5C6AE}
+/* Georgia carries no CJK, so display text fell through to a Ming-style serif
+   whose hairline horizontals vanish on dark bark. The symbol glyphs in the nav
+   (nav button b) keep var(--disp); the four elements that set CJK display text
+   move to the sans, and the 500/600 weights above carry the hierarchy. */
+html[lang="zh"] .mark,
+html[lang="zh"] h2,
+html[lang="zh"] .readout b,
+html[lang="zh"] .mixed h4{font-family:var(--body)}
+
 html[lang="zh"] .mark{font-weight:500}
 html[lang="zh"] h2{font-weight:500}
 html[lang="zh"] .sym p{font-weight:500}
@@ -1036,7 +1045,7 @@ function plateWound(){
     "<path d='M82 38 q11 -7 20 2' stroke='var(--husk)' stroke-width='2' fill='none' stroke-linecap='round'/>" +
     "<circle cx='32' cy='44' r='10' fill='none' stroke='var(--muted)' stroke-width='1.4'/>" +
     "<path d='M32 37 L32 44 L38 47' stroke='var(--muted)' stroke-width='1.4' fill='none' stroke-linecap='round'/>" +
-    cap(P("2 当天封口", "2 Seal the same day", "2 Tutup pada hari yang sama"), P(["刀口是主要入侵口"], ["the cut is the main entry"], ["luka ialah pintu masuk utama"]), "var(--husk)", 126);
+    cap(P("2 当天封口", "2 Seal the same day", "2 Tutup hari itu juga"), P(["刀口是主要入侵口"], ["the cut is the main entry"], ["luka ialah pintu masuk"]), "var(--husk)", 126);
   var s3 = "<rect x='48' y='24' width='24' height='72' rx='3' fill='var(--bark3)' stroke='var(--line)'/>" +
     "<line x1='12' y1='96' x2='108' y2='96' stroke='var(--muted)' stroke-width='1.4'/>" +
     "<path d='M12 96 q12 -16 26 -16 l0 4 q-12 0 -20 12 z' fill='var(--bark3)' stroke='var(--line)' stroke-width='.8'/>" +
@@ -1512,17 +1521,17 @@ function renderChem(){
       "真正对真菌有效的只有两个单位点组：三唑类（FRAC 3）与甲氧基丙烯酸酯类（FRAC 11）。两个组来回换，不叫轮替，只是把失效推迟几季。FRAC 11 更是一个点突变就全组报废。",
       "SDHI（FRAC 7）能补上第三组，但它同样是单位点，只是多一张牌，不是安全牌。",
       "真正压低抗性压力的是多位点保护剂（铜、代森锰锌）：作用点多，病菌躲不开，几十年下来抗性一直很小。单位点药与它们搭配或交替，是国际通行的做法。",
-      "关键一句：选择这么少的时候，抗性管理的核心不是「换着用」，而是「少用」。把伤口封好、排水做好、病株清掉，才是真正减少喷药次数的办法——喷得越少，剩下这几支才留得住。"
+      "关键一句：选择这么少的时候，抗性管理的核心不是「换着用」，而是「少用」。把伤口封好、排水做好、死株及时清走，才是真正减少喷药次数的办法——喷得越少，剩下这几支才留得住。"
     ], [
       "Only two single-site groups are genuinely active on the fungi: the triazoles (FRAC 3) and the strobilurins (FRAC 11). Swapping between two groups is not rotation — it just postpones failure by a few seasons. And FRAC 11 can be lost entirely to one point mutation.",
       "SDHIs (FRAC 7) add a third group, but they are single-site too. One more card to play, not a safe one.",
       "What actually lowers resistance pressure is the multi-site protectants — copper and mancozeb. Many targets at once, nothing for the fungus to mutate around, and resistance has stayed minor after decades. Pairing or alternating single-site products with them is standard practice worldwide.",
-      "The key point: when the choices are this few, resistance management is not about switching products — it is about spraying less. Sealed wounds, working drainage and removed diseased trees are what cut the number of sprays. The fewer you make, the longer these few keep working."
+      "The key point: when the choices are this few, resistance management is not about switching products — it is about spraying less. Sealed wounds, working drainage and dead trees cleared away are what cut the number of sprays. The fewer you make, the longer these few keep working."
     ], [
       "Hanya dua kumpulan tapak-tunggal yang benar-benar berkesan terhadap kulat ini: kumpulan triazol (FRAC 3) dan strobilurin (FRAC 11). Bertukar antara dua kumpulan sahaja bukanlah putaran — ia cuma menangguhkan kegagalan beberapa musim. FRAC 11 pula boleh hilang keberkesanannya sepenuhnya hanya kerana satu mutasi titik.",
       "SDHI (FRAC 7) menambah kumpulan ketiga, tetapi ia juga tapak-tunggal. Satu lagi kad untuk dimainkan, bukan kad yang selamat.",
       "Yang benar-benar menurunkan tekanan rintangan ialah racun pelindung pelbagai-tapak — kuprum dan mankozeb. Banyak sasaran serentak, tiada ruang untuk kulat bermutasi mengelaknya, dan rintangan kekal kecil walaupun selepas berpuluh tahun. Menggandingkan atau menyelang-nyelikan racun tapak-tunggal dengannya ialah amalan biasa di seluruh dunia.",
-      "Perkara pentingnya: apabila pilihan sesedikit ini, pengurusan rintangan bukan tentang bertukar produk — ia tentang mengurangkan semburan. Luka yang ditutup, saliran yang berfungsi dan pokok berpenyakit yang dibuang itulah yang mengurangkan bilangan semburan. Semakin kurang anda menyembur, semakin lama racun yang sedikit ini kekal berguna."
+      "Perkara pentingnya: apabila pilihan sesedikit ini, pengurusan rintangan bukan tentang bertukar produk — ia tentang mengurangkan semburan. Luka yang ditutup, saliran yang berfungsi dan pokok yang sudah mati dibuang itulah yang mengurangkan bilangan semburan. Semakin kurang anda menyembur, semakin lama racun yang sedikit ini kekal berguna."
     ]).map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>";
   h += CHEMS.map(function(c, i){
     var mark = function(v){
