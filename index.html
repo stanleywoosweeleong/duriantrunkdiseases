@@ -128,6 +128,29 @@ html[lang="zh"] .plate p{font-size:14.5px}
 .nudge{background:var(--bark3);border-left:3px solid var(--muted);border-radius:3px;
   padding:10px 12px;margin-bottom:14px;font-size:12.5px;color:var(--muted);line-height:1.7}
 html[lang="zh"] .nudge{font-size:14px}
+.ta{background:var(--bark2);border:1px solid var(--line);border-left:4px solid var(--fus);border-radius:3px;padding:0;margin:14px 0 10px}
+.ta > summary{cursor:pointer;list-style:none;padding:13px 14px;font-weight:500;font-size:15px;line-height:1.4}
+.ta > summary::-webkit-details-marker{display:none}
+.ta > summary small{display:block;color:var(--muted);font-size:12.5px;font-weight:400;margin-top:2px}
+.ta[open] > summary small{display:none}
+.ta-in{padding:0 14px 14px;font-size:13.5px;line-height:1.6}
+.ta-in p{margin:0 0 10px}
+.ta-row{border-top:1px solid var(--line);padding:10px 0}
+.ta-row > b{display:block;font-weight:500;margin-bottom:5px}
+.ta-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ta-two div{padding-left:8px}
+.ta-two .tb{border-left:3px solid var(--ink)} .ta-two .tf{border-left:3px solid var(--fus)}
+.ta-two em{display:block;font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ta-basis{color:var(--muted);font-size:12px;margin-top:5px}
+.ta-box{border:1px solid var(--line);border-radius:3px;padding:10px 12px;margin-top:10px}
+.ta-box > b{display:block;font-weight:500;margin-bottom:4px}
+.ta-box ul{margin:0;padding-left:17px}
+.ta-warn{border-color:var(--rust);color:var(--rust)}
+.ta-src{font-size:12.5px;margin-top:12px}
+.ta-src ol{margin:6px 0 0;padding-left:20px}
+.ta-src li{margin-bottom:8px}
+.ta-src a{color:var(--husk)}
+.ta-src .ta-note{display:block;color:var(--muted)}
 .mixed{background:var(--bark2);border:1px solid var(--amber);border-left:4px solid var(--amber);
   border-radius:3px;padding:13px 14px;margin-bottom:14px}
 .mixed h4{margin:0 0 8px;font-family:var(--disp);font-size:16px;font-weight:400;color:var(--amber)}
@@ -762,7 +785,7 @@ var SRC = [
   { d:true,  zh:"马来西亚禁用与限用农药名单（BKRPB，2025 年 8 月 26 日更新）：已核对，本软件「药剂」页列出的三支活性成分均不在禁用或限用名单上。该名单每月更新，请自行复核最新版。", en:"Malaysian banned and restricted pesticide list (BKRPB, updated 26 August 2025): checked — none of the three actives listed on the Chemicals tab appears on the banned or restricted list. The list is updated monthly; verify the current version yourself.", ms:"Senarai racun perosak diharamkan dan dihadkan Malaysia (BKRPB, dikemas kini 26 Ogos 2025): disemak — tiada satu pun daripada tiga bahan aktif yang disenaraikan dalam tab Racun Kulat terdapat dalam senarai diharamkan atau dihadkan. Senarai ini dikemas kini setiap bulan; sahkan sendiri versi terkini.", k:"g", ref:"BKRPB Senarai Racun Makhluk Perosak Diharamkan, 26 Ogos 2025" },
   { d:true,  zh:"泰国榴莲枝枯（Plants 2023）：从病株分离出腐皮镰刀菌与半裸镰刀菌，两者都能致病；叶片在 5–7 天内发黄脱落，枝梢树皮出现凹槽，木质部褐至黑色；发现小蠹 Euwallacea similis 与腐皮镰刀菌有关联（作者认为是共生关系，未证实传播途径）。果农用防疫霉的药没有控制住。", en:"Durian dieback in Thailand (Plants 2023): Fusarium solani and F. incarnatum isolated from diseased trees, both pathogenic; leaves yellow and drop within 5–7 days, twig bark grooves, brown-to-black wood; the pinhole borer Euwallacea similis was linked with F. solani (the authors suggest a partnership; spread by the beetle was not proven). Growers' Phytophthora fungicides did not control it.", ms:"Mati rosot durian di Thailand (Plants 2023): Fusarium solani dan F. incarnatum dipencilkan daripada pokok berpenyakit, kedua-duanya patogenik; daun menguning dan gugur dalam 5–7 hari, kulit ranting beralur, kayu perang hingga hitam; kumbang lubang jarum Euwallacea similis dikaitkan dengan F. solani (penulis mencadangkan perkongsian; penyebaran oleh kumbang tidak dibuktikan). Racun Phytophthora yang digunakan pekebun tidak mengawalnya.", ref:"Plants 12(17):3045 (2023) — pmc.ncbi.nlm.nih.gov/articles/PMC10490359" },
   { d:true,  zh:"镰刀菌通路的依据：三项榴莲研究——泰国枝枯（Plants 2023）、泰国东部茎腐（New Disease Reports 2021）、海南茎腐（Pathogens 2026）。本页的镰刀菌症状来自这三项：枝条、分叉处与树干上的病斑，叶片快速黄落，黄褐色黏液，褐至黑色的木质部与韧皮部，以及与小蠹的关联。粉白／粉红／橙色霉层（产孢座）来自镰刀菌属的一般特征；从根颈开始、往上扩展在榴莲上没有报告。", en:"Basis for the Fusarium pathway: three durian studies — Thai dieback (Plants 2023), Eastern Thailand stem rot (New Disease Reports 2021) and Hainan stem rot (Pathogens 2026). The Fusarium signs here come from them: lesions on branches, forks and trunk, fast yellowing leaf drop, yellow-brown ooze, brown-to-black wood and phloem, and the link with pinhole borers. White, pink or orange mould masses (sporodochia) come from the genus in general; a start at the collar and upward spread have not been reported on durian.", ms:"Asas bagi laluan Fusarium: tiga kajian durian — mati rosot di Thailand (Plants 2023), reput batang di Thailand Timur (New Disease Reports 2021) dan reput batang di Hainan (Pathogens 2026). Tanda Fusarium di sini datang daripadanya: lesi pada dahan, cabang dan batang, daun cepat menguning dan gugur, lelehan kuning perang, kayu dan floem perang hingga hitam, serta kaitan dengan kumbang lubang jarum. Jisim kulapuk putih, merah jambu atau jingga (sporodokia) daripada ciri genus secara umum; permulaan di pangkal batang dan rebakan ke atas belum dilaporkan pada durian.", ref:"Plants 2023; New Dis Rep 44:e12026; Pathogens 15(8):849" },
-  { d:true,  zh:"泰国东部榴莲茎腐：从病树皮与木质部分离出腐皮镰刀菌与拟可可毛色二孢，症状为树皮与树干溃疡、小枝枯萎、叶黄、萎蔫。", en:"Durian stem rot, Eastern Thailand: Fusarium solani and Lasiodiplodia pseudotheobromae isolated from diseased bark and wood; symptoms were bark and trunk canker, twig blight, yellow leaves and wilting.", ms:"Reput batang durian, Thailand Timur: Fusarium solani dan Lasiodiplodia pseudotheobromae dipencilkan daripada kulit kayu dan kayu yang berpenyakit; gejalanya ialah kanker kulit dan batang, hawar ranting, daun menguning dan layu.", ref:"New Disease Reports 44, e12026 (2021)" },
+  { d:true,  zh:"泰国东部榴莲茎腐：从病树皮与木质部分离出腐皮镰刀菌与拟可可毛色二孢，症状为树皮与树干溃疡、小枝枯萎、叶黄、萎蔫。", en:"Durian stem rot, Eastern Thailand: Fusarium solani and Lasiodiplodia pseudotheobromae isolated from diseased bark and wood; symptoms were bark and trunk canker, twig blight, yellow leaves and wilting.", ms:"Reput batang durian, Thailand Timur: Fusarium solani dan Lasiodiplodia pseudotheobromae dipencilkan daripada kulit kayu dan kayu yang berpenyakit; gejalanya ialah kanker kulit dan batang, hawar ranting, daun menguning dan layu.", ref:"Chantarasiri & Boontanom 2021, New Disease Reports 44:e12026 — doi.org/10.1002/ndr2.12026 (free PDF)" },
   { d:true,  zh:"榴莲上木霉与杀菌剂兼容性：分离到四种病原；Tri-1 对拟茎点霉（Phomopsis）抑制率 86.17%。同研究比较多种杀菌剂对木霉的影响，差异极大：部分处理 60 天后土壤菌数维持 2.93–3.67×10³ CFU/g，另一些跌至 0.12×10³ CFU/g。", en:"Trichoderma–fungicide compatibility in durian: four pathogens isolated; Tri-1 inhibited Phomopsis by 86.17%. The study compared several fungicides for their effect on Trichoderma and found a wide spread: some treatments left soil counts at 2.93–3.67×10³ CFU/g at 60 days while others dropped them to 0.12×10³ CFU/g.", ms:"Keserasian Trichoderma–racun kulat pada durian: empat patogen dipencilkan; Tri-1 merencat Phomopsis sebanyak 86.17%. Kajian itu membandingkan beberapa racun kulat dari segi kesannya pada Trichoderma dan mendapati jurang yang luas: sesetengah rawatan mengekalkan kiraan tanah pada 2.93–3.67×10³ CFU/g pada hari ke-60 manakala yang lain menurunkannya kepada 0.12×10³ CFU/g.", ref:"Agriculture and Natural Resources / compatibility study" },
   { d:true,  zh:"海南榴莲茎腐生物防治：枯草芽孢杆菌 SYST2（Bacillus subtilis）田间防效 53.51%，商品微生物制剂 35.15%，对照化学药霜霉威 25.46%（防疫霉药，不针对镰刀菌）。田间症状：枝条及分叉处有粗糙的灰白至浅褐色病斑，裂口渗出黄褐色黏液，剥皮见韧皮部褐至黑色。", en:"Biocontrol of durian stem rot in Hainan: Bacillus subtilis SYST2 gave 53.51% field efficacy versus 35.15% for a commercial microbial agent and 25.46% for the comparison chemical, propamocarb (a Phytophthora fungicide, not aimed at Fusarium). Field symptoms: rough grey-white to light-brown lesions on branches and forks, sticky yellow-brown exudate from cracks, brown-black phloem under the bark.", ms:"Kawalan biologi reput batang durian di Hainan: Bacillus subtilis SYST2 memberi keberkesanan ladang 53.51% berbanding 35.15% bagi agen mikrob komersial dan 25.46% bagi racun kimia bandingan, propamocarb (racun Phytophthora, tidak menyasarkan Fusarium). Simptom ladang: lesi kasar putih kelabu hingga perang muda pada dahan dan cabang, eksudat melekit kuning perang dari rekahan, floem perang kehitaman di bawah kulit.", ref:"Pathogens 15(8):849 (2026)" },
   { d:true,  zh:"榴莲果腐：篮状菌 KUFA1604（Talaromyces tratensis）与棘孢木霉 KUFA1606 粗提物 10,000 ppm 浸果，降低可可毛色二孢病害严重度 49.41–54.51%。", en:"Durian fruit rot: crude extracts of Talaromyces tratensis KUFA1604 and T. asperellum KUFA1606 at 10,000 ppm reduced Lasiodiplodia theobromae severity by 49.41–54.51%.", ms:"Reput buah durian: ekstrak kasar Talaromyces tratensis KUFA1604 dan T. asperellum KUFA1606 pada 10,000 ppm mengurangkan keterukan Lasiodiplodia theobromae sebanyak 49.41–54.51%.", ref:"European Journal of Plant Pathology (2026)" },
@@ -1550,8 +1573,83 @@ function renderTriage(){
   }
   h += '<button class="reset" type="button" id="reset">' + esc(T(STR.reset)) + "</button>";
   h += renderHelper();
+  h += tellApart();
   if (mixed) h += mixedCard(mixed);
   document.getElementById("s-triage").innerHTML = h;
+}
+
+/* "Dieback or Fusarium?" — six checks side by side, each with its basis
+   (durian study [n] or general), a bag test, the same first steps, sources. */
+var TA_SRC = [
+  { t:"Chantarasiri A. & Boontanom P. (2021). Fusarium solani and Lasiodiplodia pseudotheobromae, fungal pathogens causing stem rot disease on durian trees (Durio zibethinus) in Eastern Thailand. New Disease Reports 44: e12026.",
+    url:"https://doi.org/10.1002/ndr2.12026", pdf:"https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/ndr2.12026",
+    zh:"采自罗勇府和尖竹汶府果园的 30 份树皮与木质部样本；两种菌接种到榴莲幼苗上都引起病斑；实验室培养皿上的菌落样子。", en:"30 bark and wood samples from Rayong and Chanthaburi orchards; both fungi caused lesions when put into durian seedlings; colony looks on lab plates.", ms:"30 sampel kulit dan kayu dari kebun di Rayong dan Chanthaburi; kedua-dua kulat menyebabkan lesi bila dimasukkan ke anak benih durian; rupa koloni di atas piring makmal." },
+  { t:"Pongpisutta R., Keawmanee P., Sanguansub S., et al. (2023). Comprehensive investigation of die-back disease caused by Fusarium in durian. Plants 12(17): 3045.",
+    url:"https://doi.org/10.3390/plants12173045", pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC10490359/",
+    zh:"泰国榴莲枝枯：腐皮镰刀菌和半裸镰刀菌；叶片 5–7 天内黄落；木质部褐至黑色；小蠹 Euwallacea similis 与腐皮镰刀菌有关联。", en:"Thai durian dieback: F. solani and F. incarnatum; leaves yellow and drop in 5–7 days; brown-to-black wood; the pinhole borer Euwallacea similis linked with F. solani.", ms:"Mati rosot durian di Thailand: F. solani dan F. incarnatum; daun menguning dan gugur dalam 5–7 hari; kayu perang hingga hitam; kumbang Euwallacea similis dikaitkan dengan F. solani." },
+  { t:"Jiang W., Wei H., Gao H., et al. (2026). Isolation, molecular characterization, and biological control of Fusarium solani causing stem rot of durian tree in China. Pathogens 15(8): 849.",
+    url:"https://doi.org/10.3390/pathogens15080849", pdf:"https://pmc.ncbi.nlm.nih.gov/articles/PMC13516780/",
+    zh:"海南：枝条和分叉处粗糙的灰白色病斑，裂口流出黏稠黄褐色液体，剥皮可见褐黑色。", en:"Hainan: rough grey-white lesions on branches and forks, sticky yellow-brown ooze from cracks, brown-black bark underneath.", ms:"Hainan: lesi kasar putih kelabu pada dahan dan cabang, lelehan melekit kuning perang dari rekahan, kulit perang kehitaman di bawahnya." }
+];
+var TA_ROWS = [
+  { c:["叶子","The leaves","Daun"],
+    b:["枯叶常挂在枝上不掉","Dead leaves often stay hanging on","Daun kering selalunya kekal melekat"],
+    f:["5–7 天内发黄脱落","Turn yellow and drop within 5–7 days","Menguning dan gugur dalam 5–7 hari"],
+    s:["镰刀菌：榴莲研究 [2]。回枯：一般植物病理。","Fusarium: durian study [2]. Dieback: general plant pathology.","Fusarium: kajian durian [2]. Mati rosot: patologi tumbuhan umum."] },
+  { c:["放大镜看枯死的树皮","Hand lens on the dead bark","Kanta pembesar pada kulit yang mati"],
+    b:["针尖大小的黑点，硬，抹不掉","Pinhead black dots, hard, will not rub off","Bintik hitam sebesar kepala jarum, keras, tidak tanggal bila digosok"],
+    f:["没有黑点","No black dots","Tiada bintik hitam"],
+    s:["一般真菌学：黑点是回枯真菌的产孢结构，镰刀菌不会长。","General mycology: the dots are the fruiting bodies of the dieback fungi; Fusarium does not make them.","Mikologi umum: bintik itu jasad berbuah kulat mati rosot; Fusarium tidak menghasilkannya."] },
+  { c:["带细木屑的针孔","Pinholes with fine sawdust","Lubang jarum dengan habuk halus"],
+    b:["不常见","Not typical","Tidak biasa"],
+    f:["常有——但小蠹也会找被疫霉烂掉的树皮","Often there — but pinhole borers also come to Phytophthora-rotted bark","Selalunya ada — tetapi kumbang lubang jarum juga datang ke kulit yang direputkan Phytophthora"],
+    s:["榴莲研究：发现一种小蠹与腐皮镰刀菌有关联 [2]。","Durian study: a pinhole borer was linked with Fusarium solani [2].","Kajian durian: sejenis kumbang lubang jarum dikaitkan dengan Fusarium solani [2]."] },
+  { c:["裂口流出的液体","Ooze from cracks","Lelehan dari rekahan"],
+    b:["—","—","—"],
+    f:["黏稠，黄褐色","Sticky, yellow-brown","Melekit, kuning perang"],
+    s:["榴莲研究 [3]。疫霉流的是铁锈色胶，树皮下是湿烂。","Durian study [3]. Phytophthora ooze is rust-coloured and the rot under the bark is wet.","Kajian durian [3]. Lelehan Phytophthora berwarna karat dan reput di bawah kulit basah."] },
+  { c:["从哪里开始","Where it started","Di mana ia bermula"],
+    b:["修剪伤口、断枝或日灼的树皮","A pruning cut, broken branch or sunburnt bark","Luka pangkasan, dahan patah atau kulit terbakar matahari"],
+    f:["枝杈、枝条或树干","A branch fork, the branches or the trunk","Cabang dahan, dahan atau batang"],
+    s:["镰刀菌：榴莲研究 [2][3]。回枯：一般植物病理。","Fusarium: durian studies [2][3]. Dieback: general plant pathology.","Fusarium: kajian durian [2][3]. Mati rosot: patologi tumbuhan umum."] },
+  { c:["病斑上的霉层","Mould on the lesion","Kulapuk pada lesi"],
+    b:["—","—","—"],
+    f:["粉白、粉红或橙色粉状霉层","White, pink or orange powdery mould","Kulapuk berdebu putih, merah jambu atau jingga"],
+    s:["一般真菌学。榴莲研究都没有报告这一点，所以没看到并不能排除镰刀菌。","General mycology. The durian studies did not report it, so not seeing it does not rule Fusarium out.","Mikologi umum. Kajian durian tidak melaporkannya, jadi tidak nampak bukan bermakna bukan Fusarium."] }
+];
+function tellApart(){
+  var A = function(a){ return esc(P(a[0], a[1], a[2])); };
+  var h = "<details class='ta'><summary>" + esc(P("回枯还是镰刀菌？怎么分", "Dieback or Fusarium? How to tell", "Mati rosot atau Fusarium? Cara membezakan")) +
+    "<small>" + esc(P("6 个检查、一个袋子测试，以及两种情况的做法", "6 checks, a bag test, and what to do either way", "6 semakan, ujian beg, dan apa perlu dibuat")) + "</small></summary><div class='ta-in'>";
+  h += "<p>" + esc(P("两者都是会让枝条枯死的真菌，泰国东部的研究证实两者都会引起榴莲茎腐 [1]。下面任何一条单独都不能定案，要找两条以上相符的。",
+    "Both are true fungi that kill branches, and in Eastern Thailand both were shown to cause durian stem rot [1]. No single check below is proof. Look for two or more that agree.",
+    "Kedua-duanya kulat sebenar yang mematikan dahan, dan di Timur Thailand kedua-duanya terbukti menyebabkan reput batang durian [1]. Tiada satu semakan di bawah yang menjadi bukti sendiri. Cari dua atau lebih yang sepadan.")) + "</p>";
+  h += "<div class='ta-box ta-warn'>" + esc(P("最要紧的区分先做：湿润的溃疡、流铁锈色胶、树皮下是红褐色湿烂，那是疫霉，用药完全不同——先排除它。",
+    "The split that matters most comes first: a wet canker with rust-coloured ooze and wet, reddish-brown rot under the bark is Phytophthora. That needs different medicine — check for it before anything else.",
+    "Pembezaan paling penting dibuat dahulu: kanker basah dengan lelehan warna karat dan reput basah perang kemerahan di bawah kulit ialah Phytophthora. Ia perlukan ubat yang berbeza — periksa itu sebelum yang lain.")) + "</div>";
+  var lb = esc(P("回枯", "Dieback", "Mati rosot")), lf = esc(P("镰刀菌", "Fusarium", "Fusarium"));
+  h += TA_ROWS.map(function(r){
+    return "<div class='ta-row'><b>" + A(r.c) + "</b><div class='ta-two'><div class='tb'><em>" + lb + "</em>" + A(r.b) +
+      "</div><div class='tf'><em>" + lf + "</em>" + A(r.f) + "</div></div><div class='ta-basis'>" + A(r.s) + "</div></div>";
+  }).join("");
+  h += "<div class='ta-box'><b>" + esc(P("可以试的袋子测试——方法之一", "A bag test you can try — one of the ways", "Ujian beg yang boleh dicuba — salah satu cara")) + "</b>" +
+    esc(P("在病斑边缘（病健交界处）切一小块，放进透明塑料袋，加一张湿纸巾，封好，放在阴凉处 3–5 天。长出生长很快的灰黑色菌，或出现黑点，指向回枯；长出白色至粉红色棉絮状的菌，指向镰刀菌。泰国研究在实验室培养皿上看到的就是这样：镰刀菌白色棉絮状；毛色二孢白色绒毛状，长得快，一周内变深灰色 [1]。袋子不是实验室培养皿，枯树皮上也会长其他杂菌——只能当线索，不能当证据。",
+      "Cut a small piece from the edge of the lesion, where healthy and diseased bark meet. Put it in a clear plastic bag with a damp tissue, close it, and keep it in the shade for 3–5 days. Grey-black fungus that grows fast, or black dots, points to dieback. White to pink cottony growth points to Fusarium. This is how the two grew on lab plates in the Thai study: Fusarium white and cottony; Lasiodiplodia white and woolly, growing fast and turning dark grey within a week [1]. A bag is not a lab plate, and other fungi grow on dead bark too — treat it as a clue, not proof.",
+      "Potong sedikit dari pinggir lesi, di sempadan kulit sihat dan berpenyakit. Masukkan dalam beg plastik jernih bersama tisu lembap, tutup, dan simpan di tempat teduh 3–5 hari. Kulat kelabu hitam yang tumbuh cepat, atau bintik hitam, menunjuk kepada mati rosot. Pertumbuhan seperti kapas putih hingga merah jambu menunjuk kepada Fusarium. Beginilah kedua-duanya tumbuh di atas piring makmal dalam kajian Thailand: Fusarium putih seperti kapas; Lasiodiplodia putih berbulu, tumbuh cepat dan menjadi kelabu gelap dalam seminggu [1]. Beg bukan piring makmal, dan kulat lain juga tumbuh pada kulit mati — anggap ia petunjuk, bukan bukti.")) +
+    "<p style='margin:8px 0 0'>" + esc(P("只有实验室能确定：泰国研究人员是把菌培养出来再验 DNA [1]。可以问问州农业局办事处是否接收植物样本。",
+      "Only a lab can be sure: the Thai researchers grew the fungus and checked its DNA [1]. Ask your state Department of Agriculture office whether they take plant samples.",
+      "Hanya makmal yang boleh pasti: penyelidik Thailand mengkultur kulat itu dan memeriksa DNAnya [1]. Tanya pejabat Jabatan Pertanian negeri anda sama ada mereka menerima sampel tumbuhan.")) + "</p></div>";
+  h += "<div class='ta-box'><b>" + esc(P("不管是哪一种，前几步都一样", "Either way, the first steps are the same", "Apa pun jenisnya, langkah pertama sama")) + "</b><ul>" +
+    [["剪到健康木质部，剪下的烧掉，切口当天涂木霉膏封好。", "Cut back to healthy wood, burn the prunings, and seal the cuts the same day with Trichoderma paste.", "Potong hingga kayu sihat, bakar sisa pangkasan, dan tutup luka pada hari yang sama dengan pes Trichoderma."],
+     ["如果是镰刀菌：还要处理小蠹，被蛀的枯木也要烧掉。榴莲上还没有针对镰刀菌试验过的药。", "If it is Fusarium: also deal with the pinhole borers and burn bored dead wood. No spray has been tested against Fusarium on durian.", "Jika Fusarium: kawal juga kumbang lubang jarum dan bakar kayu mati yang dikorek. Belum ada semburan yang diuji terhadap Fusarium pada durian."],
+     ["如果是回枯：切口涂杀菌剂（三唑类、铜剂）在其他作物上有证据。", "If it is dieback: fungicide paint on the cuts (triazoles, copper) has evidence from other crops.", "Jika mati rosot: racun kulat yang disapu pada luka (triazol, kuprum) ada bukti daripada tanaman lain."]]
+    .map(function(x){ return "<li>" + A(x) + "</li>"; }).join("") + "</ul></div>";
+  h += "<div class='ta-src'><b>" + esc(P("本卡片的出处", "Sources for this card", "Sumber kad ini")) + "</b><ol>" +
+    TA_SRC.map(function(s){
+      return "<li><a href='" + s.url + "' target='_blank' rel='noopener'>" + esc(s.t) + "</a> <span class='tag d'>" + esc(T(STR.tag_d)) + "</span> " +
+        "<a href='" + s.pdf + "' target='_blank' rel='noopener'>" + esc(P("免费 PDF", "Free PDF", "PDF percuma")) + "</a><span class='ta-note'>" + esc(T(s)) + "</span></li>";
+    }).join("") + "</ol><span class='ta-note'>" + esc(P("注明“一般”的内容来自植物病理学和其他作物，不是榴莲研究。", "Where a row says \"general\", it comes from plant pathology and other crops, not from a durian study.", "Jika baris menyebut \"umum\", ia datang daripada patologi tumbuhan dan tanaman lain, bukan kajian durian.")) + "</span></div>";
+  return h + "</div></details>";
 }
 
 function tierBadge(t){
